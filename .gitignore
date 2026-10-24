@@ -1,0 +1,27 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+.ipynb_checkpoints/
+.ruff_cache/
+.mypy_cache/
+
+# Data: never commit raw or processed source data
+data/raw/
+data/processed/
+data/interim/
+
+# Local/editor
+.DS_Store
+.vscode/
+.idea/
+
+# Conductor collaboration scratch space
+.context/
+
+# Keep generated research artefacts (results/figures, results/tables) tracked,
+# but ignore caches produced while running the pipeline.
+results/cache/

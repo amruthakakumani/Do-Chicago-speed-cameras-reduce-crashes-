@@ -1,0 +1,22 @@
+data:
+  datasets: {}
+  start_month: "2015-01-01"
+  reporting_lag_months: 2
+  bbox: {lat_min: 41.6, lat_max: 42.06, lon_min: -87.95, lon_max: -87.5}
+spatial:
+  radius_m: 250
+  buffer_m: 400   # invalid: must exceed 2 * radius
+  grid_m: 500
+  min_control_crashes: 100
+  min_active_month_share: 0.4
+  max_match_distance_m: 2000
+design:
+  pre_months: 24
+  post_months: 36
+  n_controls: 5
+inference:
+  seed: 1
+paths:
+  raw: data/raw
+  processed: data/processed
+  results: results

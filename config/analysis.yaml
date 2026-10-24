@@ -1,0 +1,145 @@
+# Analysis configuration for the Chicago speed-camera study.
+#
+# Every number used in the research pipeline is declared here so that runs are
+# reproducible and reviewer-auditable.  Values marked "baseline" preserve the
+# original notebook's choices; the upgrades add explicit alternatives.
+
+data:
+  # Chicago Data Portal (Socrata) datasets.  Query parameters are recorded in
+  # data/raw/provenance.json at download time.
+  datasets:
+    cameras:
+      dataset_id: "4i42-qv3h"
+      select: null
+      where: null
+    crashes:
+      dataset_id: "85ca-t3if"
+      select: >-
+        crash_record_id,crash_date,latitude,longitude,injuries_total,
+        injuries_fatal,injuries_incapacitating,posted_speed_limit,
+        crash_type,first_crash_type,num_units,report_type
+      # Crashes are available from 2013-03; starting at 2013-03 lets the
+      # earlier cameras be used in sensitivity analyses.
+      where: "crash_date >= '2013-03-01T00:00:00'"
+    violations:
+      dataset_id: "hhkd-xvj4"
+      select: "camera_id,violation_date,violations"
+      where: null
+
+  # Observed period. The portal's crash table only has reliable coverage from
+  # 2015 (2013-2014 contain a handful of records); the coverage guard in
+  # chicago_cameras.cleaning drops any leading month below 10% of the median.
+  start_month: "2015-01-01"
+  reporting_lag_months: 2
+
+  # Plausible City of Chicago land area (WGS84). Points outside are dropped and
+  # counted in the data-quality report. This removes suburban crashes filed in
+  # the Chicago dataset as well as malformed coordinates.
+  bbox:
+    lat_min: 41.60
+    lat_max: 42.06
+    lon_min: -87.95
+    lon_max: -87.50
+
+spatial:
+  # EPSG:26916 = NAD83 / UTM zone 16N, metres. Chicago lies inside this zone,
+  # so planar distances are accurate to a few parts per million. The original
+  # notebook used a flat lon/lat approximation; see docs/AUDIT.md.
+  crs_epsg: 26916
+
+  # Treatment catchment: a crash is "near" a camera if its reported coordinate
+  # is within radius_m of the camera's reported coordinate.
+  radius_m: 250                # baseline (original notebook)
+  radius_sensitivity_m: [150, 250, 400]
+
+  # No comparison site may be closer than this to any camera. Must exceed
+  # 2 * radius_m so treated and comparison catchments cannot overlap.
+  buffer_m: 600                # baseline (original notebook)
+  buffer_sensitivity_m: [500, 600, 800]
+
+  # Spacing of the candidate comparison-site lattice.
+  grid_m: 500                  # baseline (original notebook)
+  grid_offset_m: 0             # lattice phase; robustness checks shift this
+  grid_phase_sensitivity_m: [125, 250, 375]
+
+  # A lattice point is only a plausible comparison site if it has at least this
+  # many crashes in the observed period ...
+  min_control_crashes: 100     # baseline (original notebook)
+  # ... and at least this share of observed months with >=1 crash, which
+  # screens out parking lots, empty land and one-off pile-ups.
+  min_active_month_share: 0.40
+
+  # Comparison sites must lie within this distance of the camera they match.
+  # The original README declares 1,000 m but the original code never applied the
+  # restriction (it matched against the whole city). 2,000 m is the primary local
+  # design here because a 600 m exclusion buffer plus a 1,000 m cap leaves too few
+  # eligible comparison sites; 1,000 m and citywide matching are reported as
+  # sensitivity analyses in docs/AUDIT.md.
+  max_match_distance_m: 2000
+  max_match_distance_sensitivity_m: [1000, 2000, 5000]
+
+design:
+  # Event window, in months relative to the camera go-live month (0 = post).
+  pre_months: 24               # baseline (original notebook)
+  post_months: 36              # baseline (original notebook)
+  pre_post_sensitivity: [[12, 36], [24, 24], [24, 48]]
+
+  n_controls: 5                # baseline (original notebook)
+  n_controls_sensitivity: [3, 5, 10]
+
+  # 0 = the go-live month is the first post month (original notebook).
+  # 1 = the first full month after go-live is the first post month.
+  treatment_month_offset: 0
+  treatment_month_offset_sensitivity: [0, 1]
+
+  # Chicago issued 30-day warnings before enforcement began. The portal's
+  # go_live_date is treated as the enforcement date; this setting lets the
+  # analysis exclude the first N days as a sensitivity check.
+  warning_days: 0
+
+  # Cameras whose 250 m catchments overlap are not independent experiments.
+  #   drop_later : keep the earliest camera in each overlap cluster
+  #   keep_all   : retain every camera (original notebook behaviour)
+  overlap_rule: "drop_later"
+  overlap_rule_sensitivity: ["drop_later", "keep_all"]
+
+  # Minimum pre-period observations required for a camera to be included.
+  min_pre_months: 24
+
+inference:
+  cluster: "stack"
+  alpha: 0.05
+  n_bootstrap: 999
+  wild_bootstrap_reps: 999
+  seed: 20261024
+
+synthetic_control:
+  n_placebo: 200
+  max_donors: 100
+  min_pre_fit_r2: 0.50        # below this, report the fit as inadequate
+  in_time_placebo_offsets_months: [-24, -12]
+  top_weighted_donors_loo: 5
+
+robustness:
+  covid_exclusion_months: ["2020-03-01", "2021-12-01"]
+  placebo_treatment_offsets_months: [-24, -12]
+  n_geographic_placebos: 200
+  run_radius: true
+  run_buffer: true
+  run_n_controls: true
+  run_match_distance: true
+  run_horizon: true
+  run_covid: true
+  run_injury: true
+  run_placebo_dates: true
+  run_placebo_geography: true
+  run_grid_offset: true
+  run_overlap: true
+  run_cohort_era: true
+
+paths:
+  raw: "data/raw"
+  processed: "data/processed"
+  results: "results"
+  figures: "results/figures"
+  tables: "results/tables"
