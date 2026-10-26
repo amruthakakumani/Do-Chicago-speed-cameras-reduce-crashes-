@@ -38,7 +38,8 @@ deployed or published.
 
 ### Deliverables
 
-- `paper/chicago_speed_cameras_research.md` / `.pdf` (22 pages) / `.docx`
+- `paper/chicago_speed_cameras_research.md` / `.pdf` (21 pages) / `.docx` (21 pages when rendered)
+- Cover, author-information page, automatic TOC, running headers and body page numbers
 - 11 figures in `paper/figures/` (PNG + SVG)
 - `paper/bottom_up_reconstruction.md`
 - Updated README, model cards, methodology documents and LinkedIn drafts
@@ -54,5 +55,6 @@ deployed or published.
 - No license is declared; no affiliation or peer-review status is asserted.
 - No DOI, release, deployment or publication is created.
 
-Do not publish until both co-authors approve the final wording and explicit
-authorization is given.
+Author release approval recorded 2026-10-27. No license is added; affiliations
+are withheld by author decision. Dashboard deployment and LinkedIn publication
+remain separate.

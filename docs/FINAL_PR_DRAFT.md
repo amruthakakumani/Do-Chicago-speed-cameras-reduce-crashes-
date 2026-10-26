@@ -37,7 +37,7 @@ Final co-authored research release: Chicago speed cameras, causal sensitivity an
 - [x] Statistics checked against saved artifacts.
 - [x] 13 DOI records checked through Crossref; external URLs checked.
 - [x] 11 figures generated from saved data.
-- [x] 22-page PDF, DOCX and Markdown generated from one source.
+- [x] 21-page PDF and 21-page DOCX with cover, author page, TOC, headers and page numbers.
 - [x] README, model cards, methodology and LinkedIn drafts aligned.
 - [x] Seven dashboard pages and overlay tested.
 - [x] 63 tests pass; `ruff` clean.

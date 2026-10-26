@@ -17,4 +17,6 @@ artifacts and cleaned data. PNG is 300 dpi; SVG is vector.
 | `fig10_model_comparison` | `results/bottom_up/coverage_model/common_metrics.csv` | V1/V2/coverage-consistent models on common test rows |
 | `fig11_road_intervals` | `results/bottom_up/road_model/road_metrics.json` | Road-segment interval coverage by risk decile |
 
+The cover also uses `cover_street_grid.png`, an abstract crop of the actual TIGER road network; it is not a research-results figure.
+
 No fabricated distributions or illustrative values are used.

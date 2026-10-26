@@ -38,6 +38,8 @@ The closest recent quasi-experimental comparison is New York City. Stagoff-Belfo
 
 Methodologically, Bertrand, Duflo and Mullainathan (2004) show that naive standard errors are understated under serial correlation. Goodman-Bacon (2021) and de Chaisemartin and D'Haultfœuille (2020) show that two-way fixed-effects estimands can place negative weights on staggered 2×2 comparisons; Callaway and Sant'Anna (2021) and Sun and Abraham (2021) provide group-time and event-study alternatives. Abadie, Diamond and Hainmueller (2010) develop synthetic control; Cameron, Gelbach and Miller (2008) provide small-cluster bootstrap inference; Barnett (2005) and Hauer (1997) document regression to the mean.
 
+**Table 1. Comparison with prior studies.**
+
 | Study | Geography | Period | Outcome | Design | Estimated effect |
 |---|---|---|---|---|---|
 | Tilahun (2023) | Chicago | 2015–2017 | Fatal/injury; fatal/severe | Empirical Bayes, 101 locations | −12% fatal/injury; −15% fatal/severe |
@@ -55,12 +57,14 @@ All data are public: crashes from the Chicago Data Portal *Traffic Crashes – C
 
 The cleaned crash table contains 1,080,998 records from 2015-09 to 2026-08. The portal has only 476 records in 2015-01…08 and 8 in 2013–14; those months are missing, not observed zeros. The last two source months are excluded because reports are still arriving. The coverage guard removes sparse leading months, but it does **not** make 2015-09…2017-08 citywide: the portal states that E-Crash data are available for some districts in 2015 and citywide coverage begins in September 2017. The publication causal panel begins in 2015-09, the V1/V2 forecast target begins in 2017-01, and the coverage-consistent reconstruction uses 2017-09 history and 2018-01 targets. These are different samples and are not interchangeable.
 
+**Table 2. Reporting-regime diagnostic.**
+
 | Period | Mean monthly crashes | Mean injury share |
 |---|---:|---:|
 | 2016-09…2017-08 | 5,382 | 7.7% |
 | 2017-09…2018-08 | 9,817 | 14.1% |
 
-The break is shown in Figure 9, placed with the forecasting figures.
+Figure 9 shows the break.
 
 The outcome is reported crashes within 250 m of a location in a calendar month, not crashes per vehicle-mile. The public AADT extract begins in July 2022, not October 2020, and contains 2,525 segments and 83,232 segment-months; 1,454 distinct 2024 road segments match within 50 m. It cannot supply a historical 2017–2021 denominator, and its camera-derived counts are not exogenous. Traffic volume is therefore excluded from the forecasting model and the causal estimand.
 
@@ -76,19 +80,17 @@ The estimand is the average effect of camera enforcement on reported crashes per
 
 The last assumption is the weakest. Cameras are placed where crashes were high, so regression to the mean remains a threat even after matching on pre-period level and slope. Placebo go-live dates and geographic placebos test for some forms of this bias but cannot eliminate it.
 
-The design proceeds in five steps.
-
 1. **Catchments.** A camera's catchment is a 250 m radius around its reported coordinate.
 2. **Comparison sites.** A 500 m lattice is screened for ≥100 crashes and ≥40% active months, at least 600 m from every camera (more than twice the treatment radius).
-3. **Matching.** Each camera gets five sites within 2,000 m, matched on pre-period level and slope in its own pre-window. The 1,000 m alternative leaves only 11 of 33 cameras with five controls; citywide matching reproduces the original behavior.
+3. **Matching.** Each camera gets five sites within 2,000 m, matched on pre-period level and slope in its own pre-window. The 1,000 m alternative leaves 11 of 33 cameras with five controls; citywide matching reproduces the original.
 4. **Overlap.** A camera overlapping an already-live camera is removed: 34,222 crashes (36.3%) fall inside two or more catchments. The primary design drops 13 of 33 eligible cameras.
 5. **Event time.** The panel runs from 24 months before to 35 months after go-live. The go-live month is month 0.
 
-The replication sample has 33 cameras and 11,880 panel rows; the primary sample has 20 cameras and 7,200 rows. Pre-period balance is good: standardized mean difference in crash level 0.14; differential pre-trend +0.007 crashes/site-month per month (95% CI −0.022 to +0.036; p = 0.62).
+The replication sample has 33 cameras and 11,880 rows; the primary sample has 20 cameras and 7,200. Pre-period balance is good: standardized mean difference in crash level 0.14; differential pre-trend +0.007 crashes/site-month per month (95% CI −0.022 to +0.036; p = 0.62).
 
 ### 4.6 Coverage-consistent design
 
-Because the publication pre-period straddles the reporting transition, we also require all 24 pre-months and 36 post-months to fall after 2017-09. This leaves **15 cameras** (go-live 2021-07…2023-07) and 5,400 panel rows. The design is otherwise the same local 2,000 m, overlap-removed specification. It is a new estimand on a much smaller cohort, not a replication of the 20-camera estimate. A 12-month pre-period extension yields 16 cameras; a 24-month post-period yields 18. The joint pre-trend p-value is 0.855, and the geographic placebo one-sided p-value is 0.25.
+Because the publication pre-period straddles the transition, we require all 24 pre-months and 36 post-months to fall after 2017-09. This leaves **15 cameras** (go-live 2021-07…2023-07) and 5,400 panel rows. Otherwise the design is the same local 2,000 m, overlap-removed specification. It is a new estimand, not a replication of the 20-camera estimate. A 12-month pre-period yields 16 cameras; a 24-month post-period yields 18. Joint pre-trend p = 0.855; geographic placebo p = 0.25.
 
 ### What changed between the original and revised estimates
 
@@ -100,7 +102,7 @@ The original README required comparison sites within 1,000 m, but the code selec
 
 Distances are computed in NAD83 / UTM zone 16N (EPSG:26916), with validation against great-circle distances. All site-months are retained, including genuine zeros. A crash is counted at most once per site; repeated attribution across overlapping camera catchments is measured and removed from the primary sample.
 
-The 500 m lattice is a proxy for road exposure. It is not a road network. Candidate sites are screened by crash volume and active-month share, and the analysis reports posted-speed-limit balance (both camera and comparison catchments have a median of 30 mph). The lattice phase is arbitrary; the primary estimate ranges from −3.07% to −1.20% across four phases, while the citywide replication ranges from about −5.0% to −8.5%. Local matching is less phase-sensitive, which is one reason it is preferred.
+The 500 m lattice is a proxy for road exposure, not a road network. Candidate sites are screened by crash volume and active-month share, and the analysis reports posted-speed-limit balance (both camera and comparison catchments have a median of 30 mph). The lattice phase is arbitrary; the primary estimate ranges from −3.07% to −1.20% across four phases, while the citywide replication ranges from about −5.0% to −8.5%. Local matching is less phase-sensitive, which is one reason it is preferred.
 
 ![Camera and comparison locations](figures/fig1_study_map.png)
 
@@ -164,6 +166,8 @@ Applying the corrected projection to the same 33-camera sample gives −8.58% [�
 
 ### 7.2 Primary estimates
 
+**Table 3. Causal estimates under the primary design.**
+
 | Estimator | Effect | 95% CI | p |
 |---|---:|---:|---:|
 | Naive before/after | +4.7% | — | — |
@@ -199,6 +203,8 @@ The synthetic control for the 2023-03 cohort has pre-period R² 0.742 and pre-RM
 ---
 
 ## 8. Robustness and sensitivity analysis
+
+**Table 4. Causal-sensitivity specifications.**
 
 | Specification | Cameras | Effect (%) | 95% CI | p |
 |---|---:|---:|---|---:|
@@ -255,6 +261,8 @@ A separate road-segment task uses 73,088 TIGER/Line 2024 segments; the modelling
 
 ### 10.1 V1 versus V2
 
+**Table 5. V1 and V2 retrospective test performance.**
+
 | Metric | V1 (deployed) | V2 candidate |
 |---|---:|---:|
 | Test MAE | 1.5683 | **1.5642** |
@@ -274,7 +282,7 @@ V2 improves validation deviance by only 0.24%, below the pre-declared 1% rule, a
 
 ### 10.2 Calibration and intervals
 
-The model over-predicts zero-crash months and under-predicts high-crash months. V1's top actual-crash decile has mean actual 10.99 and mean predicted 9.02; the coverage-tuned model has mean predicted 9.02 and MAE 2.922 (V1 2.897). Zero-crash MAE is 1.72 for V1 and 1.745 for coverage-tuned.
+It over-predicts zero months and under-predicts high-crash months. V1's top actual-crash decile has mean actual 10.99 and mean predicted 9.02; the coverage-tuned model has mean predicted 9.02 and MAE 2.922 (V1 2.897). Zero-crash MAE is 1.72 for V1 and 1.745 for coverage-tuned.
 
 Split-conformal intervals use the scale-normalised score \(|y-\mu|/\sqrt{\mu+1}\), calibrated on out-of-fold rolling predictions. V1 coverage is **90.6%** overall, 90.1% at camera sites and 90.7% at comparison sites; the highest-risk decile is **84.8%**. Coverage-tuned coverage is 90.4% overall and 84.9% in the highest decile. Intervals are approximate and not causal confidence intervals.
 
@@ -293,6 +301,8 @@ Split-conformal intervals use the scale-normalised score \(|y-\mu|/\sqrt{\mu+1}\
 ### 10.3 Coverage-consistent comparison
 
 The coverage-tuned model (78 features, 8 Optuna trials) reaches test MAE 1.5775 and deviance 1.2162 on the same 15,912 common rows, versus V1 1.5860 and 1.2242. Its validation deviance 1.2165 is 0.48% better than coverage V1—below the 1% rule. The paired spatial-block bootstrap deviance difference is −0.0080 [−0.0114, −0.0043]. It is slightly worse than coverage V1 on the geographic holdout (1.2267 vs 1.2257), so it is not deployed.
+
+**Table 6. Common-row model comparison.**
 
 | Common test model | MAE | Deviance | Bias | R² |
 |---|---:|---:|---:|---:|

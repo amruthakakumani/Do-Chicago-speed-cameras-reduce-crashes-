@@ -2,8 +2,8 @@
 
 **Branch:** `publication/final-review`
 **Date:** 2026-10-27
-**Status:** final internal review complete; all changes uncommitted.
-**Decision:** **READY FOR CO-AUTHOR REVIEW — NOT READY FOR PUBLIC RELEASE.**
+**Status:** release approval recorded 2026-10-27; final commit and push authorized.
+**Decision:** **APPROVED FOR PUBLIC GITHUB RELEASE.**
 
 This audit supersedes the earlier pre-bottom-up readiness record. The original
 notebook, V1/V2 models, original results and authorship records are preserved.
@@ -17,10 +17,21 @@ notebook, V1/V2 models, original results and authorship records are preserved.
 | Markdown source | `paper/chicago_speed_cameras_research.md` |
 | Body words excluding references/appendices | **4,997** |
 | Total words including references/appendices | 5,613 |
-| PDF | **22 pages** |
-| DOCX | **11 inline images; 6 tables; 204 paragraphs** |
+| PDF | **21 pages** |
+| DOCX | **11 research images + cover graphic; 6 tables; 21 pages when rendered** |
 | Figures | **11 PNG + 11 SVG** |
 | Figure generator | `scripts/make_publication_figures.py` |
+| Document generator | `scripts/build_publication_docs.py` |
+| Cover graphic | `paper/figures/cover_street_grid.png` (actual Chicago road crop) |
+| PDF TOC | 16 internal links; 23 PDF bookmarks |
+| DOCX TOC | populated 16-entry field; `updateFields` enabled |
+| Front matter | PDF pages 1–3: cover, author information, contents |
+| Body numbering | PDF and DOCX body pages 1–18; front matter unnumbered |
+| Figure captions | 11 figures, full text width, captions attached |
+| Equation check | Display and inline LaTeX converted to native equations |
+| Table captions | Six tables carry explicit Table 1–6 labels |
+| Front-matter layout | Cover, author page and contents are separate pages |
+| DOCX render | 21 pages; cover/author/TOC/body checked through LibreOffice |
 | Tables | V1/V2, common model comparison, coverage regime, sensitivity, causal, etc. |
 | Original 21-page paper | Preserved on `publication/research-release`; final-review version is a new file revision |
 | Original notebook | Zero diff at repository root |
@@ -99,6 +110,8 @@ reported with its wide interval, small sample and placebo distribution.
 
 All figures are generated from saved artifacts by
 `scripts/make_publication_figures.py`; PNG is 300 dpi and SVG is vector.
+The document build is reproducible with `scripts/build_publication_docs.py`
+(cover graphic: `scripts/make_cover_graphic.py`).
 
 | Figure | Purpose |
 |---|---|
@@ -142,8 +155,10 @@ figure-number order; it is referenced in Section 3.
 | `ruff check` | clean |
 | Local Markdown links/images | no missing links |
 | `CITATION.cff` | valid YAML |
-| PDF | 22 pages, no build error |
-| DOCX | opens; 11 images, 6 tables |
+| PDF | 21 pages; front matter + body; no blank page |
+| DOCX | opens; 21 pages; cover/author/TOC/body; 12 images, 6 tables; populated TOC field |
+| Blank pages | none in the 21-page PDF or 21-page DOCX render |
+| TOC page numbers | verified against rendered pages in both formats |
 | Git diff whitespace | clean |
 | Credentials/large raw data | none found; `data/` gitignored |
 | Dashboard | seven pages + overlay; HTTP 200 |
@@ -174,33 +189,30 @@ deployment claims.
 
 ---
 
-## 8. Author approvals required
+## 8. Author approvals
 
-- [ ] Saketh Donepudi and Amrutha Kakumani approve the final manuscript wording.
-- [ ] Affiliations are verified and added.
-- [ ] CRediT/individual contribution wording is confirmed in
-      `docs/AUTHOR_CONTRIBUTIONS.md`.
-- [ ] Both co-authors approve the LinkedIn article and launch-package wording.
-- [ ] Both co-authors approve any dashboard deployment and verified URL.
-- [ ] License decision is made; no license is currently declared.
-- [ ] Explicit authorization is given before commit, push, merge, release or
-      publication.
+- [x] Final manuscript and author order approved for release.
+- [x] Affiliations withheld by author decision; no university affiliation asserted.
+- [x] CRediT/contribution wording approved in `docs/AUTHOR_CONTRIBUTIONS.md`.
+- [x] No license is added; upstream license status remains unchanged.
+- [x] Explicit authorization recorded for commit and push to `main`.
+- [ ] Dashboard deployment remains separate; no live URL is asserted.
+- [ ] LinkedIn publication remains separate from this repository push.
 
-No affiliation, credential, peer-review status, DOI, release or live dashboard
-URL is asserted.
+No credential, peer-review status, DOI or live dashboard URL is asserted.
 
 ---
 
 ## 9. Release readiness
 
-**READY FOR CO-AUTHOR REVIEW. NOT READY FOR PUBLIC RELEASE.**
+**APPROVED FOR PUBLIC GITHUB RELEASE.**
 
 The scientific, software, manuscript, figure, citation and dashboard checks pass.
-Publication is blocked only on author approvals, affiliation/contribution
-confirmation, license decision and explicit release authorization.
+Affiliations are withheld by author decision; no license is added. Dashboard
+deployment and LinkedIn publication remain separate.
 
-**Repository state:** `publication/final-review`; all changes uncommitted. No
-commit, push, merge, deployment, release or publication was performed.
+**Repository state:** `publication/final-review`; final formatting changes are
+included in the authorized release commit. No force-push is used.
 
 ---
 

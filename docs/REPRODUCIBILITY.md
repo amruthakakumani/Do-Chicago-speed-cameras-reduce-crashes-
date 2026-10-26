@@ -207,3 +207,21 @@ notebook is preserved untouched at the repository root.
 - The downloader honours HTTP 429 with `Retry-After`; a very aggressive schedule can still be
   throttled, in which case rerun after a few minutes. Partial raw files are never written: the file
   is written only after a complete download.
+
+
+---
+
+## Formatted paper build
+
+The scientific Markdown source remains `paper/chicago_speed_cameras_research.md`.
+The PDF/DOCX front matter is generated without editing that source:
+
+```bash
+python scripts/make_cover_graphic.py
+python scripts/build_publication_docs.py
+```
+
+Requirements: Pandoc 3.12, Typst 0.15, LibreOffice/`soffice` for the DOCX preview,
+`python-docx` and `pypdf`. The script creates a temporary `paper/build/` body,
+applies the cover/author/TOC template, compiles the PDF, post-processes the DOCX
+with a Word TOC field and sectioned page numbering, and validates the result.

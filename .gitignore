@@ -25,3 +25,6 @@ data/interim/
 # Keep generated research artefacts (results/figures, results/tables) tracked,
 # but ignore caches produced while running the pipeline.
 results/cache/
+
+# Generated paper build intermediates
+paper/build/

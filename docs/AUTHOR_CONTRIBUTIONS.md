@@ -2,9 +2,8 @@
 
 **Co-authors:** Saketh Donepudi and Amrutha Kakumani.
 
-**Status:** contribution wording requires approval from both co-authors before
-publication. Affiliations are intentionally omitted because they have not been
-independently verified for this release.
+**Status:** release approval recorded 2026-10-27. Affiliations are withheld by
+author decision for this release.
 
 ## Original work
 
@@ -13,16 +12,16 @@ Amrutha Kakumani and earlier contributors. The original notebook is preserved
 unchanged at the repository root. This release builds on that work and does not
 claim authorship of it.
 
-## Proposed contribution statement (pending confirmation)
+## Approved contribution statement
 
 | Area | Proposed lead | Status |
 |---|---|---|
 | Original study conception and notebook | Amrutha Kakumani and earlier contributors | Confirmed by repository history |
-| Causal audit, design corrections and sensitivity analysis | Saketh Donepudi | Pending co-author confirmation |
-| V1/V2 forecasting system, intervals and dashboard | Saketh Donepudi | Pending co-author confirmation |
-| Manuscript, figures and public release | Both co-authors | Pending co-author confirmation |
+| Causal audit, design corrections and sensitivity analysis | Saketh Donepudi | Approved for release |
+| V1/V2 forecasting system, intervals and dashboard | Saketh Donepudi | Approved for release |
+| Manuscript, figures and public release | Both co-authors | Approved for release |
 
-Suggested CRediT roles (to be confirmed, not yet asserted):
+CRediT roles approved for this release:
 
 - Conceptualization: both co-authors
 - Methodology: both co-authors
@@ -35,5 +34,5 @@ Suggested CRediT roles (to be confirmed, not yet asserted):
 - Visualization: Saketh Donepudi
 - Supervision: Amrutha Kakumani
 
-No individual contribution is invented or asserted as final in this document.
-Both co-authors should edit and approve this file before a public release.
+No individual contribution is invented in this document. Affiliations remain
+withheld; no university affiliation is asserted.

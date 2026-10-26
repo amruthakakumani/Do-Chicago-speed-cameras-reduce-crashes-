@@ -144,8 +144,10 @@ confidence intervals.
 The paper reports the causal design, the exact replication, the stepwise design
 changes, the event study, the synthetic control, the September 2017 reporting
 boundary, the coverage-consistent sensitivity, the forecasting system, the
-conformal intervals, the separate road task and the limitations. It is a working
-paper, not peer-reviewed, and no institutional endorsement is claimed.
+conformal intervals, the separate road task and the limitations. The PDF/DOCX
+exports include a cover, author-information page, automatic table of contents,
+running headers and page numbers. It is a working paper, not peer-reviewed, and
+no institutional endorsement is claimed.
 
 ---
 
@@ -175,6 +177,10 @@ python -m chicago_cameras.ml.coverage_dataset
 python -m chicago_cameras.ml.reconstruction
 python -m chicago_cameras.ml.tune_coverage
 python -m chicago_cameras.ml.road_model
+
+# formatted paper exports
+python scripts/make_cover_graphic.py
+python scripts/build_publication_docs.py
 
 # tests and dashboard
 python -m pytest -q
@@ -246,10 +252,9 @@ The repository builds on the original study, notebook and README created by
 Amrutha Kakumani and earlier contributors; the original notebook is preserved
 unchanged.
 
-Affiliations are not asserted here because they have not been independently
-verified for this release. Individual contribution roles (for example, CRediT)
-require confirmation from both co-authors before publication; see
-`docs/AUTHOR_CONTRIBUTIONS.md`.
+Affiliations are withheld by author decision for this release. Individual
+contribution and CRediT wording is recorded in `docs/AUTHOR_CONTRIBUTIONS.md`
+and approved for release.
 
 ---
 
