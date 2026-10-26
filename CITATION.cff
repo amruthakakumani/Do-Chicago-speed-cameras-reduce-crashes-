@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it using the metadata below."
+title: "Do Speed Cameras Make Chicago Safer? A Geospatial Causal Inference and Machine Learning Study"
+abstract: >-
+  A reproducible study of Chicago's automated speed enforcement program using
+  matched difference-in-differences, conditional Poisson fixed effects, event
+  studies, synthetic control and placebo tests, together with a separate
+  LightGBM crash forecasting system with conformal prediction intervals.
+authors:
+  - family-names: Donepudi
+    given-names: Saketh
+  - family-names: Kakumani
+    given-names: Amrutha
+version: "1.0.0"
+date-released: "2026-10-26"
+type: software
+repository-code: "https://github.com/amruthakakumani/Do-Chicago-speed-cameras-reduce-crashes-"
+url: "https://github.com/amruthakakumani/Do-Chicago-speed-cameras-reduce-crashes-"
+keywords:
+  - speed cameras
+  - road safety
+  - causal inference
+  - difference-in-differences
+  - synthetic control
+  - LightGBM
+  - conformal prediction
+  - Chicago

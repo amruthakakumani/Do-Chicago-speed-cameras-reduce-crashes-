@@ -1,0 +1,19 @@
+{
+  "all_total_crashes": 975033,
+  "months": {
+    "first": "2017-09-01",
+    "last": "2026-08-01",
+    "n": 108
+  },
+  "n_local_sampled": 12000,
+  "n_local_total": 69962,
+  "n_major_sampled": 3126,
+  "n_segments_sampled": 15126,
+  "n_segments_total": 73088,
+  "note": "All major segments plus a seeded random sample of local segments. The sample is not a citywide segment census; raw MAE is not comparable to the 250 m camera-zone task.",
+  "sample_crash_share": 0.23631815538551004,
+  "sample_fraction_all_segments": 0.20695599824868652,
+  "sample_fraction_local_segments": 0.17152168319945113,
+  "sample_total_crashes": 230418,
+  "zero_crash_segments_in_sample": 2440
+}

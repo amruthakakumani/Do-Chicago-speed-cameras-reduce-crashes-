@@ -9,7 +9,8 @@ stage. No Colab, Google Drive, or private credentials are required.
 
 - Python **3.11+**
 - ~2 GB free disk for raw and processed data
-- Internet access for the first download (analysis then runs offline)
+- Internet access for the first download and the Open-Meteo weather archive
+- macOS only: LightGBM needs the OpenMP runtime (`brew install libomp`)
 
 Dependencies are declared in `pyproject.toml` (runtime, `dev`, `dashboard` extras). They are not
 pinned to exact versions; the reference environment used Python 3.11.9 with pandas 2.3, numpy 2.x,
@@ -21,7 +22,7 @@ streamlit 1.66.
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -e ".[dev,dashboard]"
+pip install -e ".[dev,dashboard,ml]"
 ```
 
 ## 3. Get the data
@@ -59,8 +60,8 @@ Re-download and re-clean from scratch:
 python -m chicago_cameras.pipeline --refresh
 ```
 
-Runtime on a 2021 MacBook Pro (M1): download ≈ 5 min; cleaning/projection ≈ 40 s; analysis,
-placebos and figures ≈ 15–20 min. The processed Parquet cache is reused on subsequent runs unless
+Runtime on a 2021 MacBook Pro (M1): download ≈ 5 min; cleaning/projection ≈ 40 s; causal analysis,
+placebos and figures ≈ 4–20 min depending on placebo count; LightGBM tuning/evaluation ≈ 15–20 min. The processed Parquet cache is reused on subsequent runs unless
 `--refresh` is passed or the data fingerprint changes.
 
 ### Stages and caches
@@ -71,6 +72,54 @@ placebos and figures ≈ 15–20 min. The processed Parquet cache is reused on s
 | Cleaning / projection | `data/processed/*.parquet`, `quality_report.json` | Reused if config fingerprint matches |
 | Design / estimation | `results/*.json`, `results/tables/*.csv` | Recomputed each run |
 | Figures | `results/figures/*.png|svg` | Recomputed each run |
+
+## 4b. Train and evaluate the LightGBM forecaster
+
+The predictive layer is independent of the causal analysis and is optional for
+reproducing the causal results.
+
+```bash
+python scripts/train_lightgbm.py --trials 40 --timeout 900
+python scripts/evaluate_lightgbm.py
+python scripts/build_prediction_report.py
+```
+
+- The first command builds the location-month dataset, runs Optuna on
+  rolling-origin folds, refits on all pre-test months, evaluates once on the
+  untouched test period, computes SHAP values and writes `models/` and
+  `results/ml/`.
+- Runtime on the reference machine: ≈ 15 minutes for tuning (900 s budget) plus
+  ≈ 2 minutes for the final fit, predictions, SHAP and figures.
+- `--reuse-tuning` refits with saved hyperparameters; `--quick` runs five trials
+  for development. `--trials` and `--timeout` are explicit budgets.
+- The weather archive is cached at `data/raw/weather_daily.csv.gz` with
+  provenance. If it is unavailable, the weather features are dropped and the
+  limitation is recorded; no weather values are invented.
+- `scripts/evaluate_lightgbm.py` never retrains; it re-evaluates the saved model
+  and can be used to verify reproducibility.
+- `scripts/build_prediction_report.py` generates `docs/PREDICTION_RESULTS.md`
+  and fills the metrics tables in the model card and README from
+  `results/ml/metrics.json`.
+
+## 4c. V2 prediction, intervals and geographic validation
+
+```bash
+python scripts/train_lightgbm_v2.py --trials 40 --timeout 900
+python scripts/evaluate_recursive_v2.py
+```
+
+- Downloads US Census TIGER/Line 2024 EDGES for Cook and DuPage counties on
+  first use; raw archives and SHA-256 are stored in `data/raw/tiger/`.
+- Builds 84 features (V1 + road, neighbourhood, citywide, long-history and
+  climate normals), tunes on pre-test rolling folds only, evaluates the
+  retrospective test period, calibrates split-conformal intervals on out-of-fold
+  predictions, runs geographic block holdouts and writes `results/ml_v2/`.
+- Runtime on the reference machine: ≈ 25 minutes (tuning budget 900 s plus
+  folds, intervals, geographic models and SHAP).
+- `scripts/evaluate_recursive_v2.py` runs a genuine 12-month recursive path from
+  2025-08 and writes `results/ml_v2/recursive_metrics.json`.
+- The pre-declared selection rule is in `docs/V2_BASELINE_AUDIT.md`; V1 remains
+  deployed if V2 does not meet it.
 
 ## 5. Verify the original study
 
@@ -98,10 +147,16 @@ projection and citywide matching on purpose; it is an audit tool, not the upgrad
 python -m pytest -q
 ```
 
-39 tests cover distance/projection, counting zeros, duplicate attribution, overlap detection,
-cleaning and the coverage guard, panel completeness, matching eligibility and the camera-specific
-pre-window regression test, estimator recovery of known effects, synthetic-control exact recovery
-and poor-fit detection, and an end-to-end synthetic design.
+63 tests cover distance/projection, counting zeros, duplicate attribution, overlap detection,
+cleaning and the coverage guard, coverage-regime classification, panel completeness, matching
+eligibility and the camera-specific pre-window regression test, estimator recovery of known effects,
+synthetic-control exact recovery and poor-fit detection, an end-to-end synthetic design, exposure
+chronology, road assignment uniqueness/ambiguity, feature-group separation, and the ML layer
+(lag/rolling leakage, temporal splits, folds, schema checks, serialization, reproducible
+non-negative predictions),
+V2 temporal/road/neighbourhood features, geographic block isolation with a 1 km buffer, conformal
+interval endpoints and coverage, recursive forecasts that ignore future actuals, model-version
+compatibility and dashboard-artifact consistency.
 
 CI (`.github/workflows/tests.yml`) installs the package and runs the tests on every push and pull
 request. **CI does not download the crash dataset**, so it stays fast and offline-safe.

@@ -1,0 +1,20 @@
+{
+  "best_params": {
+    "bagging_fraction": 0.6483334484743057,
+    "bagging_freq": 2,
+    "feature_fraction": 0.7806608394378358,
+    "lambda_l1": 0.0018300906617137174,
+    "lambda_l2": 5.800250575286426e-05,
+    "learning_rate": 0.013122466677346024,
+    "max_depth": 8,
+    "min_child_samples": 93,
+    "num_leaves": 86
+  },
+  "best_value": 1.2164732727685486,
+  "budget": {
+    "n_trials": 8,
+    "timeout_seconds": 600
+  },
+  "n_trials": 8,
+  "runtime_seconds": 385.06
+}

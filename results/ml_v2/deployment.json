@@ -1,0 +1,50 @@
+{
+  "conformal_method": "normalized",
+  "interval_coverage_90": 0.9062115621156211,
+  "interval_mean_width_90": 5.86280728757521,
+  "model_file": "models/v1/lightgbm_crash_model.txt",
+  "model_version": "1.0.0",
+  "predictions_path": "results/ml/v1/predictions.parquet",
+  "retrospective_test": {
+    "note": "Retrospective only; this period was already examined in V1.",
+    "v1": {
+      "bias": 0.16303034667168714,
+      "mae": 1.5683310206830294,
+      "mape_pct_nonzero": 52.42243797609439,
+      "mean_actual": 3.769311193111931,
+      "mean_predicted": 3.9323415397836183,
+      "n": 16260,
+      "poisson_deviance": 1.2232660668852962,
+      "r2": 0.6610584895643361,
+      "relative_bias_pct": 4.325202625074048,
+      "rmse": 2.0930764012093506
+    },
+    "v2": {
+      "bias": 0.14397082570247668,
+      "mae": 1.5642288175999717,
+      "mape_pct_nonzero": 52.10399840540168,
+      "mean_actual": 3.769311193111931,
+      "mean_predicted": 3.9132820188144075,
+      "n": 16260,
+      "poisson_deviance": 1.2180600071543366,
+      "r2": 0.6624484771834807,
+      "relative_bias_pct": 3.819552653693601,
+      "rmse": 2.088780174408443
+    }
+  },
+  "selected_model": "v1",
+  "selection_rule": "deviance improvement >= 1% and MAE regression <= 2% on pre-test folds",
+  "test_predictions_path": "results/ml_v2/selected_predictions.parquet",
+  "validation": {
+    "relative_deviance_improvement": 0.0024333840170713827,
+    "relative_mae_change": 0.00020163910171588917,
+    "v1": {
+      "deviance": 1.222707070056508,
+      "mae": 1.592981718584758
+    },
+    "v2": {
+      "deviance": 1.2197317542146722,
+      "mae": 1.5933029259875433
+    }
+  }
+}

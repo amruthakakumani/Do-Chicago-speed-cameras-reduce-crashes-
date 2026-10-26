@@ -1,0 +1,9 @@
+{
+  "n_placebo": 100,
+  "placebo_did_pct_median": -5.917256513836722,
+  "placebo_did_pct_p05": -11.357154156687065,
+  "placebo_did_pct_p95": 1.446260293746979,
+  "p_one_sided_did": 0.25,
+  "placebo_cohort_median": -0.10387566137566145,
+  "p_one_sided_cohort": 0.55
+}

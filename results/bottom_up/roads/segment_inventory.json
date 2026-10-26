@@ -1,0 +1,21 @@
+{
+  "boundary": "Union of City of Chicago community areas (igwz-8jzy)",
+  "class_counts": {
+    "local": 69962,
+    "primary": 1377,
+    "secondary": 1749
+  },
+  "county_counts": {
+    "17031": 73076,
+    "17043": 12
+  },
+  "length_m": {
+    "median_m": 54.89370438827479,
+    "total_km": 6659.101550767781
+  },
+  "n_intersection_edges": 64771,
+  "n_major": 3126,
+  "n_segments": 73088,
+  "note": "2024 geometry is static; historical TIGER 2017 comparison is reported separately. Segment IDs are TIGER TLIDs.",
+  "source": "US Census TIGER/Line 2024 EDGES, Cook and DuPage counties"
+}

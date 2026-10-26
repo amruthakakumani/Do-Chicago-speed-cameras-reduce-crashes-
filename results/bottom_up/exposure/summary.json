@@ -1,0 +1,622 @@
+{
+  "actual_first_month": "2022-07-01",
+  "actual_last_month": "2026-10-01",
+  "camera_zone_coverage": {
+    "cameras_with_segment_within_1000m": 208,
+    "cameras_with_segment_within_250m": 199,
+    "n_cameras": 209,
+    "note": "UTM-like local approximation; coverage screen only, not an exposure merge.",
+    "share_with_segment_within_1000m": 0.9952153110047847,
+    "share_with_segment_within_250m": 0.9521531100478469
+  },
+  "coverage_by_month": [
+    {
+      "mean_adt": 10526.569059107358,
+      "median_adt": 10026.75,
+      "month": "2022-07-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 24625.64000000002,
+      "rows": 829,
+      "segments": 829,
+      "share_of_segments": 0.32831683168316833
+    },
+    {
+      "mean_adt": 10957.770185178419,
+      "median_adt": 10500.935483870968,
+      "month": "2022-08-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 24165.21419354831,
+      "rows": 1117,
+      "segments": 1117,
+      "share_of_segments": 0.4423762376237624
+    },
+    {
+      "mean_adt": 10739.54187651882,
+      "median_adt": 10071.7,
+      "month": "2022-09-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 24147.86666666667,
+      "rows": 1111,
+      "segments": 1111,
+      "share_of_segments": 0.44
+    },
+    {
+      "mean_adt": 10827.273595266688,
+      "median_adt": 10254.564516129032,
+      "month": "2022-10-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 23652.74193548387,
+      "rows": 1182,
+      "segments": 1182,
+      "share_of_segments": 0.46811881188118815
+    },
+    {
+      "mean_adt": 10937.219285906862,
+      "median_adt": 10400.6,
+      "month": "2022-11-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 24109.533333333333,
+      "rows": 1189,
+      "segments": 1189,
+      "share_of_segments": 0.47089108910891087
+    },
+    {
+      "mean_adt": 10111.795209415104,
+      "median_adt": 9634.258064516129,
+      "month": "2022-12-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 22477.83870967742,
+      "rows": 1238,
+      "segments": 1238,
+      "share_of_segments": 0.4902970297029703
+    },
+    {
+      "mean_adt": 9704.639649430013,
+      "median_adt": 9272.0,
+      "month": "2023-01-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 21862.738064516114,
+      "rows": 1243,
+      "segments": 1243,
+      "share_of_segments": 0.49227722772277227
+    },
+    {
+      "mean_adt": 9927.576358005292,
+      "median_adt": 9438.74074074074,
+      "month": "2023-02-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 22648.76518518521,
+      "rows": 1232,
+      "segments": 1232,
+      "share_of_segments": 0.4879207920792079
+    },
+    {
+      "mean_adt": 10247.587919767473,
+      "median_adt": 9765.258064516129,
+      "month": "2023-03-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 22347.666774193487,
+      "rows": 1264,
+      "segments": 1264,
+      "share_of_segments": 0.5005940594059406
+    },
+    {
+      "mean_adt": 10104.701083464473,
+      "median_adt": 9689.25,
+      "month": "2023-04-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 22494.653333333372,
+      "rows": 1286,
+      "segments": 1286,
+      "share_of_segments": 0.5093069306930693
+    },
+    {
+      "mean_adt": 10040.954838716383,
+      "median_adt": 9669.548387096775,
+      "month": "2023-05-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 21099.132258064525,
+      "rows": 1154,
+      "segments": 1154,
+      "share_of_segments": 0.45702970297029705
+    },
+    {
+      "mean_adt": 10088.687274310512,
+      "median_adt": 9701.033333333333,
+      "month": "2023-06-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 21546.100666666658,
+      "rows": 1163,
+      "segments": 1163,
+      "share_of_segments": 0.4605940594059406
+    },
+    {
+      "mean_adt": 9738.617209660464,
+      "median_adt": 9283.59677419355,
+      "month": "2023-07-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 21293.776774193546,
+      "rows": 1142,
+      "segments": 1142,
+      "share_of_segments": 0.4522772277227723
+    },
+    {
+      "mean_adt": 9875.336212022801,
+      "median_adt": 9426.951612903225,
+      "month": "2023-08-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 20472.217741935485,
+      "rows": 1202,
+      "segments": 1202,
+      "share_of_segments": 0.476039603960396
+    },
+    {
+      "mean_adt": 9724.931182356699,
+      "median_adt": 9166.733333333334,
+      "month": "2023-09-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 21128.01,
+      "rows": 1271,
+      "segments": 1271,
+      "share_of_segments": 0.5033663366336634
+    },
+    {
+      "mean_adt": 9475.735442426008,
+      "median_adt": 8964.290322580644,
+      "month": "2023-10-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 21033.76164874552,
+      "rows": 1326,
+      "segments": 1326,
+      "share_of_segments": 0.5251485148514852
+    },
+    {
+      "mean_adt": 8757.080143053652,
+      "median_adt": 8211.7,
+      "month": "2023-11-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 20192.109999999982,
+      "rows": 1247,
+      "segments": 1247,
+      "share_of_segments": 0.49386138613861386
+    },
+    {
+      "mean_adt": 8648.037231105009,
+      "median_adt": 8138.096774193548,
+      "month": "2023-12-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 19843.451612903224,
+      "rows": 1276,
+      "segments": 1276,
+      "share_of_segments": 0.5053465346534654
+    },
+    {
+      "mean_adt": 7839.840357122007,
+      "median_adt": 7428.241935483871,
+      "month": "2024-01-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 16913.67903225807,
+      "rows": 1306,
+      "segments": 1306,
+      "share_of_segments": 0.5172277227722772
+    },
+    {
+      "mean_adt": 8327.01389516058,
+      "median_adt": 7880.879310344828,
+      "month": "2024-02-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 17268.051379310346,
+      "rows": 1310,
+      "segments": 1310,
+      "share_of_segments": 0.5188118811881188
+    },
+    {
+      "mean_adt": 8930.645264936174,
+      "median_adt": 8268.516129032258,
+      "month": "2024-03-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 19978.169032258014,
+      "rows": 1339,
+      "segments": 1339,
+      "share_of_segments": 0.5302970297029703
+    },
+    {
+      "mean_adt": 9038.161250649904,
+      "median_adt": 8543.733333333334,
+      "month": "2024-04-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 20375.027692307696,
+      "rows": 1353,
+      "segments": 1353,
+      "share_of_segments": 0.5358415841584159
+    },
+    {
+      "mean_adt": 9517.238898480757,
+      "median_adt": 8879.967741935483,
+      "month": "2024-05-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 21630.314838709728,
+      "rows": 1385,
+      "segments": 1385,
+      "share_of_segments": 0.5485148514851486
+    },
+    {
+      "mean_adt": 9479.815381508432,
+      "median_adt": 8782.266666666666,
+      "month": "2024-06-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 21862.583999999988,
+      "rows": 1417,
+      "segments": 1417,
+      "share_of_segments": 0.5611881188118812
+    },
+    {
+      "mean_adt": 9311.350006273256,
+      "median_adt": 8660.983870967742,
+      "month": "2024-07-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 21551.185161290312,
+      "rows": 1424,
+      "segments": 1424,
+      "share_of_segments": 0.5639603960396039
+    },
+    {
+      "mean_adt": 9266.263694475601,
+      "median_adt": 8579.467741935485,
+      "month": "2024-08-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 21486.679032258067,
+      "rows": 1436,
+      "segments": 1436,
+      "share_of_segments": 0.5687128712871287
+    },
+    {
+      "mean_adt": 9308.469705682912,
+      "median_adt": 8597.8,
+      "month": "2024-09-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 21672.287666666667,
+      "rows": 1554,
+      "segments": 1554,
+      "share_of_segments": 0.6154455445544554
+    },
+    {
+      "mean_adt": 9161.438567668927,
+      "median_adt": 8523.451612903227,
+      "month": "2024-10-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 20873.752903225813,
+      "rows": 1658,
+      "segments": 1658,
+      "share_of_segments": 0.6566336633663367
+    },
+    {
+      "mean_adt": 9065.29133552848,
+      "median_adt": 8489.9,
+      "month": "2024-11-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 20592.579999999998,
+      "rows": 1649,
+      "segments": 1649,
+      "share_of_segments": 0.6530693069306931
+    },
+    {
+      "mean_adt": 8825.530204188219,
+      "median_adt": 8233.225806451614,
+      "month": "2024-12-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 20222.04387096771,
+      "rows": 1639,
+      "segments": 1639,
+      "share_of_segments": 0.6491089108910891
+    },
+    {
+      "mean_adt": 8097.095506483168,
+      "median_adt": 7529.612903225807,
+      "month": "2025-01-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 18478.076129032226,
+      "rows": 1637,
+      "segments": 1637,
+      "share_of_segments": 0.6483168316831683
+    },
+    {
+      "mean_adt": 8737.944988860425,
+      "median_adt": 8111.392857142857,
+      "month": "2025-02-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 20364.471428571425,
+      "rows": 1769,
+      "segments": 1769,
+      "share_of_segments": 0.7005940594059406
+    },
+    {
+      "mean_adt": 8902.899656612417,
+      "median_adt": 8424.444444444445,
+      "month": "2025-03-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 21141.069677419342,
+      "rows": 1848,
+      "segments": 1848,
+      "share_of_segments": 0.7318811881188119
+    },
+    {
+      "mean_adt": 9070.655941521893,
+      "median_adt": 8546.666666666666,
+      "month": "2025-04-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 20341.820000000003,
+      "rows": 1861,
+      "segments": 1861,
+      "share_of_segments": 0.737029702970297
+    },
+    {
+      "mean_adt": 9429.65099022033,
+      "median_adt": 8936.322580645161,
+      "month": "2025-05-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 21014.221290322606,
+      "rows": 1859,
+      "segments": 1859,
+      "share_of_segments": 0.7362376237623762
+    },
+    {
+      "mean_adt": 9406.67152044879,
+      "median_adt": 8868.5,
+      "month": "2025-06-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 20858.241666666672,
+      "rows": 1886,
+      "segments": 1886,
+      "share_of_segments": 0.7469306930693069
+    },
+    {
+      "mean_adt": 9187.689390249214,
+      "median_adt": 8570.129032258064,
+      "month": "2025-07-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 20453.82096774192,
+      "rows": 1894,
+      "segments": 1894,
+      "share_of_segments": 0.7500990099009901
+    },
+    {
+      "mean_adt": 9276.014877036829,
+      "median_adt": 8702.483870967742,
+      "month": "2025-08-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 20600.054193548367,
+      "rows": 1937,
+      "segments": 1937,
+      "share_of_segments": 0.7671287128712871
+    },
+    {
+      "mean_adt": 8684.236470376522,
+      "median_adt": 8203.206896551725,
+      "month": "2025-09-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 19478.022068965514,
+      "rows": 1947,
+      "segments": 1947,
+      "share_of_segments": 0.7710891089108911
+    },
+    {
+      "mean_adt": 4240.355809191712,
+      "median_adt": 3127.904761904762,
+      "month": "2025-10-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 15714.474,
+      "rows": 1923,
+      "segments": 1923,
+      "share_of_segments": 0.7615841584158416
+    },
+    {
+      "mean_adt": 7176.803890224351,
+      "median_adt": 6618.283333333333,
+      "month": "2025-11-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 17287.308333333334,
+      "rows": 2026,
+      "segments": 2026,
+      "share_of_segments": 0.8023762376237624
+    },
+    {
+      "mean_adt": 8515.732211850413,
+      "median_adt": 7991.967741935484,
+      "month": "2025-12-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 19212.021612903274,
+      "rows": 2098,
+      "segments": 2098,
+      "share_of_segments": 0.8308910891089109
+    },
+    {
+      "mean_adt": 8030.961437950891,
+      "median_adt": 7408.58064516129,
+      "month": "2026-01-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 19884.025161290338,
+      "rows": 2084,
+      "segments": 2084,
+      "share_of_segments": 0.8253465346534653
+    },
+    {
+      "mean_adt": 8177.3120071358235,
+      "median_adt": 7628.714285714286,
+      "month": "2026-02-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 18551.297857142843,
+      "rows": 1992,
+      "segments": 1992,
+      "share_of_segments": 0.788910891089109
+    },
+    {
+      "mean_adt": 8954.351942448642,
+      "median_adt": 8418.677419354839,
+      "month": "2026-03-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 20400.987096774137,
+      "rows": 2131,
+      "segments": 2131,
+      "share_of_segments": 0.8439603960396039
+    },
+    {
+      "mean_adt": 9059.81303497401,
+      "median_adt": 8480.133333333333,
+      "month": "2026-04-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 20130.947,
+      "rows": 2222,
+      "segments": 2222,
+      "share_of_segments": 0.88
+    },
+    {
+      "mean_adt": 9348.37168097779,
+      "median_adt": 8787.419354838708,
+      "month": "2026-05-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 20489.336129032265,
+      "rows": 2278,
+      "segments": 2278,
+      "share_of_segments": 0.9021782178217822
+    },
+    {
+      "mean_adt": 9304.508334124745,
+      "median_adt": 8601.766666666666,
+      "month": "2026-06-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 20476.149333333356,
+      "rows": 2265,
+      "segments": 2265,
+      "share_of_segments": 0.897029702970297
+    },
+    {
+      "mean_adt": 8911.029065402066,
+      "median_adt": 8213.5,
+      "month": "2026-07-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 19651.019666666663,
+      "rows": 2162,
+      "segments": 2162,
+      "share_of_segments": 0.8562376237623762
+    },
+    {
+      "mean_adt": 9009.112130883408,
+      "median_adt": 8330.612903225807,
+      "month": "2026-08-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 19737.932903225807,
+      "rows": 2147,
+      "segments": 2147,
+      "share_of_segments": 0.8502970297029703
+    },
+    {
+      "mean_adt": 9071.982444258316,
+      "median_adt": 8371.433333333334,
+      "month": "2026-09-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 20760.483333333315,
+      "rows": 2150,
+      "segments": 2150,
+      "share_of_segments": 0.8514851485148515
+    },
+    {
+      "mean_adt": 8777.447471897487,
+      "median_adt": 7925.634615384615,
+      "month": "2026-10-01 00:00:00",
+      "negative_or_zero": 0,
+      "over_100k": 0,
+      "p99_adt": 20781.39038461538,
+      "rows": 2174,
+      "segments": 2174,
+      "share_of_segments": 0.860990099009901
+    }
+  ],
+  "decision": {
+    "reason": "No AADT before July 2022; only 2,525 segments; camera-derived counts are operational measurements and may respond to enforcement; merging current values backward would leak future exposure.",
+    "use_in_final_forecast": false,
+    "what_would_be_needed": "A time-stamped, segment-stable historical count series covering the training period, ideally from an independent traffic-count program."
+  },
+  "mean_adt_quantiles": {
+    "max": 72215.0,
+    "p01": 1552.3187096774195,
+    "p50": 8476.262365591398,
+    "p99": 21091.83777777781
+  },
+  "months_observed_per_segment": {
+    "max": 52,
+    "min": 1,
+    "p50": 35.0,
+    "p95": 52.0
+  },
+  "n_months": 52,
+  "n_rows": 83232,
+  "n_segments": 2525,
+  "over_100k_rows": 0,
+  "portal_statement": "The portal description says data are available from October 2020 and that accuracy/consistency improve from May 2026. The current extract does not contain October 2020- June 2022 records.",
+  "quality_regime": {
+    "from_2026_05": {
+      "mean_adt": 9074.487227498968,
+      "rows": 13176,
+      "segments": 2357
+    },
+    "pre_2026_05": {
+      "mean_adt": 9058.853021907626,
+      "rows": 70056,
+      "segments": 2397
+    }
+  },
+  "source": "Chicago Data Portal Average Daily Traffic Counts (gc7y-n4xa)",
+  "zero_or_negative_rows": 0
+}

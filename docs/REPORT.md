@@ -93,10 +93,11 @@ The raw download is preserved as gzip CSV with the exact query, timestamps, row 
 checksums in `data/raw/provenance.json`. No private data, credentials or imputed observations are
 used. Data are not committed to git.
 
-**Coverage.** The crash table is effectively complete from 2015-09. 2015-01…08 contains 476 records
-and 2013–14 contains 8; those months are treated as missing, not as observed zeros. The last two
-calendar months are excluded because reports are still being entered. The analysis window is
-**2015-09 … 2026-08 (132 months)**.
+**Coverage.** The crash table is complete enough for a coverage guard from 2015-09, but it is **not
+citywide** until September 2017. 2015-01…08 contains 476 records and 2013–14 contains 8; those months
+are treated as missing, not observed zeros. The last two calendar months are excluded because reports
+are still being entered. The publication analysis window is **2015-09 … 2026-08 (132 months)**; the
+coverage-consistent sensitivity begins in 2017-09 and has 15 cameras.
 
 ## 5. Data preprocessing
 
@@ -141,7 +142,7 @@ original behaviour and is reported as a sensitivity).
 4. *No differential shocks.* Camera-by-month fixed effects absorb anything common to a camera and its
    comparison sites, including citywide traffic, seasonality and COVID-19.
 5. *No contamination from earlier cameras.* A camera whose catchment overlaps a camera that is
-   already live is excluded. Among all 209 cameras, 34,239 crashes (36% of attributed crashes) fall
+   already live is excluded. Among all 209 cameras, 34,222 crashes (36.3% of attributed crashes) fall
    inside two or more 250 m catchments, so this is not a cosmetic correction.
 6. *Camera siting is not driven by unobserved, time-varying local trends.* This is the weakest
    assumption. Regression to the mean remains a threat even after matching on pre-trends.
@@ -353,6 +354,31 @@ design choices. The synthetic control disagrees, the placebos are unremarkable, 
 is that the available public data cannot resolve whether Chicago's cameras reduced crashes by a
 policy-relevant amount.
 
+## Appendix A — Predictive layer (not causal)
+
+A separate LightGBM Poisson model forecasts monthly crash counts at 1,355
+crash-dense locations (157,180 location-months, 2017-01 … 2026-08, 44 features).
+It uses lagged history, calendar, holidays, lagged weather, static geography and
+camera operational status, with strict temporal validation and a locked test
+period (2025-09 … 2026-08). Performance, calibration, baselines and SHAP
+diagnostics are reported in `docs/PREDICTION_RESULTS.md`; the model card is
+`docs/MODEL_CARD.md`.
+
+V2 adds US Census TIGER road density and intersection features, neighbourhood
+crash history, citywide regime features, conformal prediction intervals,
+geographic block holdout validation and a recursive 12-month diagnostic. The
+pre-declared selection rule required a 1% validation-deviance improvement; V2
+achieved 0.24% and V1 therefore remains deployed. V2 is slightly better on the
+retrospective test (deviance 1.2181 vs 1.2233) and on geographic holdout
+(1.2189 vs 1.2328), but the differences are small. See
+`docs/V1_V2_COMPARISON.md` and `docs/PREDICTION_INTERVALS.md`.
+
+The model is **not** used to estimate the camera effect and its feature
+importance is **not** causal evidence. Camera operational status enters only as
+an observational predictor, and prediction errors are not interpreted as
+treatment effects. The causal conclusions in §8–§13 are therefore unaffected by
+the predictive layer.
+
 ## 14. References
 
 - Abadie, A., Diamond, A., & Hainmueller, J. (2010). Synthetic control methods for comparative case
@@ -402,7 +428,7 @@ pip install -e ".[dev,dashboard]"
 python scripts/download_data.py
 python -m chicago_cameras.pipeline --config config/analysis.yaml
 python scripts/verify_replication.py     # reproduces the original published estimates
-python -m pytest -q                      # 39 tests, no network
+python -m pytest -q                      # 63 tests, no network
 streamlit run dashboard/app.py           # reads precomputed results only
 ```
 
@@ -410,7 +436,7 @@ streamlit run dashboard/app.py           # reads precomputed results only
 
 - `results/estimates.json` — machine-readable results consumed by the dashboard and notebook.
 - `results/tables/*.csv` — every estimate, sensitivity, placebo and diagnostic.
-- `results/figures/*.png|svg` — ten publication figures.
+- `results/figures/*.png|svg` — causal figures; the final paper includes 11 figures in `paper/figures/`.
 - `results/analysis_panel.parquet` — the site-month panel.
 - `data/raw/provenance.json` — URLs, queries, timestamps, row counts, SHA-256.
 

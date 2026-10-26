@@ -171,7 +171,23 @@ Every variation is a declared change to `DesignConfig`:
 The headline result is **not** chosen from this table. It is the pre-specified primary design; the
 table shows how much it moves.
 
-## 9. Deviations from the original study
+## 9. Coverage-consistent design and separate road task
+
+The publication panel begins in 2015-09, but the portal is not citywide until
+September 2017. A coverage-consistent design requires 24 citywide pre-months and
+36 post-months, leaving 15 cameras (go-live 2021-07…2023-07) and 5,400 panel rows.
+It gives −8.6% [−16.9%, +0.4%], p = 0.061; cohort −0.075 [−0.773, +0.605]; pre-trend
+p = 0.855; geographic placebo p = 0.25. This is a different estimand and sample,
+not a replication of the 20-camera estimate.
+
+A separate road-segment task uses TIGER 2024 segments clipped to Chicago
+community areas: 73,088 segments; 15,126 sampled (all major + seeded local),
+1,633,608 segment-months. Crashes are assigned once within 30 m (99.26%), but
+34.0% are ambiguous (second segment within 5 m). It is predictive only. AADT is
+not used: the public series starts 2022-07, covers 2,525 segments, and cannot
+supply a historical 2017–2021 denominator.
+
+## 10. Deviations from the original study
 
 | Original | Upgrade | Why |
 |---|---|---|
@@ -184,7 +200,7 @@ table shows how much it moves.
 | Descriptive violations curve | Within-camera slope + caveats | Enforcement ≠ behaviour |
 | Placeholder README results | Validated numbers with CIs | Scientific integrity |
 
-## 10. Interpretation rules
+## 11. Interpretation rules
 
 1. A coefficient is a causal effect only under §5. The report states which assumption is most at
    risk for each result.

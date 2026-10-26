@@ -1,0 +1,15 @@
+{
+  "source": "TIGER/Line 2017 and 2024 EDGES, Cook and DuPage counties; clipped to City of Chicago community-area union",
+  "cook_2017_city_road_ids": 78914,
+  "cook_2024_city_road_ids": 73076,
+  "cook_overlap": 72281,
+  "cook_2017_only": 6633,
+  "cook_2024_only": 795,
+  "cook_2024_overlap_share": 0.9891209152115605,
+  "dupage_2017_city_road_ids": 22,
+  "dupage_2024_city_road_ids": 12,
+  "dupage_overlap": 10,
+  "dupage_2017_only": 12,
+  "dupage_2024_only": 2,
+  "note": "2024 geometry is not assumed to be a perfect 2017 historical map. Most 2024 Cook segments existed in 2017, but thousands of older segments are absent and boundary clipping differs."
+}

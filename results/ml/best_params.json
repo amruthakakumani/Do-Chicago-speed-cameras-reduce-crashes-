@@ -1,0 +1,21 @@
+{
+  "best_iterations": [
+    681,
+    1062,
+    779
+  ],
+  "best_value": 1.2229691563334386,
+  "n_trials": 40,
+  "params": {
+    "bagging_fraction": 0.7182930422556888,
+    "bagging_freq": 6,
+    "feature_fraction": 0.811822367396855,
+    "lambda_l1": 0.0013514359357022462,
+    "lambda_l2": 0.001758225153119952,
+    "learning_rate": 0.018014572230944128,
+    "max_depth": 10,
+    "min_child_samples": 45,
+    "num_leaves": 54
+  },
+  "runtime_seconds": 913.9705939292908
+}

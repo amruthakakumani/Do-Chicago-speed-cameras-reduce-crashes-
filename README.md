@@ -1,122 +1,151 @@
-# Do Chicago speed cameras reduce crashes?
+# Do Speed Cameras Make Chicago Safer?
 
-A reproducible causal-inference study of Chicago's speed-camera programme using public Chicago Data
-Portal data. The design compares crash counts within **250 m** of each camera with **matched Chicago
-locations that never had a camera**, before and after go-live.
+### A Geospatial Causal Inference and Machine Learning Study
 
-> **Status:** research upgrade of an existing collaborative project. Not peer reviewed. The original
-> notebook is preserved unchanged at the repository root; the upgraded analysis lives in
-> `src/chicago_cameras/` and `notebooks/research_analysis.ipynb`.
+**Saketh Donepudi and Amrutha Kakumani**
 
----
+*Working paper · October 2026 · Not peer reviewed*
 
-## Research objective
-
-Speed cameras are installed where crashes are already high, so a simple before/after comparison
-conflates the camera's effect with mean reversion and with city-wide changes such as COVID-19. This
-project estimates the **causal effect of a camera on reported crashes in its catchment**, using:
-
-- a stacked, matched difference-in-differences design (each camera is its own experiment);
-- local comparison sites with similar pre-period level and trend;
-- fixed effects that absorb every shock shared by a camera and its comparison sites;
-- a staggered-adoption-robust 2×2 estimator;
-- an event study, a synthetic control and a full placebo/sensitivity programme.
-
-**Estimand:** average effect on **reported crashes per catchment-month** for cameras going live in
-2018–2024 with a complete 24-month pre-period and 36-month post-period. This is **not** crashes per
-vehicle-mile; no exposure denominator is available.
+[Paper (PDF)](paper/chicago_speed_cameras_research.pdf) ·
+[Paper (Markdown)](paper/chicago_speed_cameras_research.md) ·
+[Paper (DOCX)](paper/chicago_speed_cameras_research.docx) ·
+[Final publication audit](docs/FINAL_PUBLICATION_AUDIT.md) ·
+[Bottom-up reconstruction](paper/bottom_up_reconstruction.md) ·
+[Reproducibility](docs/REPRODUCIBILITY.md)
 
 ---
 
-## Findings
+## Research question
 
-| Estimator | Effect | 95% interval | p | Cameras |
-|---|---|---|---|---|
-| **Primary — conditional Poisson FE** | **−2.6%** | **[−11.5%, +7.2%]** | 0.59 | 20 |
-| Negative Binomial (NB2), same design | −2.6% | [−11.5%, +7.2%] | 0.59 | 20 |
-| FE OLS (same design) | −0.07 crashes/site-month | [−0.49, +0.35] | 0.74 | 20 |
-| Cohort 2×2, camera bootstrap | −0.09 crashes/site-month | [−0.74, +0.52] | 0.79 | 20 |
-| Naive before/after (no controls) | +4.7% | — | — | 20 |
-| **Original specification, original sample** | **−7.3%** | **[−13.6%, −0.6%]** | 0.034 | 33 |
-| Original sample, corrected projection | −8.6% | [−14.7%, −2.1%] | 0.011 | 33 |
-| Synthetic control (largest cohort) | +4.2% | pseudo-p ≈ 0.50 | — | 7 |
+Do Chicago's automated speed cameras reduce crashes, and how sensitive is that
+answer to geographic matching, treatment timing and research design?
 
-**How to read this.** The original study's statistically significant −7% is reproducible from the
-saved notebook, but it is **not robust** to two defensible design changes: using local comparison
-sites instead of citywide matching, and removing cameras whose 250 m catchment overlaps a camera that
-is already live. With those changes the estimate is a wide, imprecise null: the data are consistent
-with a meaningful reduction, no effect, or a modest increase. The synthetic control has only a
-moderate pre-period fit and points in the opposite direction, so it does not corroborate a reduction.
+Speed cameras are installed where crashes are already high. A simple before/after
+comparison therefore confounds enforcement with regression to the mean, local
+trends and city-wide shocks such as COVID-19. This project estimates the effect
+using nearby matched comparison sites and reports how the answer changes when
+defensible design choices change.
 
-![Main estimates](results/figures/04_main_estimates.png)
-
-![Event study](results/figures/05_event_study.png)
+A second, deliberately separate analysis asks how accurately one LightGBM model
+can forecast monthly crash counts at crash-dense locations, and where that model
+fails. Forecasting is **not** used as causal evidence.
 
 ---
 
-## What the upgrade changes
+## Key findings
 
-The full audit is in [`docs/AUDIT.md`](docs/AUDIT.md). The main corrections:
+| Analysis | Estimate | Uncertainty | Sample |
+|---|---:|---|---:|
+| Original Poisson DiD (reproduced exactly) | **−7.3%** | 95% CI [−13.6%, −0.6%], p = 0.034 | 33 cameras |
+| Revised conditional Poisson FE | **−2.6%** | 95% CI [−11.5%, +7.2%], p = 0.59 | 20 cameras |
+| Cohort 2×2 | −0.095 crashes/site-month | 95% CI [−0.735, +0.520] | 20 cameras |
+| Synthetic control (2023 cohort) | +4.2% | pre-fit R² 0.742; pseudo-p 0.495 | 7 cameras |
+| Coverage-consistent 24/36 | **−8.6%** | 95% CI [−16.9%, +0.4%], p = 0.061; placebo p = 0.25 | 15 cameras |
+| V1 forecast, held-out test | MAE 1.568 / deviance 1.223 | — | 16,260 location-months |
+| V2 candidate, retrospective test | MAE 1.564 / deviance 1.218 | — | same rows |
+| Coverage-tuned common-row deviance | 1.216 | 0.65% better than V1; below 1% rule | 15,912 rows |
+| 90% conformal interval coverage | **90.6%** | 5.86 mean width; 84.8% in highest-risk decile | 16,260 rows |
 
-| Issue | Original | Upgrade |
-|---|---|---|
-| Distance projection | Flat lon/lat approximation | UTM zone 16N metres (EPSG:26916) |
-| Matching radius | README claims 1 km; code matched **citywide** | Explicit 2 km local matching; 1 km and citywide as sensitivity |
-| Overlapping camera catchments | Kept; 36% of attributed crashes fall in ≥2 catchments | Cameras overlapping an already-live camera are dropped; `keep_all` sensitivity |
-| Missing vs zero months | Sparse 2015 months treated as observed zeros | Coverage guard starts the window at 2015‑09 |
-| Staggered adoption | Pooled OLS/Poisson only | Conditional Poisson FE + per-camera 2×2 with bootstrap |
-| Inference | Cluster-robust SE with 33 clusters | Adds wild cluster bootstrap and placebo inference |
-| Severity | Injury data downloaded but unused | Injury and severe/fatal outcomes |
-| Mechanism | "Drivers adapted" from a descriptive curve | Within-camera slope with explicit non-causal caveats |
-| Reproducibility | Colab/Drive, no pins, no tests | Package, config, provenance, checksums, 39 tests, CI |
+**The central result is design sensitivity, not a new national effect size.**
+The original −7.3% is reproducible, but it depends on citywide matching that the
+documentation did not describe and on retaining overlapping camera catchments.
+With local 2,000 m matching and overlap removal, the estimate is −2.6% with a
+wide interval. A coverage-consistent design that requires 24 citywide pre-months
+and 36 post-months leaves only 15 cameras and gives −8.6% [−16.9%, +0.4%], but it
+is a different sample, not a direct replication. That interval includes both a meaningful reduction and a modest
+increase.
 
----
+> **A non-significant estimate is not proof of zero effect.** The data are
+> insufficient to resolve the question at policy-relevant precision.
 
-## Data
-
-All from the [Chicago Data Portal](https://data.cityofchicago.org):
-
-| Dataset | ID | Used for |
-|---|---|---|
-| Speed Camera Locations | `4i42-qv3h` | 209 cameras, coordinates, go-live dates |
-| Traffic Crashes – Crashes | `85ca-t3if` | 1,106,882 records; outcome |
-| Speed Camera Violations | `hhkd-xvj4` | 502,120 daily records; mechanism check |
-
-The raw download is preserved with query parameters, timestamps, row counts and SHA-256 checksums in
-`data/raw/provenance.json`. Data are not committed. See
-[`docs/DATA_DICTIONARY.md`](docs/DATA_DICTIONARY.md).
-
-Observed crash window: **2015‑09 … 2026‑08**, 132 months. The portal table is effectively complete
-from 2015‑09; earlier months are missing, not zero.
+V1 remains the deployed forecasting model. V2 adds 40 features (including real
+Census TIGER road-network data) and improves retrospective deviance by only
+0.4%; it fails the pre-declared 1% validation promotion rule and is retained as
+a research candidate. A coverage-consistent, tuned model improves deviance by
+0.65% on common test rows—also below 1%—and is not deployed. Its geographic
+holdout is slightly worse than coverage V1.
 
 ---
 
-## Method (short)
+## Methodology
 
-1. **Unit**: site-month. Treated site = 250 m catchment around a camera. Comparison site = 500 m
-   lattice point ≥600 m from every camera with ≥100 crashes and ≥40% active months.
-2. **Matching**: five comparison sites per camera, closest on pre-period level and slope, evaluated
-   in each camera's own pre-window.
-3. **Preferred estimator**: conditional Poisson with site fixed effects and camera × event-month
-   fixed effects. Coefficient = log rate ratio; `exp(β) − 1` = percent change.
-4. **Staggered adoption**: per-camera 2×2 ATT relative to the month before go-live, averaged across
-   cameras with a camera-level bootstrap.
-5. **Event study**: quarterly effects, reference quarter −1, joint pre-trend test.
-6. **Synthetic control**: de-meaned simplex fit, 200 placebo-in-space draws, in-time placebos,
-   leave-one-out donors, and a pre-fit gate.
-7. **Falsification**: placebo go-live dates, 200 random-location placebos, lattice-phase shifts,
-   COVID exclusion, reporting-era split, severity outcomes.
+### Causal design
 
-Full details and identification assumptions: [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md).
+- **Catchment:** 250 m around each camera.
+- **Comparison sites:** 500 m lattice points at least 600 m from every camera
+  with ≥100 crashes and ≥40% active months.
+- **Matching:** five nearby sites per camera on pre-period level and slope,
+  evaluated in the camera's own pre-window; primary radius 2,000 m.
+- **Overlap removal:** cameras whose catchment overlaps an already-live camera
+  are dropped (13 of 33 eligible). Among all 209 cameras, 36.3% of attributed
+  crashes fall inside two or more catchments.
+- **Window:** −24 to +35 months around go-live. The publication panel starts in
+  2015-09, but citywide reporting begins only in 2017-09. A coverage-consistent
+  design requires 24 citywide pre-months and leaves 15 cameras.
+- **Reporting boundary:** official E-Crash metadata; monthly and district
+  diagnostics are in `docs/BOTTOM_UP_AUDIT.md`.
+- **Preferred estimators:** conditional Poisson with camera-by-month fixed
+  effects; per-camera cohort 2×2 with a camera bootstrap.
+- **Inference:** camera-clustered standard errors, wild cluster bootstrap,
+  geographic and date placebos, lattice-phase and design sensitivity.
 
-### Key assumptions
+### Forecasting
 
-- Parallel trends conditional on the match (tested, not proven).
-- No anticipation; warning periods are not observed.
-- No interference beyond 250 m; the 600 m buffer removes catchment overlap, not spillover.
-- Camera siting is not driven by unobserved, time-varying local trends. **This is the weakest
-  assumption**: regression to the mean remains a threat.
-- Overlapping-catchment cameras are excluded so treated units are independent.
+- **Unit:** location-month; V1/V2 use 1,355 locations (129 camera catchments +
+  1,226 comparison sites), 157,180 rows, 2017-01 … 2026-08.
+- **Coverage-consistent sensitivity:** 1,326 locations, 137,904 rows,
+  2018-01 … 2026-08, trained and evaluated on common test rows.
+- **Model:** one LightGBM Poisson model; no competing production model.
+- **Features:** history lags/rolling windows, calendar, holidays, lagged weather,
+  static geography; V2 adds road density/intersections, neighbourhood crash
+  history, citywide regime features and climate normals (84 features total).
+- **Validation:** three expanding temporal folds (2024-03 … 2025-08), a
+  34-block geographic holdout with a 1 km buffer, and a combined holdout.
+- **Road task:** separate 15,126-segment sample; raw MAE is not comparable to
+  the camera-zone task and the model is not deployed.
+- **Leakage:** all history features are shifted; weather is lagged;
+  neighbourhood features use prior months; mechanical checks fail the build on
+  any future-outcome leakage.
+- **Uncertainty:** scale-normalised split-conformal intervals calibrated on
+  out-of-fold predictions.
+
+No traffic-volume feature is used: the public AADT extract begins in 2022-07,
+covers 2,525 segments and cannot supply a 2017–2021 denominator. Using it would
+leak future exposure or require fabricated backfills. No values were manufactured.
+
+---
+
+## Interactive research map
+
+The Streamlit dashboard keeps a large Chicago map central: cameras, 250 m
+treatment buffers, comparison sites, observed crash density, predictions,
+predicted risk intensity, 90% interval width, held-out errors, and historical
+hotspots, with year/month/camera/region/severity filters and a camera
+drill-down. It reads precomputed validated artifacts and never retrains a model.
+
+![Study map](paper/figures/fig1_study_map.png)
+
+*Static preview. Run `streamlit run dashboard/app.py` for the interactive map.
+No public deployment is claimed or provided.*
+
+**Causal inference**, **crash forecasting**, and **methods/limitations** are
+separate dashboard sections. The group-level camera effect is never shown as a
+camera-specific estimate, and prediction intervals are never shown as causal
+confidence intervals.
+
+---
+
+## Research paper
+
+- [PDF](paper/chicago_speed_cameras_research.pdf)
+- [Markdown](paper/chicago_speed_cameras_research.md)
+- [DOCX](paper/chicago_speed_cameras_research.docx)
+
+The paper reports the causal design, the exact replication, the stepwise design
+changes, the event study, the synthetic control, the September 2017 reporting
+boundary, the coverage-consistent sensitivity, the forecasting system, the
+conformal intervals, the separate road task and the limitations. It is a working
+paper, not peer-reviewed, and no institutional endorsement is claimed.
 
 ---
 
@@ -125,48 +154,114 @@ Full details and identification assumptions: [`docs/METHODOLOGY.md`](docs/METHOD
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install -e ".[dev,dashboard]"
+# macOS only: LightGBM needs OpenMP
+brew install libomp
+pip install -e ".[dev,dashboard,ml]"
 
 python scripts/download_data.py
 python -m chicago_cameras.pipeline --config config/analysis.yaml
-
-# verify the original study's published numbers
 python scripts/verify_replication.py
 
-# tests (no data download, no network)
+# forecasting
+python scripts/train_lightgbm.py --trials 40 --timeout 900
+python scripts/train_lightgbm_v2.py --trials 40 --timeout 900
+python scripts/evaluate_recursive_v2.py
+
+# bottom-up reconstruction
+python -m chicago_cameras.coverage
+python -m chicago_cameras.exposure
+python -m chicago_cameras.road_network
+python -m chicago_cameras.ml.coverage_dataset
+python -m chicago_cameras.ml.reconstruction
+python -m chicago_cameras.ml.tune_coverage
+python -m chicago_cameras.ml.road_model
+
+# tests and dashboard
 python -m pytest -q
-```
-
-Or run everything:
-
-```bash
-bash scripts/run_all.sh
-```
-
-Runtime: download ≈ 5 min; analysis ≈ 15–20 min on an M1 laptop. A `--quick` flag reduces bootstrap
-and placebo draws for development.
-
-Expected replication output:
-
-```
-crashes kept          1,081,474
-camera sample         33 of 209
-panel rows            11,880
-pre means             twins 4.298 | cameras 4.403
-OLS      -0.3557 [-0.7110, -0.0005]  p=0.0497
-Poisson  -7.3% [-13.6%, -0.6%]  p=0.0342
-```
-
-These match the notebook's saved outputs to four decimal places.
-
-### Dashboard
-
-```bash
 streamlit run dashboard/app.py
 ```
 
-The dashboard reads precomputed validated artefacts only. It never refits a model and shows an
-explicit "results not generated" state when artefacts are missing.
+Runtime: data download ≈ 5 min; causal pipeline 4–20 min depending on placebo
+count; V2 tuning/evaluation ≈ 25 min. A `--quick` flag reduces draws for
+development.
+
+**Verified status:** 63 tests pass; `ruff` clean; original notebook unchanged;
+V1 and V2 artifacts preserved. The test period (2025-09 … 2026-08) was
+already inspected in V1; V2 and coverage-consistent test numbers are
+retrospective.
+
+---
+
+## Data provenance
+
+| Dataset | Source | Use |
+|---|---|---|
+| Traffic Crashes – Crashes `85ca-t3if` | Chicago Data Portal | Outcome |
+| Speed Camera Locations `4i42-qv3h` | Chicago Data Portal | Camera coordinates and go-live |
+| Speed Camera Violations `hhkd-xvj4` | Chicago Data Portal | Mechanism check |
+| Historical weather | Open-Meteo archive | Lagged weather and climate normals |
+| AADT `gc7y-n4xa` | Chicago Data Portal | Audited, **not used**: starts 2022-07 |
+| Community areas `igwz-8jzy` | Chicago Data Portal | City boundary for road clipping |
+| Road network | US Census TIGER/Line 2024 EDGES (Cook, DuPage) | Road density, class, intersections |
+| Holidays | `holidays` US calendar | Calendar features |
+
+Raw files are preserved with URLs, query parameters, timestamps, row counts and
+SHA-256 checksums in `data/raw/provenance.json` and
+`data/raw/tiger/provenance.json`. Raw and processed data are not committed.
+
+---
+
+## Limitations
+
+- **Non-random siting.** Cameras are placed at high-crash sites; matching
+  reduces but cannot remove regression to the mean.
+- **Small treated sample.** 20 cameras; wide intervals and fragile
+  small-cluster inference.
+- **Reporting changes.** Citywide reporting begins in 2017-09; the publication
+  panel and V1/V2 target include earlier partial months. The coverage-consistent
+  estimate uses a different, 15-camera sample.
+- **No traffic exposure.** Crashes per catchment-month is not crashes per
+  vehicle-mile. AADT starts in 2022-07 and covers only 1,454 distinct 2024 road
+  segments within 50 m.
+- **Spillover.** The buffer prevents catchment overlap, not crash displacement.
+- **Timing.** Go-live dates are monthly; warning periods and downtime are not
+  observed.
+- **Synthetic control.** Moderate pre-fit and opposite sign; it does not
+  corroborate the DiD.
+- **Test reuse.** The test period is not a new untouched confirmation for V2.
+- **Forecasting geography.** The location set is crash-dense and non-random.
+- **High-risk calibration.** The model under-predicts high-crash months; 90%
+  intervals cover 84.8% of the highest-risk decile.
+- **V2 not deployed.** 0.24% validation improvement, below the 1% rule. The
+  coverage-tuned model is also research-only (0.48% validation improvement).
+- **Road-task ambiguity.** 34.0% of road assignments have a second segment
+  within 5 m; road and camera-zone MAE are not comparable.
+
+---
+
+## Authors and contributions
+
+**Saketh Donepudi** and **Amrutha Kakumani** are the co-authors of this release.
+The repository builds on the original study, notebook and README created by
+Amrutha Kakumani and earlier contributors; the original notebook is preserved
+unchanged.
+
+Affiliations are not asserted here because they have not been independently
+verified for this release. Individual contribution roles (for example, CRediT)
+require confirmation from both co-authors before publication; see
+`docs/AUTHOR_CONTRIBUTIONS.md`.
+
+---
+
+## Citation
+
+```text
+Donepudi, S., & Kakumani, A. (2026). Do Speed Cameras Make Chicago Safer?
+A Geospatial Causal Inference and Machine Learning Study [Working paper].
+GitHub. https://github.com/amruthakakumani/Do-Chicago-speed-cameras-reduce-crashes-
+```
+
+A machine-readable citation is provided in [`CITATION.cff`](CITATION.cff).
 
 ---
 
@@ -174,122 +269,54 @@ explicit "results not generated" state when artefacts are missing.
 
 ```text
 .
-├── README.md
-├── pyproject.toml
-├── config/analysis.yaml           # every design and inference parameter
-├── data/                          # gitignored raw + processed data
-│   ├── raw/                       # gzip CSV + provenance.json
-│   └── processed/                 # parquet + quality_report.json
+├── paper/                          # manuscript, PDF/DOCX, 11 publication figures
 ├── src/chicago_cameras/
-│   ├── acquisition.py             # paginated, retryable Socrata download + provenance
-│   ├── cleaning.py                # schema validation, coverage guard, severity flags
-│   ├── geospatial.py              # UTM projection, counting, overlap diagnostics
-│   ├── matching.py                # pre-trend matching with distance cap and caliper
-│   ├── panel.py                   # stacked site-month panel + validation
-│   ├── design.py                  # catchments, comparison sites, treatment timing
-│   ├── did.py                     # OLS/Poisson, FE absorption, conditional Poisson, 2×2
-│   ├── event_study.py             # dynamic effects and persistence
-│   ├── synthetic_control.py       # simplex fit, placebos, leave-one-out
-│   ├── robustness.py              # sensitivity and falsification
-│   ├── visualization.py           # ten publication figures (PNG + SVG)
-│   └── pipeline.py                # end-to-end orchestration
-├── notebooks/research_analysis.ipynb   # upgraded notebook (reads validated artefacts)
-├── dashboard/app.py               # Streamlit reader of precomputed results
-├── scripts/
-│   ├── download_data.py
-│   ├── verify_replication.py
-│   └── run_all.sh
-├── tests/                         # 37 synthetic-fixture tests
-├── results/
-│   ├── estimates.json
-│   ├── tables/*.csv
-│   └── figures/*.png|svg
-├── docs/
-│   ├── README.md
-│   ├── AUDIT.md
-│   ├── METHODOLOGY.md
-│   ├── DATA_DICTIONARY.md
-│   ├── REPRODUCIBILITY.md
-│   ├── REPORT.md
-│   └── ORIGINAL_README.md
-└── Do_Chicago_speed_cameras_reduce_crashes_.ipynb   # original notebook, untouched
+│   ├── ml/                         # V1/V2 forecasting, intervals, geography, recursion
+│   ├── acquisition.py              # portal downloads + provenance
+│   ├── cleaning.py                 # schema checks, coverage guard
+│   ├── geospatial.py               # UTM metres, counting, overlap diagnostics
+│   ├── matching.py                 # matched comparison groups
+│   ├── design.py                   # catchments, treatment timing
+│   ├── did.py / event_study.py     # causal estimators
+│   ├── synthetic_control.py        # synthetic control
+│   ├── robustness.py               # sensitivity and falsification
+│   └── visualization.py            # causal figures
+├── dashboard/app.py                # public research dashboard
+├── scripts/                        # download, pipeline, replication, ML, figures
+├── models/                         # V1 deployed model; V2 candidate; metadata
+├── results/                        # causal and ML artefacts
+├── tests/                          # 63 tests
+├── docs/                           # audit, methods, data dictionary, readiness
+└── Do_Chicago_speed_cameras_reduce_crashes_.ipynb   # original notebook
 ```
 
 ---
 
-## Limitations
+## Tests and reproducibility status
 
-- **Camera siting is non-random.** Matching on pre-period level and slope reduces but cannot remove
-  regression to the mean.
-- **Small treated sample.** 20 cameras in the primary design; confidence intervals are wide and
-  cluster-robust inference is fragile with so few clusters.
-- **Reporting changes.** 2016 crash volume is roughly one third of 2018; if reporting changed
-  differentially across neighbourhoods, the DiD is biased.
-- **COVID-19.** Traffic fell sharply in 2020; camera-by-month fixed effects absorb city-wide shocks
-  but not uneven local impact.
-- **No exposure denominator.** Crashes per catchment-month is not crashes per vehicle-mile.
-- **Spillover and displacement.** The buffer prevents catchment overlap but cannot detect crashes
-  moving beyond 250 m.
-- **Treatment timing.** Go-live dates are monthly; warning periods and downtime are not observed.
-- **External validity.** The 2013–14 rollout cannot be evaluated because crash data begin in 2015.
-- **Synthetic control.** Pre-period fit is moderate (R² 0.74) and its sign disagrees with the DiD.
+- `pytest -q`: **63 passed**.
+- `ruff check`: clean.
+- Original notebook: unchanged.
+- Causal results: unchanged from the audited release.
+- Dashboard: launches locally and reads precomputed artifacts; no live URL is
+  claimed.
+- Manuscript: Markdown, PDF and DOCX generated from the same source.
+- Full status: [`docs/PUBLICATION_READINESS.md`](docs/PUBLICATION_READINESS.md).
 
 ---
-
-## References
-
-- Abadie, A., Diamond, A., & Hainmueller, J. (2010). Synthetic control methods for comparative case
-  studies. *Journal of the American Statistical Association*, 105(490), 493–505.
-  [doi:10.1198/jasa.2009.ap08746](https://doi.org/10.1198/jasa.2009.ap08746)
-- Bertrand, M., Duflo, E., & Mullainathan, S. (2004). How much should we trust
-  differences-in-differences estimates? *Quarterly Journal of Economics*, 119(1), 249–275.
-  [doi:10.1162/003355304772839588](https://doi.org/10.1162/003355304772839588)
-- Callaway, B., & Sant'Anna, P. H. C. (2021). Difference-in-differences with multiple time periods.
-  *Journal of Econometrics*, 225(2), 200–230.
-  [doi:10.1016/j.jeconom.2020.12.001](https://doi.org/10.1016/j.jeconom.2020.12.001)
-- Cameron, A. C., Gelbach, J. B., & Miller, D. L. (2008). Bootstrap-based improvements for inference
-  with clustered errors. *Review of Economics and Statistics*, 90(3), 414–427.
-  [doi:10.1162/rest.90.3.414](https://doi.org/10.1162/rest.90.3.414)
-- de Chaisemartin, C., & D'Haultfœuille, X. (2020). Two-way fixed effects estimators with
-  heterogeneous treatment effects. *American Economic Review*, 110(9), 2964–2996.
-  [doi:10.1257/aer.20181169](https://doi.org/10.1257/aer.20181169)
-- Goodman-Bacon, A. (2021). Difference-in-differences with variation in treatment timing.
-  *Journal of Econometrics*, 225(2), 254–277.
-  [doi:10.1016/j.jeconom.2021.03.014](https://doi.org/10.1016/j.jeconom.2021.03.014)
-- Graham, D. J., Naik, C., McCoy, E. J., & Li, H. (2019). Do speed cameras reduce road traffic
-  collisions? *PLoS ONE*, 14(9), e0221267.
-  [doi:10.1371/journal.pone.0221267](https://doi.org/10.1371/journal.pone.0221267)
-- Pilkington, P., & Kinra, S. (2005). Effectiveness of speed cameras in preventing road traffic
-  collisions and related casualties: systematic review. *BMJ*, 330(7487), 331–334.
-  [doi:10.1136/bmj.38324.646574.AE](https://doi.org/10.1136/bmj.38324.646574.AE)
-- Retting, R. A., Ferguson, S. A., & McCartt, A. T. (2003). A review of evidence-based traffic
-  engineering measures designed to reduce pedestrian–motor vehicle crashes. *American Journal of
-  Public Health*, 93(9), 1456–1463.
-  [doi:10.2105/AJPH.93.9.1456](https://doi.org/10.2105/AJPH.93.9.1456)
-- Sun, L., & Abraham, S. (2021). Estimating dynamic treatment effects in event studies with
-  heterogeneous treatment effects. *Journal of Econometrics*, 225(2), 175–199.
-  [doi:10.1016/j.jeconom.2020.09.006](https://doi.org/10.1016/j.jeconom.2020.09.006)
-- Wilson, C., Willis, C., Hendrikz, J. K., Le Brocque, R., & Bellamy, N. (2010). Speed cameras for
-  the prevention of road traffic injuries and deaths. *Cochrane Database of Systematic Reviews*,
-  2010(11), CD004607.
-  [doi:10.1002/14651858.CD004607.pub3](https://doi.org/10.1002/14651858.CD004607.pub3)
-
-Bibliographic details were checked against DOI records. Cited findings are the cited authors' work;
-they are not findings of this project.
-
----
-
-## Acknowledgments
-
-The original study, notebook and README were created by the repository owner
-([`amruthakakumani`](https://github.com/amruthakakumani)) and contributors; see the git history for
-individual commits. The original notebook is preserved unchanged. The original README is preserved verbatim at
-[`docs/ORIGINAL_README.md`](docs/ORIGINAL_README.md). This upgrade was built on that work and does
-not claim authorship of it.
-
-No affiliation, credential, publication or peer-review status is asserted for any contributor.
 
 ## License
 
-The upstream repository does not declare a license. No license file is added here because
-re-licensing requires the copyright holders' authorization. Add one only with the owners' consent.
+The upstream repository does not declare a license. No license is added here
+because re-licensing requires the copyright holders' authorization.
+
+## Acknowledgments
+
+The original Chicago speed-camera study, notebook and README were created by
+Amrutha Kakumani and contributors; see the git history. This release preserves
+that work and does not claim authorship of it. The V1 forecasting system and V2
+research candidate were developed in this repository with the methods and
+limitations documented above.
+
+No affiliation, credential, peer-review status, or institutional endorsement is
+asserted.

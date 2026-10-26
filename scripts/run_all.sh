@@ -21,7 +21,22 @@ fi
 echo "== 3/4: verify the original study's published estimates =="
 "$PYTHON" scripts/verify_replication.py
 
-echo "== 4/4: run the test suite =="
+if [[ "${RUN_ML:-0}" == "1" ]]; then
+  echo "== 4/5: train and evaluate the LightGBM forecaster =="
+  "$PYTHON" scripts/train_lightgbm.py --trials "${ML_TRIALS:-40}" --timeout "${ML_TIMEOUT:-900}"
+  "$PYTHON" scripts/evaluate_lightgbm.py
+  "$PYTHON" scripts/build_prediction_report.py
+  echo "== 5/5: run the test suite =="
+else
+  echo "== 4/4: run the test suite =="
+fi
+
+if [[ "${RUN_ML_V2:-0}" == "1" ]]; then
+  echo "== V2: train, tune, intervals, geographic holdout, recursive benchmark =="
+  "$PYTHON" scripts/train_lightgbm_v2.py --trials "${ML_TRIALS:-40}" --timeout "${ML_TIMEOUT:-900}"
+  "$PYTHON" scripts/evaluate_recursive_v2.py
+fi
+
 "$PYTHON" -m pytest -q
 
 echo

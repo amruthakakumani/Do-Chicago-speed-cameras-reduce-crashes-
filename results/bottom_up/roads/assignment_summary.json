@@ -1,0 +1,19 @@
+{
+  "ambiguous_assignments": 331234,
+  "assigned": 975033,
+  "assignment_rate": 0.9926475304274348,
+  "crashes_in_window": 982255,
+  "distance_m": {
+    "max": 29.928083357316662,
+    "median": 12.064072591900764,
+    "p95": 12.319849640877049
+  },
+  "excluded": 98743,
+  "low_confidence_assignments": 2214,
+  "n_candidate_segments": {
+    "max": 14,
+    "median": 3.0,
+    "p95": 6.0
+  },
+  "unassigned": 7222
+}

@@ -1,0 +1,231 @@
+{
+  "artifacts": {
+    "crash_grid": "results/ml/crash_grid_monthly.parquet",
+    "figures": "results/ml/figures/",
+    "metrics": "results/ml/metrics.json",
+    "predictions": "results/ml/predictions.parquet",
+    "shap_values": "results/ml/shap_values.parquet"
+  },
+  "categorical_features": [
+    "cluster"
+  ],
+  "causal_disclaimer": "This model predicts observed crash counts. It does not estimate the causal effect of cameras, and feature importance must not be read causally.",
+  "data_snapshot": "2026-10-24T18:37:54Z",
+  "feature_importance_top_15": [
+    {
+      "feature": "roll_mean_12",
+      "gain": 3226785.429214716,
+      "gain_share_pct": 58.489348510829615,
+      "split": 1955
+    },
+    {
+      "feature": "roll_mean_6",
+      "gain": 855255.6708943844,
+      "gain_share_pct": 15.502532814206656,
+      "split": 997
+    },
+    {
+      "feature": "expanding_mean",
+      "gain": 651652.5023918152,
+      "gain_share_pct": 11.81198166300908,
+      "split": 4093
+    },
+    {
+      "feature": "expanding_std",
+      "gain": 187742.7699559927,
+      "gain_share_pct": 3.4030624419352664,
+      "split": 1514
+    },
+    {
+      "feature": "month_index",
+      "gain": 149008.0914900303,
+      "gain_share_pct": 2.7009500275991325,
+      "split": 5818
+    },
+    {
+      "feature": "roll_mean_3",
+      "gain": 119683.96433544159,
+      "gain_share_pct": 2.169415120631976,
+      "split": 1179
+    },
+    {
+      "feature": "month_cos",
+      "gain": 34041.26748085022,
+      "gain_share_pct": 0.6170387220083519,
+      "split": 1401
+    },
+    {
+      "feature": "cluster",
+      "gain": 28768.61570429802,
+      "gain_share_pct": 0.521465596958615,
+      "split": 2811
+    },
+    {
+      "feature": "temp_lag1",
+      "gain": 19819.045058965683,
+      "gain_share_pct": 0.35924391597608896,
+      "split": 1536
+    },
+    {
+      "feature": "year",
+      "gain": 17111.93526339531,
+      "gain_share_pct": 0.3101743104000126,
+      "split": 573
+    },
+    {
+      "feature": "month_of_year",
+      "gain": 16122.452979326248,
+      "gain_share_pct": 0.2922387595467625,
+      "split": 919
+    },
+    {
+      "feature": "lag_1",
+      "gain": 15066.998658418655,
+      "gain_share_pct": 0.27310738655433864,
+      "split": 518
+    },
+    {
+      "feature": "lat",
+      "gain": 14288.809611082077,
+      "gain_share_pct": 0.2590017785443085,
+      "split": 1645
+    },
+    {
+      "feature": "trend_12",
+      "gain": 14181.344230651855,
+      "gain_share_pct": 0.25705383988314945,
+      "split": 1847
+    },
+    {
+      "feature": "dist_center_m",
+      "gain": 12678.432657003403,
+      "gain_share_pct": 0.22981176855847618,
+      "split": 1844
+    }
+  ],
+  "feature_schema": [
+    "month_index",
+    "year",
+    "month_of_year",
+    "month_sin",
+    "month_cos",
+    "quarter",
+    "days_in_month",
+    "n_holidays",
+    "is_covid",
+    "lag_1",
+    "lag_2",
+    "lag_3",
+    "lag_6",
+    "lag_12",
+    "roll_mean_3",
+    "roll_mean_6",
+    "roll_mean_12",
+    "roll_std_3",
+    "roll_std_6",
+    "roll_std_12",
+    "expanding_mean",
+    "expanding_std",
+    "zero_share_12",
+    "injury_share_12",
+    "severe_share_12",
+    "trend_12",
+    "temp_lag1",
+    "precip_lag1",
+    "snow_lag1",
+    "temp_mean_3",
+    "precip_mean_3",
+    "snow_mean_3",
+    "easting_m",
+    "northing_m",
+    "lat",
+    "lon",
+    "dist_center_m",
+    "dist_nearest_camera_m",
+    "n_cameras_1km",
+    "cluster",
+    "site_is_camera",
+    "camera_operational",
+    "camera_age_months",
+    "n_operational_cameras_1km"
+  ],
+  "framework": "lightgbm 4.7.0",
+  "geographic_coverage": {
+    "n_camera_locations": 129,
+    "n_control_locations": 1226,
+    "n_locations": 1355,
+    "note": "Camera catchments (overlapping catchments deduplicated) plus the causal design's comparison sites. Crash-dense, non-random sample of Chicago.",
+    "radius_m": 250.0
+  },
+  "hyperparameters": {
+    "bagging_fraction": 0.7182930422556888,
+    "bagging_freq": 6,
+    "bagging_seed": 20261025,
+    "boosting_type": "gbdt",
+    "data_random_seed": 20261027,
+    "deterministic": true,
+    "feature_fraction": 0.811822367396855,
+    "feature_fraction_seed": 20261026,
+    "force_col_wise": true,
+    "lambda_l1": 0.0013514359357022462,
+    "lambda_l2": 0.001758225153119952,
+    "learning_rate": 0.018014572230944128,
+    "max_depth": 10,
+    "metric": "poisson",
+    "min_child_samples": 45,
+    "min_data_in_bin": 5,
+    "num_leaves": 54,
+    "num_threads": 8,
+    "objective": "poisson",
+    "seed": 20261024,
+    "verbosity": -1
+  },
+  "inference_seconds_for_test": 1.569,
+  "model_file": "models/lightgbm_crash_model.txt",
+  "model_name": "lightgbm_poisson_crash_model",
+  "model_version": "1.0.0",
+  "n_features": 44,
+  "num_boost_round": 924,
+  "objective": "poisson",
+  "optuna": {
+    "best_iterations": [
+      681,
+      1062,
+      779
+    ],
+    "best_value": 1.2229691563334386,
+    "n_trials": 40,
+    "runtime_seconds": 913.9705939292908
+  },
+  "seed": 20261024,
+  "target_definition": "Reported crashes within 250 m of the location coordinate during the calendar month. Not crashes per vehicle-mile.",
+  "target_window": {
+    "first": "2017-01-01",
+    "last": "2026-08-01"
+  },
+  "test_metrics": {
+    "bias": 0.16303034667168714,
+    "mae": 1.5683310206830294,
+    "mape_pct_nonzero": 52.42243797609439,
+    "mean_actual": 3.769311193111931,
+    "mean_predicted": 3.9323415397836183,
+    "n": 16260,
+    "poisson_deviance": 1.2232660668852962,
+    "r2": 0.6610584895643361,
+    "relative_bias_pct": 4.325202625074048,
+    "rmse": 2.0930764012093506
+  },
+  "test_period": {
+    "first": "2025-09-01",
+    "last": "2026-08-01",
+    "months": 12,
+    "rows": 16260
+  },
+  "test_start": "2025-09-01",
+  "training_period": {
+    "first": "2017-01-01",
+    "last": "2025-08-01"
+  },
+  "training_rows": 140920,
+  "training_seconds": 13.167
+}

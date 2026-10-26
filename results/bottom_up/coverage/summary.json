@@ -1,0 +1,70 @@
+{
+  "amended_report_type": 240,
+  "citywide_start": "2017-09-01",
+  "current_portal_rows": 1107461,
+  "districts_present": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    22,
+    24,
+    25
+  ],
+  "duplicate_ids": 0,
+  "invalid_district_or_beat": 21,
+  "missing_coordinates": 8673,
+  "monthly_regime": {
+    "aug_2017_crashes": 7685,
+    "post_citywide_mean_crashes": 9817.25,
+    "post_citywide_mean_injury_share": 0.14099404724482503,
+    "pre_citywide_mean_crashes": 5381.583333333333,
+    "pre_citywide_mean_injury_share": 0.07661583986492539,
+    "sep_2017_crashes": 9038
+  },
+  "n_beats_present": 275,
+  "n_districts_present": 22,
+  "new_after_snapshot": 581,
+  "notes": [
+    "All 22 CPD districts have at least one record in every month from 2015-09 onward, so district presence alone cannot measure completeness.",
+    "The official metadata is the primary evidence for the September 2017 regime boundary; monthly counts and injury composition are corroborating diagnostics, not proof of completeness.",
+    "The portal does not expose a per-record finalization timestamp, so portal reporting delay cannot be reconstructed; the two-month lag is a conservative operational rule."
+  ],
+  "notification_delay_days": {
+    "median": 0.021527777777777778,
+    "missing": 2,
+    "n": 1107461,
+    "p95": 2.53125,
+    "p99": 9.166666666666666,
+    "share_gt_30d": 0.0017020915409210798,
+    "share_gt_90d": 0.0003602835675477511
+  },
+  "official_statement": "E-Crash data are available for some police districts in 2015, but citywide data are not available until September 2017. The portal description also notes that records are added or amended after reports are finalized.",
+  "outside_bbox_coordinates": 8748,
+  "recent_incomplete_months": [
+    "2026-09-01",
+    "2026-10-01"
+  ],
+  "removed_from_current": 2,
+  "snapshot_first": "2013-03-03 16:48:00",
+  "snapshot_last": "2026-10-24 02:15:00",
+  "snapshot_rows": 1106882,
+  "snapshot_unique_ids": 1106882,
+  "source": "Chicago Data Portal Traffic Crashes - Crashes (85ca-t3if)",
+  "zero_coordinates": 75
+}
