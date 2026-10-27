@@ -1342,7 +1342,7 @@ else:
     )
     st.markdown(
         "Detailed documentation: `docs/METHODOLOGY.md`, `docs/DATA_DICTIONARY.md`, "
-        "`docs/AUDIT.md`, `docs/REPRODUCIBILITY.md`, `docs/REPORT.md`."
+        "`docs/AUDIT.md`, `docs/REPRODUCIBILITY.md`, `docs/FINAL_RELEASE_AUDIT.md`."
     )
 
     st.markdown("## What this dashboard does not do")

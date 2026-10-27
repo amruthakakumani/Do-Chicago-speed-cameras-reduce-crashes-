@@ -8,8 +8,9 @@ both fake treatment dates and fake treated locations.
 from __future__ import annotations
 
 import logging
+from collections.abc import Iterable
 from dataclasses import replace
-from typing import Any, Iterable
+from typing import Any
 
 import numpy as np
 import pandas as pd
@@ -57,7 +58,7 @@ def evaluate_design(
     return {
         "analysis": label,
         "n_cameras": design.n_cameras,
-        "n_obs": int(len(panel)),
+        "n_obs": len(panel),
         "did_pct": conditional.pct,
         "did_pct_ci_low": pct_low,
         "did_pct_ci_high": pct_high,
@@ -410,7 +411,7 @@ def placebo_summary(real: dict[str, Any], placebo: pd.DataFrame) -> dict[str, fl
     did = placebo["did_pct"].dropna().to_numpy()
     cohort = placebo["cohort_att_level"].dropna().to_numpy()
     return {
-        "n_placebo": int(len(placebo)),
+        "n_placebo": len(placebo),
         "placebo_did_pct_median": float(np.median(did)) if len(did) else np.nan,
         "placebo_did_pct_p05": float(np.percentile(did, 5)) if len(did) else np.nan,
         "placebo_did_pct_p95": float(np.percentile(did, 95)) if len(did) else np.nan,

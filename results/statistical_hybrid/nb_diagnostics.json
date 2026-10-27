@@ -1,0 +1,160 @@
+{
+  "fit_seconds": 38.58181095123291,
+  "fold_info": {
+    "alphas": [
+      0.05215559544965479,
+      0.0513393589881258,
+      0.05077018978662126
+    ],
+    "mean_alpha": 0.051421714741467284
+  },
+  "test_info": {
+    "alpha": 0.04983104393103774,
+    "vif": [
+      {
+        "feature": "const",
+        "vif": 1.0
+      },
+      {
+        "feature": "lag_1",
+        "vif": 13.112090108332266
+      },
+      {
+        "feature": "lag_3",
+        "vif": 6.29069141442127
+      },
+      {
+        "feature": "roll_mean_3",
+        "vif": 22.923235696243818
+      },
+      {
+        "feature": "roll_mean_12",
+        "vif": 13.29300989255985
+      },
+      {
+        "feature": "expanding_mean",
+        "vif": 11.099826689104665
+      },
+      {
+        "feature": "roll_std_12",
+        "vif": 3.5226055616543444
+      },
+      {
+        "feature": "zero_share_12",
+        "vif": 1.5706204804974526
+      },
+      {
+        "feature": "trend_12",
+        "vif": 9.681951161872421
+      },
+      {
+        "feature": "seasonal_ratio",
+        "vif": 1.0977730539584944
+      },
+      {
+        "feature": "trend_6",
+        "vif": 9.705242896785638
+      },
+      {
+        "feature": "injury_share_12",
+        "vif": 1.0534163275572987
+      },
+      {
+        "feature": "month_sin",
+        "vif": 10.689582753261066
+      },
+      {
+        "feature": "month_cos",
+        "vif": 16.95158388725921
+      },
+      {
+        "feature": "is_covid",
+        "vif": 1.0707345994074176
+      },
+      {
+        "feature": "temp_lag1",
+        "vif": 29.451969429007917
+      },
+      {
+        "feature": "precip_lag1",
+        "vif": 1.426868241105926
+      },
+      {
+        "feature": "snow_lag1",
+        "vif": 2.1430571185953533
+      },
+      {
+        "feature": "camera_operational",
+        "vif": 1.1873081189695602
+      },
+      {
+        "feature": "n_cameras_1km",
+        "vif": 1.3223405662378291
+      },
+      {
+        "feature": "dist_center_m",
+        "vif": 6.480294140213974
+      },
+      {
+        "feature": "road_density_500m_km_per_km2",
+        "vif": 2.9165387693299385
+      },
+      {
+        "feature": "major_road_share_500m",
+        "vif": 1.6962389530979252
+      },
+      {
+        "feature": "n_intersections_1000m",
+        "vif": 3.7982177757808264
+      },
+      {
+        "feature": "dist_major_intersection_m",
+        "vif": 2.028580724903603
+      },
+      {
+        "feature": "neighbor_crash_mean_12",
+        "vif": 5.306683470666637
+      },
+      {
+        "feature": "neighbor_crash_lag1",
+        "vif": 4.8177168779288975
+      },
+      {
+        "feature": "cluster_1",
+        "vif": 3.4201034368918717
+      },
+      {
+        "feature": "cluster_2",
+        "vif": 2.9592905449860853
+      },
+      {
+        "feature": "cluster_3",
+        "vif": 5.436656320106892
+      },
+      {
+        "feature": "cluster_4",
+        "vif": 1.888754288692238
+      },
+      {
+        "feature": "cluster_5",
+        "vif": 2.2415415082136403
+      },
+      {
+        "feature": "cluster_6",
+        "vif": 5.109165351691093
+      },
+      {
+        "feature": "cluster_7",
+        "vif": 4.728123183887176
+      },
+      {
+        "feature": "cluster_8",
+        "vif": 2.8860901293957544
+      },
+      {
+        "feature": "cluster_9",
+        "vif": 2.5868719046145974
+      }
+    ]
+  }
+}

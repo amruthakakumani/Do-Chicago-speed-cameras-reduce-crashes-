@@ -37,7 +37,7 @@ def regression_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> dict[str, floa
         raise ValueError("y_true and y_pred must have the same length")
     residual = pred - y
     return {
-        "n": int(len(y)),
+        "n": len(y),
         "mae": float(np.mean(np.abs(residual))),
         "rmse": float(np.sqrt(np.mean(residual**2))),
         "poisson_deviance": poisson_deviance(y, pred),
@@ -125,7 +125,7 @@ def baseline_comparison(test_frame: pd.DataFrame) -> pd.DataFrame:
             continue
         metrics = regression_metrics(subset["y_all"], subset[column])
         metrics["baseline"] = name
-        metrics["n"] = int(len(subset))
+        metrics["n"] = len(subset)
         rows.append(metrics)
     return pd.DataFrame(rows)
 
@@ -159,6 +159,6 @@ def full_evaluation(test_frame: pd.DataFrame, prediction_column: str = "predicte
             "first": str(pd.Timestamp(test_frame["month"].min()).date()),
             "last": str(pd.Timestamp(test_frame["month"].max()).date()),
             "months": int(test_frame["month"].nunique()),
-            "rows": int(len(test_frame)),
+            "rows": len(test_frame),
         },
     }

@@ -2,7 +2,7 @@
 """Train and evaluate LightGBM V2 with prediction intervals and geographic holdout.
 
 V1 artifacts are never overwritten.  V2 is deployed only if it passes the
-pre-declared validation criterion in ``docs/V2_BASELINE_AUDIT.md``.
+pre-declared validation criterion in ``docs/MODEL_SELECTION_DECISION.md``.
 """
 
 from __future__ import annotations
@@ -25,18 +25,18 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from chicago_cameras.config import load_config  # noqa: E402
-from chicago_cameras.ml.conformal import apply_conformal, evaluate_methods, select_method  # noqa: E402
-from chicago_cameras.ml.dataset import FEATURE_COLUMNS as V1_FEATURE_COLUMNS  # noqa: E402
-from chicago_cameras.ml.dataset import build_dataset  # noqa: E402
-from chicago_cameras.ml.dataset_v2 import build_dataset_v2  # noqa: E402
-from chicago_cameras.ml.evaluate import (  # noqa: E402
+from chicago_cameras.config import load_config
+from chicago_cameras.ml.conformal import apply_conformal, evaluate_methods, select_method
+from chicago_cameras.ml.dataset import FEATURE_COLUMNS as V1_FEATURE_COLUMNS
+from chicago_cameras.ml.dataset import build_dataset
+from chicago_cameras.ml.dataset_v2 import build_dataset_v2
+from chicago_cameras.ml.evaluate import (
     calibration_table,
     full_evaluation,
     regression_metrics,
     subgroup_errors,
 )
-from chicago_cameras.ml.explain import (  # noqa: E402
+from chicago_cameras.ml.explain import (
     compute_shap_values,
     gain_importance,
     plot_actual_vs_predicted,
@@ -48,8 +48,8 @@ from chicago_cameras.ml.explain import (  # noqa: E402
     plot_shap_summary,
     plot_shap_waterfall,
 )
-from chicago_cameras.ml.geographic import geographic_split  # noqa: E402
-from chicago_cameras.ml.train import (  # noqa: E402
+from chicago_cameras.ml.geographic import geographic_split
+from chicago_cameras.ml.train import (
     evaluate_folds,
     merge_params,
     model_metadata,
@@ -57,8 +57,8 @@ from chicago_cameras.ml.train import (  # noqa: E402
     train_final,
     write_metadata,
 )
-from chicago_cameras.ml.tune import run_tuning  # noqa: E402
-from chicago_cameras.ml.validation import fold_frames, rolling_origin_folds  # noqa: E402
+from chicago_cameras.ml.tune import run_tuning
+from chicago_cameras.ml.validation import fold_frames, rolling_origin_folds
 
 LOGGER = logging.getLogger("train_lightgbm_v2")
 
@@ -284,7 +284,7 @@ def main() -> int:
     v1_metrics_compare = regression_metrics(comparison_frame["y_all"], comparison_frame["v1_predicted"])
     v2_metrics_compare = regression_metrics(comparison_frame["y_all"], comparison_frame["v2_predicted"])
     comparison = {
-        "n_rows": int(len(comparison_frame)),
+        "n_rows": len(comparison_frame),
         "v1": v1_metrics_compare,
         "v2": v2_metrics_compare,
         "delta_mae": float(v2_metrics_compare["mae"] - v1_metrics_compare["mae"]),
@@ -445,9 +445,9 @@ def main() -> int:
     payload = {
         "generated_at_utc": pd.Timestamp.now(tz="UTC").isoformat(),
         "dataset": {
-            "rows": int(len(bundle.frame)),
+            "rows": len(bundle.frame),
             "training_rows": trained.train_rows,
-            "test_rows": int(len(v2_test)),
+            "test_rows": len(v2_test),
             "locations": bundle.metadata["n_locations"],
             "camera_locations": bundle.metadata["n_camera_locations"],
             "control_locations": bundle.metadata["n_control_locations"],
@@ -516,7 +516,7 @@ def main() -> int:
                 / (1024**2 if platform.system() == "Darwin" else 1024),
                 1,
             ),
-            "rows_scored": int(len(v2_predictions)),
+            "rows_scored": len(v2_predictions),
         },
         "top_features": top_features,
         "total_runtime_seconds": time.time() - started,

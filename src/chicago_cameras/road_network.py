@@ -21,10 +21,10 @@ import numpy as np
 import pandas as pd
 import shapefile
 from pyproj import Transformer
-from shapely import contains_xy
+from shapely import contains_xy, wkt
 from shapely.geometry import shape
-from shapely import wkt
-from shapely.ops import transform as shp_transform, unary_union
+from shapely.ops import transform as shp_transform
+from shapely.ops import unary_union
 from shapely.strtree import STRtree
 
 LOGGER = logging.getLogger(__name__)
@@ -60,7 +60,8 @@ def _project_geometry(geometry, transformer: Transformer):
     return shp_transform(transformer.transform, geometry)
 
 
-def extract_road_segments(config: RoadConfig = RoadConfig()) -> pd.DataFrame:
+def extract_road_segments(config: RoadConfig | None = None) -> pd.DataFrame:
+    config = config or RoadConfig()
     """Clip 2024 TIGER road edges to Chicago and persist stable TLID segments."""
     city = load_city_boundary(config.boundary_path)
     transformer = Transformer.from_crs(4326, config.epsg, always_xy=True)
@@ -80,7 +81,8 @@ def extract_road_segments(config: RoadConfig = RoadConfig()) -> pd.DataFrame:
                 continue
             try:
                 geometry = shape(shape_record.shape.__geo_interface__)
-            except Exception:  # pragma: no cover - malformed shapefile geometry
+            except Exception as exc:  # noqa: BLE001 - malformed TIGER geometry
+                LOGGER.warning("skipping malformed TIGER geometry: %s", exc)
                 continue
             if not geometry.intersects(city):
                 continue
@@ -126,7 +128,7 @@ def extract_road_segments(config: RoadConfig = RoadConfig()) -> pd.DataFrame:
     summary = {
         "source": "US Census TIGER/Line 2024 EDGES, Cook and DuPage counties",
         "boundary": "Union of City of Chicago community areas (igwz-8jzy)",
-        "n_segments": int(len(frame)),
+        "n_segments": len(frame),
         "n_major": int(frame["major_road"].sum()),
         "n_intersection_edges": int(frame["is_intersection_edge"].sum()),
         "length_m": {
@@ -163,8 +165,9 @@ def _metric_crash_points(crashes: pd.DataFrame, config: RoadConfig | None = None
 def assign_crashes_to_segments(
     segments: pd.DataFrame,
     crashes: pd.DataFrame,
-    config: RoadConfig = RoadConfig(),
+    config: RoadConfig | None = None,
 ) -> tuple[pd.DataFrame, dict[str, Any]]:
+    config = config or RoadConfig()
     """Assign each crash once to the nearest road segment within a radius.
 
     Candidates are all segments intersecting a 30 m buffer.  The nearest segment
@@ -225,7 +228,7 @@ def assign_crashes_to_segments(
     )
     result["assigned"] = result["segment_id"].notna()
     summary = {
-        "crashes_in_window": int(len(result)),
+        "crashes_in_window": len(result),
         "assigned": int(result["assigned"].sum()),
         "unassigned": int((~result["assigned"]).sum()),
         "assignment_rate": float(result["assigned"].mean()),
@@ -255,8 +258,9 @@ def assign_crashes_to_segments(
 def segment_month_counts(
     segments: pd.DataFrame,
     assignments: pd.DataFrame,
-    config: RoadConfig = RoadConfig(),
+    config: RoadConfig | None = None,
 ) -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame]:
+    config = config or RoadConfig()
     """Build full-network counts, a model sample, and segment-level summaries."""
     assigned = assignments.loc[assignments["assigned"]].copy()
     assigned["segment_id"] = assigned["segment_id"].astype(str)
@@ -342,11 +346,11 @@ def segment_month_counts(
         panel["month"] < pd.Timestamp(config.test_start), "train", "test"
     )
     selected_summary = {
-        "n_segments_total": int(len(segment_summary)),
+        "n_segments_total": len(segment_summary),
         "n_segments_sampled": int(selected["segment_id"].nunique()),
         "n_major_sampled": int(selected["major_road"].sum()),
         "n_local_sampled": int((selected["major_road"] == 0).sum()),
-        "n_local_total": int(len(local)),
+        "n_local_total": len(local),
         "sample_fraction_all_segments": float(selected["segment_id"].nunique() / len(segment_summary)),
         "sample_fraction_local_segments": float(n_local / len(local)),
         "sample_total_crashes": int(selected["total_crashes"].sum()),

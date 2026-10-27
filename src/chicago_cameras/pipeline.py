@@ -147,8 +147,8 @@ def prepare_data(
             "months": len(months),
             "first_month": str(months[0].date()),
             "last_month": str(months[-1].date()),
-            "crashes": int(len(crashes)),
-            "cameras": int(len(cameras)),
+            "crashes": len(crashes),
+            "cameras": len(cameras),
             "epsg": epsg,
         },
     }
@@ -294,7 +294,7 @@ def subgroup_analysis(
                 {
                     "dimension": dimension,
                     "group": str(group),
-                    "n_cameras": int(len(values)),
+                    "n_cameras": len(values),
                     "att_level": float(values.mean()),
                     "ci_low": float(low),
                     "ci_high": float(high),
@@ -378,7 +378,7 @@ def synthetic_control_analysis(design, config: dict[str, Any], seed: int) -> dic
 
     return {
         "cohort_go_month": str(design.cameras.loc[cohort_rows, "go_month"].iloc[0].date()),
-        "cohort_size": int(len(cohort_rows)),
+        "cohort_size": len(cohort_rows),
         "cohort_camera_uids": design.cameras.loc[cohort_rows, "camera_uid"].tolist(),
         "g_index": g,
         "fit": fit,
@@ -416,7 +416,7 @@ def mechanism_analysis(violations: pd.DataFrame, seed: int) -> dict[str, Any]:
     work = frame.loc[frame["months_since_first"].between(1, 48)].copy()
     work["log_violations"] = np.log1p(work["violations"].clip(lower=0))
     codes, _ = pd.factorize(work["camera_id"], sort=True)
-    from .did import absorb, _cluster_meat
+    from .did import _cluster_meat, absorb
 
     y = absorb(work["log_violations"].to_numpy(float), [codes])
     x = absorb((work["months_since_first"] / 12).to_numpy(float), [codes])
@@ -434,7 +434,7 @@ def mechanism_analysis(violations: pd.DataFrame, seed: int) -> dict[str, Any]:
         "slope_per_year_log": beta,
         "slope_se": se,
         "slope_pct_per_year": float((np.exp(beta) - 1) * 100),
-        "n_camera_months": int(len(work)),
+        "n_camera_months": len(work),
         "n_cameras": int(n_clusters),
         "caveat": (
             "Violations are enforcement output, not speeding behaviour or exposure. "
@@ -573,7 +573,7 @@ def run(config: dict[str, Any], refresh: bool = False, quick: bool = False) -> d
     ].str.startswith("Baseline")
     phase_values = sensitivity.loc[phase_mask, "did_pct"].dropna()
     lattice_phase = {
-        "n_phases": int(len(phase_values)),
+        "n_phases": len(phase_values),
         "mean_pct": float(phase_values.mean()) if len(phase_values) else np.nan,
         "min_pct": float(phase_values.min()) if len(phase_values) else np.nan,
         "max_pct": float(phase_values.max()) if len(phase_values) else np.nan,
@@ -658,7 +658,7 @@ def run(config: dict[str, Any], refresh: bool = False, quick: bool = False) -> d
         "estimates": estimate_table.to_dict(orient="records"),
         "replication": {
             "n_cameras": replication_design.n_cameras,
-            "n_panel_rows": int(len(replication_design.panel)),
+            "n_panel_rows": len(replication_design.panel),
             "first_month": str(replication_data.months[0].date()),
             "last_month": str(replication_data.months[-1].date()),
             "estimates": replication_table.to_dict(orient="records"),

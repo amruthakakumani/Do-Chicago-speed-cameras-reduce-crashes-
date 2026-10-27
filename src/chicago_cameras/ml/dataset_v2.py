@@ -29,13 +29,15 @@ from ..config import load_config, path_for
 from ..pipeline import prepare_data
 from .dataset import (
     CATEGORICAL_FEATURES,
-    FEATURE_COLUMNS as V1_FEATURE_COLUMNS,
-    MLDatasetConfig,
     DatasetBundle,
+    MLDatasetConfig,
     add_features,
     assert_valid_features,
     build_counts,
     build_locations,
+)
+from .dataset import (
+    FEATURE_COLUMNS as V1_FEATURE_COLUMNS,
 )
 from .external import (
     fetch_daily_weather,
@@ -364,7 +366,7 @@ def build_dataset_v2(
             "last": str(pd.Timestamp(ml_config.target_end).date()),
         },
         "test_start": str(pd.Timestamp(ml_config.test_start).date()),
-        "n_location_months": int(len(frame)),
+        "n_location_months": len(frame),
         "n_locations": int(locations["location_id"].nunique()),
         "n_camera_locations": int((locations["site_type"] == "camera").sum()),
         "n_control_locations": int((locations["site_type"] == "control").sum()),

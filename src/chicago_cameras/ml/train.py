@@ -99,7 +99,7 @@ def train_final(
         params=params,
         num_boost_round=int(num_boost_round),
         training_seconds=float(runtime),
-        train_rows=int(len(train)),
+        train_rows=len(train),
         train_period=(pd.Timestamp(train["month"].min()), pd.Timestamp(train["month"].max())),
     )
 
@@ -116,7 +116,7 @@ def model_metadata(
     tuning: Any | None,
     extra: dict[str, Any] | None = None,
     version: str = "1.0.0",
-    model_file: str = "models/lightgbm_crash_model.txt",
+    model_file: str = "models/v1/lightgbm_crash_model.txt",
 ) -> dict[str, Any]:
     metadata = {
         "model_name": "lightgbm_poisson_crash_model",

@@ -6,7 +6,11 @@ import json
 
 import pandas as pd
 
-from chicago_cameras.road_network import RoadConfig, assign_crashes_to_segments, segment_month_counts
+from chicago_cameras.road_network import (
+    RoadConfig,
+    assign_crashes_to_segments,
+    segment_month_counts,
+)
 
 
 def test_road_assignment_is_unique_and_tracks_ambiguity(tmp_path):

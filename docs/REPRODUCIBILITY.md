@@ -81,12 +81,11 @@ reproducing the causal results.
 ```bash
 python scripts/train_lightgbm.py --trials 40 --timeout 900
 python scripts/evaluate_lightgbm.py
-python scripts/build_prediction_report.py
 ```
 
 - The first command builds the location-month dataset, runs Optuna on
   rolling-origin folds, refits on all pre-test months, evaluates once on the
-  untouched test period, computes SHAP values and writes `models/` and
+  untouched test period, computes SHAP values and writes `models/v1/` and
   `results/ml/`.
 - Runtime on the reference machine: ≈ 15 minutes for tuning (900 s budget) plus
   ≈ 2 minutes for the final fit, predictions, SHAP and figures.
@@ -97,9 +96,6 @@ python scripts/build_prediction_report.py
   limitation is recorded; no weather values are invented.
 - `scripts/evaluate_lightgbm.py` never retrains; it re-evaluates the saved model
   and can be used to verify reproducibility.
-- `scripts/build_prediction_report.py` generates `docs/PREDICTION_RESULTS.md`
-  and fills the metrics tables in the model card and README from
-  `results/ml/metrics.json`.
 
 ## 4c. V2 prediction, intervals and geographic validation
 
@@ -118,8 +114,8 @@ python scripts/evaluate_recursive_v2.py
   folds, intervals, geographic models and SHAP).
 - `scripts/evaluate_recursive_v2.py` runs a genuine 12-month recursive path from
   2025-08 and writes `results/ml_v2/recursive_metrics.json`.
-- The pre-declared selection rule is in `docs/V2_BASELINE_AUDIT.md`; V1 remains
-  deployed if V2 does not meet it.
+- The pre-declared selection rule is in `docs/MODEL_SELECTION_DECISION.md`; V1
+  remains deployed because no candidate met the rule.
 
 ## 5. Verify the original study
 
@@ -147,7 +143,7 @@ projection and citywide matching on purpose; it is an audit tool, not the upgrad
 python -m pytest -q
 ```
 
-63 tests cover distance/projection, counting zeros, duplicate attribution, overlap detection,
+The test suite covers distance/projection, counting zeros, duplicate attribution, overlap detection,
 cleaning and the coverage guard, coverage-regime classification, panel completeness, matching
 eligibility and the camera-specific pre-window regression test, estimator recovery of known effects,
 synthetic-control exact recovery and poor-fit detection, an end-to-end synthetic design, exposure
@@ -213,15 +209,16 @@ notebook is preserved untouched at the repository root.
 
 ## Formatted paper build
 
-The scientific Markdown source remains `paper/chicago_speed_cameras_research.md`.
-The PDF/DOCX front matter is generated without editing that source:
+The scientific Markdown source is `paper/source/chicago_speed_cameras_research.md`.
+The approved PDF is generated without editing that source:
 
 ```bash
 python scripts/make_cover_graphic.py
 python scripts/build_publication_docs.py
 ```
 
-Requirements: Pandoc 3.12, Typst 0.15, LibreOffice/`soffice` for the DOCX preview,
-`python-docx` and `pypdf`. The script creates a temporary `paper/build/` body,
-applies the cover/author/TOC template, compiles the PDF, post-processes the DOCX
-with a Word TOC field and sectioned page numbering, and validates the result.
+Requirements: Pandoc 3.12, Typst 0.15, LibreOffice/`soffice` for the internal
+DOCX pagination preview, `python-docx` and `pypdf`. The script creates a
+temporary `paper/build/` body, applies the cover/author/TOC template, compiles
+the public PDF and uses the internal DOCX preview only to place body-page
+numbers in the table of contents.

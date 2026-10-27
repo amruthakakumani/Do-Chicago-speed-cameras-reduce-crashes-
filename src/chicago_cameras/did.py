@@ -17,8 +17,8 @@ and adds:
 from __future__ import annotations
 
 import logging
+from collections.abc import Iterable, Sequence
 from dataclasses import dataclass, field
-from typing import Iterable, Sequence
 
 import numpy as np
 import pandas as pd
@@ -313,7 +313,7 @@ def naive_before_after(panel: pd.DataFrame) -> Estimate:
         pvalue=np.nan,
         ci_low=np.nan,
         ci_high=np.nan,
-        n_obs=int(len(treated)),
+        n_obs=len(treated),
         n_clusters=int(treated["stack"].nunique()),
         scale="log",
         method="Treated-only before/after mean comparison (biased by mean reversion)",
@@ -390,11 +390,11 @@ def did_conditional_poisson(panel: pd.DataFrame) -> Estimate:
         pvalue=float(model.pvalues[1]),
         ci_low=float(low),
         ci_high=float(high),
-        n_obs=int(len(cells)),
+        n_obs=len(cells),
         n_clusters=int(cells.index.get_level_values("stack").nunique()),
         scale="log",
         method="Conditional Poisson FE (stack x event-month fixed effects), cluster by camera",
-        details={"conditional_cells": int(len(cells))},
+        details={"conditional_cells": len(cells)},
     )
 
 
@@ -487,7 +487,7 @@ def cohort_did_from_panel(
     if len(stacks) == 0 or -1 not in treated.columns or -1 not in controls.columns:
         raise ValueError("panel lacks a baseline month (rel = -1) for the cohort estimator")
 
-    post = [r for r in range(0, post_months) if r in treated.columns and r in controls.columns]
+    post = [r for r in range(post_months) if r in treated.columns and r in controls.columns]
     if not post:
         raise ValueError("panel has no post-treatment months for the cohort estimator")
 
@@ -515,10 +515,10 @@ def cohort_did_from_panel(
         ci_low=low,
         ci_high=high,
         n_obs=int(len(per_camera) * len(post)),
-        n_clusters=int(len(per_camera)),
+        n_clusters=len(per_camera),
         scale="level",
         method="Matched 2x2 DiD per camera, average across cameras, bootstrap by camera",
-        details={"n_cameras": int(len(per_camera)), "n_post_months": len(post)},
+        details={"n_cameras": len(per_camera), "n_post_months": len(post)},
     )
 
 

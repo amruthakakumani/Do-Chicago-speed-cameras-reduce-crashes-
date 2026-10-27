@@ -226,5 +226,4 @@ python -m chicago_cameras.ml.road_model
 python scripts/make_bottom_up_figures.py
 ```
 
-Artifacts are under `results/bottom_up/`. The publication branch and its
-21-page paper, V1/V2 artifacts and LinkedIn drafts are untouched.
+Artifacts are under `results/bottom_up/`. The final paper (`paper/Chicago_Speed_Cameras_Research.pdf`), deployed V1 artifacts and the reproducible V2 workflow are retained; promotional drafts were removed from the public release.

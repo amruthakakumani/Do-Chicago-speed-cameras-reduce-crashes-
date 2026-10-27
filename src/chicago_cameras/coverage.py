@@ -34,7 +34,8 @@ class CoverageConfig:
     reporting_lag_months: int = 2
 
 
-def load_crash_coverage(config: CoverageConfig = CoverageConfig()) -> pd.DataFrame:
+def load_crash_coverage(config: CoverageConfig | None = None) -> pd.DataFrame:
+    config = config or CoverageConfig()
     """Join the analysis snapshot to current portal beat/notification fields.
 
     The crash snapshot remains authoritative for the modeled outcome.  The
@@ -147,7 +148,8 @@ def beat_month_coverage(frame: pd.DataFrame) -> pd.DataFrame:
     )
 
 
-def coverage_summary(frame: pd.DataFrame, config: CoverageConfig = CoverageConfig()) -> dict[str, Any]:
+def coverage_summary(frame: pd.DataFrame, config: CoverageConfig | None = None) -> dict[str, Any]:
+    config = config or CoverageConfig()
     snapshot = frame.loc[frame["in_snapshot"]]
     current_new = frame.loc[~frame["in_snapshot"]]
     removed_from_current = int((snapshot["in_snapshot"] & ~snapshot["in_current"]).sum())
@@ -170,11 +172,11 @@ def coverage_summary(frame: pd.DataFrame, config: CoverageConfig = CoverageConfi
             "are finalized."
         ),
         "citywide_start": str(config.citywide_start.date()),
-        "snapshot_rows": int(len(snapshot)),
+        "snapshot_rows": len(snapshot),
         "snapshot_unique_ids": int(snapshot["crash_record_id"].nunique()),
         "duplicate_ids": int(snapshot["crash_record_id"].duplicated().sum()),
         "current_portal_rows": int(frame["in_current"].sum()),
-        "new_after_snapshot": int(len(current_new)),
+        "new_after_snapshot": len(current_new),
         "removed_from_current": removed_from_current,
         "snapshot_first": str(snapshot["crash_date"].min()),
         "snapshot_last": str(snapshot["crash_date"].max()),
@@ -216,7 +218,8 @@ def coverage_summary(frame: pd.DataFrame, config: CoverageConfig = CoverageConfi
     }
 
 
-def write_coverage_outputs(config: CoverageConfig = CoverageConfig()) -> dict[str, Any]:
+def write_coverage_outputs(config: CoverageConfig | None = None) -> dict[str, Any]:
+    config = config or CoverageConfig()
     frame = load_crash_coverage(config)
     config.results_dir.mkdir(parents=True, exist_ok=True)
     monthly = monthly_coverage(frame)

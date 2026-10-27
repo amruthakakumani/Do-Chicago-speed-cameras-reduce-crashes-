@@ -14,8 +14,8 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.collections import LineCollection
 import pandas as pd
+from matplotlib.collections import LineCollection
 from shapely import wkt
 
 ROOT = Path(__file__).resolve().parents[1]

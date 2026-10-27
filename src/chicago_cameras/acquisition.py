@@ -20,10 +20,11 @@ import io
 import json
 import logging
 import time
+from collections.abc import Iterable
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 import pandas as pd
 import requests
@@ -160,7 +161,7 @@ def download_dataset(
     frames: list[pd.DataFrame] = []
     page_rows: list[int] = []
     offset = 0
-    started = datetime.now(timezone.utc)
+    started = datetime.now(UTC)
 
     while True:
         params = spec.query_params(limit=page_size, offset=offset)
@@ -194,7 +195,7 @@ def download_dataset(
         )
 
     frame = pd.concat(frames, ignore_index=True)
-    finished = datetime.now(timezone.utc)
+    finished = datetime.now(UTC)
     provenance = {
         "name": spec.name,
         "dataset_id": spec.dataset_id,
@@ -208,7 +209,7 @@ def download_dataset(
         },
         "pages": len(page_rows),
         "rows_per_page": page_rows,
-        "rows": int(len(frame)),
+        "rows": len(frame),
         "columns": list(frame.columns),
         "downloaded_at_utc": started.isoformat(),
         "completed_at_utc": finished.isoformat(),

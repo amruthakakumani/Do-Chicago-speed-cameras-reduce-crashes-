@@ -10,11 +10,11 @@
 | Framework | LightGBM 4.7 |
 | Target | Reported crashes in a 250 m catchment during a calendar month |
 | Unit | Location-month |
-| Artifact | `models/lightgbm_crash_model.txt` |
-| Metadata | `models/model_metadata.json` |
+| Artifact | `models/v1/lightgbm_crash_model.txt` |
+| Metadata | `models/v1/model_metadata.json` |
 | Seed | 20261024 |
 | Owner | Chicago speed-camera research project (see repository contributors) |
-| License | No license declared by the upstream repository |
+| License | MIT (repository code and research materials) |
 
 ## 2. Intended use
 
@@ -55,7 +55,7 @@ The location set is **crash-dense and non-random**: it is the causal design's
 camera and comparison geography, not a random sample of Chicago streets. The
 target window begins eight months before the portal's September 2017 citywide
 coverage start; the coverage-consistent sensitivity is documented in
-`paper/bottom_up_reconstruction.md`.
+`docs/BOTTOM_UP_AUDIT.md`.
 
 ## 5. Features
 
@@ -63,7 +63,8 @@ coverage start; the coverage-consistent sensitivity is documented in
 (1/2/3/6/12 months), rolling means/standard deviations and expanding statistics,
 severity shares, lagged weather, static geography (UTM coordinates, distance to
 centre and cameras, k-means cluster), and camera operational context. See
-`docs/LIGHTGBM_METHODOLOGY.md` for the full table.
+`docs/METHODOLOGY.md` and `docs/FEATURE_AVAILABILITY_LEDGER.md` for the feature
+and leakage rules.
 
 Weather is lagged by at least one month; the forecast month's own weather is
 never used. No target-derived feature is in the feature list. See §7.
@@ -74,7 +75,7 @@ never used. No target-derived feature is in the feature list. See §7.
 before the test period; final model refit on all pre-test months. No test month
 influenced training or tuning. A five-trial smoke run was inspected during
 implementation; no selection decision changed in response. See
-`docs/PREDICTION_RESULTS.md` for the full protocol note.
+`docs/REPRODUCIBILITY.md` for the full protocol and commands.
 
 Test period: **2025-09-01 … 2026-08-01** (16,260 location-months).
 
@@ -156,7 +157,7 @@ Across the ten predicted-risk deciles the ratio of actual to predicted crashes r
 - Keep the test period untouched; if a new test period is chosen, archive the old
   one and do not re-use it for tuning.
 - Re-run `scripts/evaluate_lightgbm.py` after any retrain and update
-  `docs/PREDICTION_RESULTS.md`.
+  `docs/MODEL_EXPERIMENT_RESULTS.md`.
 - Re-check feature schema and leakage tests after changing the dataset builder.
 
 ## 12. Reproduction

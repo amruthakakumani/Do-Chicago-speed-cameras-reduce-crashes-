@@ -12,7 +12,8 @@ authors:
   - family-names: Kakumani
     given-names: Amrutha
 version: "1.0.0"
-date-released: "2026-10-26"
+date-released: "2026-10-28"
+license: MIT
 type: software
 repository-code: "https://github.com/amruthakakumani/Do-Chicago-speed-cameras-reduce-crashes-"
 url: "https://github.com/amruthakakumani/Do-Chicago-speed-cameras-reduce-crashes-"

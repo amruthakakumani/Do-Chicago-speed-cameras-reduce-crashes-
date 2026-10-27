@@ -1,0 +1,11 @@
+{
+  "lightgbm_load_seconds": 0.13628625869750977,
+  "lightgbm_inference_seconds": 1.726912021636963,
+  "nb_training_seconds": 21.595839023590088,
+  "nb_inference_seconds": 0.05138587951660156,
+  "rows": 15912,
+  "lightgbm_rows_per_second": 9214.134710184486,
+  "nb_rows_per_second": 309657.0526706507,
+  "peak_rss_mb": 668.609375,
+  "nb_alpha": 0.04983104393103774
+}

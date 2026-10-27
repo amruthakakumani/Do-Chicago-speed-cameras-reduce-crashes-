@@ -290,7 +290,7 @@ def recursive_forecast(
         )
 
         # Future weather is unknown: use expanding same-month normals.
-        def normal_for(offset: int, column: str) -> float:
+        def normal_for(offset: int, column: str, pos: int = pos) -> float:
             index = pos - offset
             if index < 0:
                 return float("nan")

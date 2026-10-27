@@ -16,7 +16,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -71,7 +71,7 @@ def fetch_daily_weather(
         "daily": "temperature_2m_mean,precipitation_sum,snowfall_sum",
         "timezone": "America/Chicago",
     }
-    started = datetime.now(timezone.utc)
+    started = datetime.now(UTC)
     try:
         response = _session().get(ARCHIVE_URL, params=params, timeout=90)
         response.raise_for_status()
@@ -102,7 +102,7 @@ def fetch_daily_weather(
         "available": True,
         "url": ARCHIVE_URL,
         "params": params,
-        "rows": int(len(frame)),
+        "rows": len(frame),
         "first_date": str(frame["date"].min().date()),
         "last_date": str(frame["date"].max().date()),
         "fetched_at_utc": started.isoformat(),

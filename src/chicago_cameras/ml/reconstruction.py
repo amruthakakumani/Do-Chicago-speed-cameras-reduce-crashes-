@@ -173,7 +173,7 @@ def train_evaluate(
     subgroups = subgroup_errors(test["y_all"], test["predicted"])
     threshold = float(np.quantile(train_all["y_all"], 0.90))
     actual_high = test["y_all"] >= threshold
-    k = max(1, int(round(0.10 * len(test))))
+    k = max(1, round(0.10 * len(test)))
     top = test.nlargest(k, "predicted")
     top_high = top["y_all"] >= threshold
     hotspot = {
@@ -224,8 +224,8 @@ def train_evaluate(
         "rounds": int(rounds),
         "best_iterations": best_iterations,
         "training_seconds": round(time.time() - started, 2),
-        "train_rows": int(len(train_all)),
-        "test_rows": int(len(test)),
+        "train_rows": len(train_all),
+        "test_rows": len(test),
         "train_period": {
             "first": str(train_all["month"].min().date()),
             "last": str(train_all["month"].max().date()),
