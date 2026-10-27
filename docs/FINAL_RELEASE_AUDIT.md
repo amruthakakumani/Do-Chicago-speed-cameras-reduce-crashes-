@@ -78,18 +78,19 @@ additional operational complexity. No candidate met the promotion rule.
 | Check | Result |
 |---|---|
 | Public path | `paper/Chicago_Speed_Cameras_Research.pdf` |
-| Pages | 21 |
+| Pages | 22 |
 | Publication figures | 11 (plus cover graphic) |
 | Tables | 6 |
-| File size | 2,694,967 bytes (~2.69 MB) |
-| Body page numbers | 1–18; cover/author/TOC pages precede them |
+| File size | 2,916,608 bytes (~2.78 MB) |
+| Body page numbers | 1–19; cover/author/TOC pages precede them |
 | Source available | `paper/source/chicago_speed_cameras_research.md` |
 | Build command | `python scripts/build_publication_docs.py` |
 | Hidden build output | `paper/build/` is ignored and was removed after verification |
 
 The PDF was rebuilt from the retained source. The text contains all 11 figure
-captions and six numbered tables; the final body ends on page 18. No clipped or
-missing section was found in the extracted text inspection.
+captions and six numbered tables; the final body ends on page 19. No clipped or
+missing section was found in the extracted text inspection. The PDF outline and
+the 16 top-level contents links were verified.
 
 ## 6. Dashboard status
 
@@ -128,7 +129,7 @@ missing section was found in the extracted text inspection.
 | `pip check` | PASS |
 | Local Markdown link validation | PASS after final audit files were added |
 | Credential scan | No credentials found |
-| PDF inspection | PASS: 21 pages, 11 figures, 6 tables |
+| PDF inspection | PASS: 22 pages, 11 figures, 6 tables; outline and 16 TOC links verified |
 | `git diff --check` | PASS |
 
 The skipped V2 test is explicit and does not mask a failure: the V2 metrics and
@@ -167,7 +168,7 @@ Release final Chicago speed-camera research package
 - keep compact negative results and model-selection rationale
 - remove LinkedIn drafts, duplicate manuscripts and experimental dashboard page
 - add MIT license, dashboard requirements and final release audits
-- rebuild and verify the 21-page PDF
+- rebuild and verify the formatted PDF
 ```
 
 ## 12. Suggested pull request description
@@ -186,7 +187,7 @@ Release final Chicago speed-camera research package
 
 **Chicago Speed Cameras — final research release**
 
-- Causal paper: one 21-page PDF, 11 figures and 6 tables.
+- Causal paper: one 22-page PDF, 11 figures and 6 tables.
 - Deployed forecasting model: LightGBM V1; V2 and hybrid experiments retained as
   documented negative results, not deployed.
 - Seven-page Streamlit research dashboard with local run instructions; no public

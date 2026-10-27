@@ -3,3 +3,4 @@
 *.jpg binary
 *.parquet binary
 *.docx binary
+*.svg -whitespace

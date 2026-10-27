@@ -39,6 +39,7 @@ TOC_ENTRIES = [
     "5. Geospatial matching and treatment definition",
     "6. Statistical models",
     "7. Causal results",
+    "7.2 How Research Design Changes the Estimated Effect",
     "8. Robustness and sensitivity analysis",
     "9. Crash forecasting using LightGBM",
     "10. Prediction evaluation and uncertainty",
@@ -48,6 +49,16 @@ TOC_ENTRIES = [
     "References",
     "Appendix A — Reproducibility",
 ]
+
+TABLE_WIDTHS = [
+    ("1.15in", "0.70in", "0.65in", "1.05in", "1.45in", "1.30in"),
+    ("2.00in", "1.70in", "1.70in"),
+    ("2.20in", "1.75in", "1.45in", "0.65in"),
+    ("2.15in", "0.75in", "1.00in", "1.55in", "0.65in"),
+    ("2.90in", "1.40in", "1.40in"),
+    ("2.10in", "1.10in", "1.10in", "0.90in", "0.70in"),
+]
+TABLE_INSETS = ["3.8pt", "4.0pt", "4.2pt", "3.2pt", "4.0pt", "4.0pt"]
 
 NAVY = RGBColor(0x1F, 0x3A, 0x5F)
 CHARCOAL = RGBColor(0x2B, 0x2F, 0x33)
@@ -90,6 +101,28 @@ def run(command: list[str], cwd: Path = PAPER) -> None:
     subprocess.run(command, cwd=cwd, check=True)
 
 
+def style_tables(typ: str) -> str:
+    """Give each Markdown table explicit column widths and academic spacing."""
+    pattern = re.compile(
+        r"#figure\(\n  align\(center\)\[#table\(\n.*?\n  \)\]\n  , kind: table\n  \)",
+        re.DOTALL,
+    )
+    matches = list(pattern.finditer(typ))
+    if len(matches) != len(TABLE_WIDTHS):
+        raise RuntimeError(f"expected six tables; found {len(matches)}")
+    for match, widths, inset in reversed(list(zip(matches, TABLE_WIDTHS, TABLE_INSETS))):
+        block = match.group(0)
+        columns = ", ".join(widths)
+        block = re.sub(
+            r"    columns: [^\n]+,",
+            f"    columns: ({columns}),\n    inset: {inset},",
+            block,
+            count=1,
+        )
+        typ = typ[: match.start()] + block + typ[match.end() :]
+    return typ
+
+
 def build_pdf(body: Path) -> None:
     body_typ = BUILD / "body.typ"
     run([
@@ -99,7 +132,13 @@ def build_pdf(body: Path) -> None:
     typ = body_typ.read_text().replace('image("figures/', 'image("../figures/')
     # Pandoc emits the source image size; make every research figure fill the
     # text measure so small labels remain legible in print and on screen.
-    typ = re.sub(r'image\("(\.\./figures/[^"]+)", alt:', r'image("\1", width: 6.2in, alt:', typ)
+    typ = re.sub(r'image\("(\.\./figures/[^"]+)", alt:', r'image("\1", width: 6.45in, alt:', typ)
+    typ = style_tables(typ)
+    # Keep the Section 8 caption and 17-row sensitivity table on one page.
+    table4_start = typ.index("#strong[Table 4. Causal-sensitivity specifications.]")
+    table4_end = typ.index("  , kind: table\n  )", table4_start) + len("  , kind: table\n  )")
+    table4_block = typ[table4_start:table4_end]
+    typ = typ[:table4_start] + "#block(breakable: false)[\n" + table4_block + "\n]" + typ[table4_end:]
     body_typ.write_text(typ)
     wrapper = BUILD / "paper.typ"
     wrapper.write_text(TEMPLATE.read_text())
