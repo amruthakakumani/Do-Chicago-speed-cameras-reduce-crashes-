@@ -9,6 +9,7 @@ hand-entered except the published original estimate, which is read from
 from __future__ import annotations
 
 import json
+import textwrap
 from pathlib import Path
 
 import matplotlib
@@ -36,18 +37,18 @@ TEAL = "#2a9d8f"
 plt.rcParams.update(
     {
         "font.family": "DejaVu Serif",
-        "font.size": 9,
-        "axes.titlesize": 10.5,
+        "font.size": 10.5,
+        "axes.titlesize": 12,
         "axes.titleweight": "semibold",
-        "axes.labelsize": 9,
+        "axes.labelsize": 10.5,
         "axes.edgecolor": MUTED,
         "axes.labelcolor": INK,
         "xtick.color": INK,
         "ytick.color": INK,
-        "xtick.labelsize": 8,
-        "ytick.labelsize": 8,
+        "xtick.labelsize": 9.5,
+        "ytick.labelsize": 9.5,
         "legend.frameon": False,
-        "legend.fontsize": 8,
+        "legend.fontsize": 9.5,
         "axes.grid": True,
         "grid.color": GRID,
         "grid.linewidth": 0.6,
@@ -59,7 +60,7 @@ plt.rcParams.update(
 
 
 def save(fig: plt.Figure, name: str, note: str) -> None:
-    fig.text(0.01, -0.02, note, fontsize=6.8, color=MUTED, ha="left", va="top")
+    fig.text(0.01, -0.02, textwrap.fill(note, 100), fontsize=8.0, color=MUTED, ha="left", va="top")
     for suffix in ("png", "svg"):
         fig.savefig(OUT / f"{name}.{suffix}", bbox_inches="tight", dpi=300)
     plt.close(fig)
@@ -81,11 +82,11 @@ def figure1_map() -> None:
     controls = sites.loc[sites["role"] == "comparison site"]
     matched = sites.loc[sites["role"] == "matched camera"]
 
-    fig, ax = plt.subplots(figsize=(7.2, 8.8))
+    fig, ax = plt.subplots(figsize=(7.2, 6.4))
     ax.hexbin(crashes["x"], crashes["y"], gridsize=95, cmap="Greys", mincnt=1, alpha=0.28, linewidths=0)
-    ax.scatter(cameras["x"], cameras["y"], s=15, marker="^", c=MUTED, alpha=0.55, label="Camera (all 209)")
-    ax.scatter(matched["x"], matched["y"], s=36, marker="^", c=RED, edgecolor="white", linewidth=0.4, label="Matched camera (20)")
-    ax.scatter(controls["x"], controls["y"], s=10, c=BLUE, alpha=0.55, linewidth=0, label="Comparison site (1,226)")
+    ax.scatter(cameras["x"], cameras["y"], s=20, marker="^", c=MUTED, alpha=0.62, label="Camera (all 209)")
+    ax.scatter(matched["x"], matched["y"], s=48, marker="^", c=RED, edgecolor="white", linewidth=0.5, label="Matched camera (20)")
+    ax.scatter(controls["x"], controls["y"], s=13, c=BLUE, alpha=0.65, linewidth=0, label="Comparison site (1,226)")
     x0, y0 = _km_axes(ax, np.r_[cameras["x"], controls["x"]], np.r_[cameras["y"], controls["y"]])
     ax.set_xticks(np.arange(0, 65, 5) * 1000 + x0)
     ax.set_yticks(np.arange(0, 55, 5) * 1000 + y0)
@@ -106,7 +107,7 @@ def figure2_overlap() -> None:
     cameras = pd.read_parquet(ROOT / "data/processed/cameras.parquet")
     xy = cameras[["x", "y"]].to_numpy(float)
     pairs = np.array(sorted(cKDTree(xy).query_pairs(500.0)), dtype=int)
-    fig, ax = plt.subplots(figsize=(7.2, 8.2))
+    fig, ax = plt.subplots(figsize=(7.2, 6.4))
     x0, y0 = _km_axes(ax, cameras["x"], cameras["y"])
     for a, b in pairs:
         ax.plot(
@@ -114,8 +115,8 @@ def figure2_overlap() -> None:
             color=GOLD, lw=0.8, alpha=0.7, zorder=1,
         )
     for x, y in xy:
-        ax.add_patch(Circle((x, y), 250, fill=False, edgecolor=BLUE, lw=0.35, alpha=0.35, zorder=0))
-    ax.scatter(xy[:, 0], xy[:, 1], s=14, c=RED, marker="^", edgecolor="white", linewidth=0.3, zorder=3)
+        ax.add_patch(Circle((x, y), 250, fill=False, edgecolor=BLUE, lw=0.5, alpha=0.45, zorder=0))
+    ax.scatter(xy[:, 0], xy[:, 1], s=20, c=RED, marker="^", edgecolor="white", linewidth=0.45, zorder=3)
     ax.set_xticks(np.arange(0, 65, 5) * 1000 + x0)
     ax.set_yticks(np.arange(0, 55, 5) * 1000 + y0)
     ax.set_xticklabels([f"{(value - x0) / 1000:.0f}" for value in ax.get_xticks()])
@@ -173,7 +174,7 @@ def figure3_causal() -> None:
         ("Keep overlapping cameras (33)", *sens("Keep overlapping cameras")),
         ("2019+ cohorts only (15)", *sens("2019+ go-live cohorts only")),
     ]
-    fig, ax = plt.subplots(figsize=(9.8, 4.8))
+    fig, ax = plt.subplots(figsize=(7.6, 5.8))
     y = np.arange(len(rows))
     values = np.array([row[1] for row in rows])
     lows = np.array([row[2] for row in rows])
@@ -183,8 +184,8 @@ def figure3_causal() -> None:
     ax.scatter(values, y, c=colors[:len(rows)], s=50, zorder=3)
     ax.axvline(0, color=INK, lw=0.9)
     ax.set_yticks(y)
-    ax.set_yticklabels([row[0] for row in rows], fontsize=8)
-    ax.set_xlabel("Change in crashes (%)  ·  negative = fewer crashes")
+    ax.set_yticklabels([row[0] for row in rows], fontsize=9.3)
+    ax.set_xlabel("Change in crashes (%)  ·  negative = fewer crashes", fontsize=10.5)
     ax.set_title("Causal estimates under alternative defensible designs")
     ax.invert_yaxis()
     save(
@@ -199,7 +200,7 @@ def figure3_causal() -> None:
 def figure4_event_study() -> None:
     event = pd.read_csv(ROOT / "results/tables/event_study.csv")
     estimates = json.loads((ROOT / "results/estimates.json").read_text())
-    fig, ax = plt.subplots(figsize=(8.8, 4.0))
+    fig, ax = plt.subplots(figsize=(8.8, 4.6))
     ax.errorbar(
         event["quarter"], event["beta"],
         yerr=[event["beta"] - event["ci_low"], event["ci_high"] - event["beta"]],
@@ -228,7 +229,7 @@ def figure5_pretrends() -> None:
     panel = pd.read_parquet(ROOT / "results/analysis_panel.parquet")
     pre = panel.loc[panel["rel"] <= -1]
     agg = pre.groupby(["treated", "rel"])["y"].agg(["mean", "sem"]).reset_index()
-    fig, ax = plt.subplots(figsize=(8.4, 3.8))
+    fig, ax = plt.subplots(figsize=(8.6, 4.4))
     for treated, color, label in ((0, BLUE, "Matched comparison sites"), (1, RED, "Camera catchments")):
         subset = agg.loc[agg["treated"] == treated]
         ax.plot(subset["rel"], subset["mean"], color=color, lw=1.8, label=label)
@@ -305,7 +306,7 @@ def figure7_calibration() -> None:
             }
         )
     error_table = pd.DataFrame(errors)
-    fig, axes = plt.subplots(1, 2, figsize=(10.2, 3.8))
+    fig, axes = plt.subplots(1, 2, figsize=(8.8, 4.8))
     ax = axes[0]
     ax.plot(calibration["predicted_mean"], calibration["actual_mean"], "o-", color=BLUE, label="Deciles")
     upper = float(max(calibration["predicted_mean"].max(), calibration["actual_mean"].max())) * 1.1
@@ -334,7 +335,7 @@ def figure7_calibration() -> None:
 def figure8_intervals() -> None:
     metrics = json.loads((ROOT / "results/ml_v2/metrics.json").read_text())
     deciles = pd.DataFrame(metrics["conformal"]["interval_90"]["by_risk_decile"])
-    fig, ax = plt.subplots(figsize=(8.2, 3.9))
+    fig, ax = plt.subplots(figsize=(8.8, 4.4))
     x = np.arange(len(deciles)) + 1
     ax.bar(x, deciles["coverage"] * 100, color=BLUE, alpha=0.8, label="Empirical coverage")
     ax.axhline(90, color=RED, ls="--", lw=1.2, label="Nominal 90%")
@@ -364,7 +365,7 @@ def figure8_intervals() -> None:
 def figure9_reporting_coverage() -> None:
     table = pd.read_csv(ROOT / "results/bottom_up/coverage/monthly_coverage.csv", parse_dates=["month"])
     table = table.loc[table["month"] >= "2015-09-01"]
-    fig, ax = plt.subplots(figsize=(9.8, 3.8))
+    fig, ax = plt.subplots(figsize=(9.4, 4.8))
     ax.plot(table["month"], table["crashes"], color=INK, lw=1.5, label="Reported crashes")
     ax.axvline(pd.Timestamp("2017-09-01"), color=RED, ls="--", lw=1.2)
     ax.set_xlabel("Month")
@@ -390,7 +391,7 @@ def figure10_model_comparison() -> None:
     order = ["v1", "v2", "coverage_v1", "coverage_full", "coverage_tuned"]
     labels = ["Deployed V1", "V2 candidate", "Coverage V1", "Coverage full", "Coverage tuned"]
     table = table.set_index("model").loc[order]
-    fig, axes = plt.subplots(1, 2, figsize=(10.0, 3.7))
+    fig, axes = plt.subplots(1, 2, figsize=(8.8, 4.8))
     colors = [MUTED, BLUE, TEAL, TEAL, PURPLE]
     axes[0].bar(labels, table["mae"], color=colors)
     axes[0].set_ylabel("MAE")
@@ -412,7 +413,7 @@ def figure10_model_comparison() -> None:
 def figure11_road_intervals() -> None:
     metrics = json.loads((ROOT / "results/bottom_up/road_model/road_metrics.json").read_text())
     deciles = pd.DataFrame(metrics["interval_90"]["by_risk_decile"])
-    fig, ax = plt.subplots(figsize=(8.4, 3.6))
+    fig, ax = plt.subplots(figsize=(8.8, 4.2))
     ax.bar(deciles["risk_decile"] + 1, deciles["coverage"] * 100, color=BLUE, alpha=0.85)
     ax.axhline(90, color=RED, ls="--", lw=1.2, label="Nominal 90%")
     ax.set_ylim(50, 102)

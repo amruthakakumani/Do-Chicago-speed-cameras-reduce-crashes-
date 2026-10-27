@@ -4,7 +4,6 @@
 
 *Working paper · October 2026 · Not peer reviewed*
 
-*Affiliations and individual contribution roles are pending confirmation by both co-authors. No institutional endorsement is claimed.*
 
 ---
 
@@ -108,10 +107,6 @@ The 500 m lattice is a proxy for road exposure, not a road network. Candidate si
 
 *Figure 1. Chicago camera locations and matched comparison sites. Comparison sites are more than 600 m from every camera. Crash density is a 60,000-record sample.*
 
-![Overlapping catchments](figures/fig2_catchment_overlap.png)
-
-*Figure 2. Overlapping 250 m camera catchments. Gold segments join pairs less than 500 m apart; the primary design keeps the earliest camera in each overlap chain.*
-
 ---
 
 ## 6. Statistical models
@@ -134,7 +129,11 @@ The preferred count model conditions on each camera-month total. Let \(y_{0st}\)
 y_{0st} \mid N_{st} \sim \text{Binomial}\left(N_{st}, \frac{\exp(\alpha_{st}+\tau \text{post}_{st})}{\exp(\alpha_{st}+\tau \text{post}_{st})+5}\right),
 \]
 
-which is the exact conditional likelihood of a Poisson model with a full set of camera-by-month fixed effects. The coefficient \(\tau\) is a log rate ratio; \(\exp(\tau)-1\) is the percent change. This absorbs every shock shared by a camera and its comparison sites, including citywide traffic and COVID-19.
+which is the exact conditional likelihood of a Poisson model with a full set of camera-by-month fixed effects. The coefficient \(\tau\) is a log rate ratio; \(\exp(\tau)-1\) is the percent change. Camera-by-month fixed effects absorb shocks genuinely common to a treated camera and its matched comparison sites within the same stack and month. They do not remove differential local shocks, unobserved time-varying confounding that differs between treated and control locations, or COVID-19 effects that vary geographically.
+
+![Overlapping catchments](figures/fig2_catchment_overlap.png)
+
+*Figure 2. Overlapping 250 m camera catchments. Gold segments join pairs less than 500 m apart; the primary design keeps the earliest camera in each overlap chain.*
 
 ### 6.3 Cohort 2×2 estimator
 
@@ -164,7 +163,9 @@ The original logic reproduces exactly on the current snapshot: 33 cameras, 11,88
 
 Applying the corrected projection to the same 33-camera sample gives −8.58% [−14.66%, −2.07%], p = 0.0105. The projection matters, but the larger change comes from local matching and overlap removal.
 
-### 7.2 Primary estimates
+### 7.2 How Research Design Changes the Estimated Effect
+
+The comparison below separates sample composition from estimator choice. The original, revised and coverage-consistent columns are different estimands: they use different samples and reporting windows, not alternative estimates of one fixed target.
 
 **Table 3. Causal estimates under the primary design.**
 
@@ -178,7 +179,7 @@ Applying the corrected projection to the same 33-camera sample gives −8.58% [�
 | Cohort 2×2 | −0.095 | [−0.735, +0.520] | 0.79 |
 | Wild cluster bootstrap p (FE OLS) | — | — | 0.72 |
 
-The naive comparison increases crashes by 4.7%, illustrating selection. The controlled estimates are negative but imprecise. The interval is compatible with a reduction of roughly one in nine crashes and an increase of roughly one in fourteen. With 20 treated units and shared comparison sites, the design cannot resolve modest effects.
+Percent effects are percentage changes; OLS and cohort coefficients are crashes per site-month. The naive comparison increases crashes by 4.7%, illustrating selection. The controlled estimates are negative but imprecise. The interval is compatible with a reduction of roughly one in nine crashes and an increase of roughly one in fourteen. With 20 treated units and shared comparison sites, the design cannot resolve modest effects.
 
 ![Causal estimates](figures/fig3_causal_estimates.png)
 
@@ -203,6 +204,8 @@ The synthetic control for the 2023-03 cohort has pre-period R² 0.742 and pre-RM
 ---
 
 ## 8. Robustness and sensitivity analysis
+
+The table reports alternative design, window, outcome and coverage specifications. It is a sensitivity analysis; none of these rows replaces the primary design.
 
 **Table 4. Causal-sensitivity specifications.**
 
@@ -312,13 +315,13 @@ The coverage-tuned model (78 features, 8 Optuna trials) reaches test MAE 1.5775 
 | Coverage full | 1.5786 | 1.2175 | +0.130 | 0.659 |
 | Coverage tuned | 1.5775 | 1.2162 | +0.127 | 0.660 |
 
-![Common-row model comparison](figures/fig10_model_comparison.png)
-
-*Figure 10. All models on 15,912 common camera-zone test rows. V1 remains deployed because the pre-declared 1% rule is not met.*
-
 ### 10.4 Road-segment experiment
 
 The road model achieves MAE 0.182, Poisson deviance 0.395 and R² 0.351 on 181,512 segment-months. Overall 90% interval coverage is 90.3%, but the highest-risk decile is **60.2%**; hotspot precision is 0.48 and recall 0.46. These figures describe a different unit and population with a 90% zero share and are not comparable to camera-zone MAE.
+
+![Common-row model comparison](figures/fig10_model_comparison.png)
+
+*Figure 10. All models on 15,912 common camera-zone test rows. V1 remains deployed because the pre-declared 1% rule is not met.*
 
 ![Road-task intervals](figures/fig11_road_intervals.png)
 
@@ -349,19 +352,17 @@ Three policy implications follow. First, do not cite the original −7.3% as a r
 1. **Non-random siting and regression to the mean.** Cameras are placed at high-crash sites; matching on pre-period level and slope reduces but cannot remove mean reversion.
 2. **Small treated sample.** Twenty cameras in the primary design; cluster-robust inference is fragile and confidence intervals are wide.
 3. **Reporting changes.** 2016 crash volume is roughly one third of 2018; differential reporting changes across neighbourhoods would bias the DiD.
-4. **No traffic exposure.** Crashes per catchment-month is not crashes per vehicle-mile.
+4. **No traffic exposure.** Crashes per catchment-month is not crashes per vehicle-mile. The public AADT extract begins in 2022-07, not 2020-10, and covers only 1,454 distinct 2024 road segments within 50 m.
 5. **Spillover and displacement.** The buffer prevents catchment overlap, not behavioural spillover or crash migration.
 6. **Treatment timing.** Go-live dates are monthly; warning periods and downtime are unobserved.
 7. **Synthetic control.** Moderate pre-fit and opposite sign; it neither confirms nor overturns the DiD.
-8. **Test-period reuse.** The 2025-09 … 2026-08 period was inspected in V1; V2 test numbers are retrospective, not a new untouched confirmation.
+8. **Test-period reuse.** The 2025-09 … 2026-08 period was inspected in V1; all V2 and coverage-consistent test results are retrospective, not a new untouched confirmation.
 9. **Forecasting geography.** The location set is crash-dense and non-random; accuracy elsewhere is unknown.
 10. **Interval conditional coverage.** The highest-risk decile is covered at 84.8%, below the nominal 90%.
 11. **V2 not deployed.** V2 fails the pre-declared 1% validation rule; it is a research candidate.
 12. **Road-network vintage.** 2024 TIGER geometry is assumed time-invariant for 2017–2025.
 13. **Reporting regime.** The publication causal panel and V1/V2 target include months before citywide reporting; the coverage-consistent estimate is a different, 15-camera sample.
-14. **Exposure.** The public AADT extract begins in 2022-07, not 2020-10, and covers only 1,454 distinct 2024 road segments within 50 m.
-15. **Road-task ambiguity.** 34.0% of road assignments have a second segment within 5 m; road and camera-zone MAE are not comparable.
-16. **Test-period reuse.** All V2 and coverage-consistent test results are retrospective; the period was already inspected in V1.
+14. **Road-task ambiguity.** 34.0% of road assignments have a second segment within 5 m; road and camera-zone MAE are not comparable.
 
 ---
 
@@ -446,8 +447,10 @@ streamlit run dashboard/app.py
 - **Data provenance:** `data/raw/provenance.json`, `data/raw/tiger/provenance.json`.
 - **Seeds:** 20261024 for all stochastic procedures; deterministic LightGBM settings.
 - **Bottom-up artifacts:** `results/bottom_up/` and `docs/BOTTOM_UP_AUDIT.md`.
-- **Tests:** 63 pass; CI runs the suite without downloading the crash data.
+- **Tests:** 67 collected; 66 passed, 1 skipped (V2 binary-artifact metadata test); CI runs the suite without downloading the crash data.
 - **Original notebook:** preserved unchanged at the repository root.
 - **Model decision:** V1 deployed; V2 candidate retained under the pre-declared rule.
 
 All figures in this paper are generated by `scripts/make_publication_figures.py` from saved results and cleaned data. No values are hand-entered except the published original estimate, which is read from `results/estimates.json`, and the coverage-consistent estimates, which are read from `results/bottom_up/coverage_causal/estimates.json`.
+
+The public release is `v1.0.0`; citation metadata and the MIT license are in `CITATION.cff` and `LICENSE`. The PDF is the only public manuscript export; the retained source is for reproducible regeneration.

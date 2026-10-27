@@ -24,10 +24,11 @@
 #set figure(gap: 0.45em)
 #show figure.caption: set text(size: 8.6pt, style: "italic", fill: muted)
 #show table: it => {
-  set text(size: 8.0pt, hyphenate: false)
+  set text(size: 8.5pt, hyphenate: false)
   it
 }
-#set table(inset: 3.5pt, stroke: 0.35pt + rule)
+#show table.cell.where(y: 0): set text(weight: "bold", fill: navy)
+#set table(inset: 4.0pt, stroke: 0.35pt + rule)
 #set list(spacing: 0.55em)
 
 // Cover
@@ -84,10 +85,6 @@
   #v(1.15in)
   #line(length: 100%, stroke: 0.4pt + rule)
   #v(0.25in)
-  #text(font: "Avenir Next", size: 9.2pt, fill: muted)[
-    Affiliations, verified individual contributions, and correspondence details are withheld pending written approval from both co-authors. No university affiliation or contribution is asserted.
-  ]
-  #v(0.28in)
   #text(font: "Georgia", size: 9.6pt, style: "italic", fill: charcoal)[
     “This manuscript is an independent research working paper and has not undergone formal peer review.”
   ]
