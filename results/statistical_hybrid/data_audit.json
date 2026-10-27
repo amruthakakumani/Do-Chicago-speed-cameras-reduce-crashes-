@@ -1,0 +1,979 @@
+{
+  "camera_locations": 129,
+  "comparison_locations": 1197,
+  "data_fingerprint_sha256": "978946729dcf7b5ec0f9df1b1fcb5134cfcebbc1a638e789ffaee59ab43cec8c",
+  "feature_redundancy_abs_corr_ge_0_90": [
+    {
+      "correlation": 0.9307633008204704,
+      "feature_a": "roll_mean_3",
+      "feature_b": "roll_mean_12"
+    },
+    {
+      "correlation": 0.9016786654300261,
+      "feature_a": "roll_mean_3",
+      "feature_b": "expanding_mean"
+    },
+    {
+      "correlation": 0.9666160297918776,
+      "feature_a": "roll_mean_12",
+      "feature_b": "expanding_mean"
+    }
+  ],
+  "locations": 1326,
+  "max_target": 53,
+  "min_location_spacing_m": 500.0,
+  "monthly": [
+    {
+      "crashes": 5266,
+      "mean": 3.971342383107089,
+      "month": "2018-01-01 00:00:00",
+      "month_of_year": 1,
+      "zeros": 142
+    },
+    {
+      "crashes": 4940,
+      "mean": 3.7254901960784315,
+      "month": "2018-02-01 00:00:00",
+      "month_of_year": 2,
+      "zeros": 156
+    },
+    {
+      "crashes": 5231,
+      "mean": 3.944947209653092,
+      "month": "2018-03-01 00:00:00",
+      "month_of_year": 3,
+      "zeros": 142
+    },
+    {
+      "crashes": 5444,
+      "mean": 4.105580693815988,
+      "month": "2018-04-01 00:00:00",
+      "month_of_year": 4,
+      "zeros": 128
+    },
+    {
+      "crashes": 6007,
+      "mean": 4.530165912518854,
+      "month": "2018-05-01 00:00:00",
+      "month_of_year": 5,
+      "zeros": 110
+    },
+    {
+      "crashes": 5933,
+      "mean": 4.4743589743589745,
+      "month": "2018-06-01 00:00:00",
+      "month_of_year": 6,
+      "zeros": 116
+    },
+    {
+      "crashes": 5855,
+      "mean": 4.41553544494721,
+      "month": "2018-07-01 00:00:00",
+      "month_of_year": 7,
+      "zeros": 122
+    },
+    {
+      "crashes": 5668,
+      "mean": 4.2745098039215685,
+      "month": "2018-08-01 00:00:00",
+      "month_of_year": 8,
+      "zeros": 122
+    },
+    {
+      "crashes": 5475,
+      "mean": 4.1289592760181,
+      "month": "2018-09-01 00:00:00",
+      "month_of_year": 9,
+      "zeros": 120
+    },
+    {
+      "crashes": 5794,
+      "mean": 4.369532428355957,
+      "month": "2018-10-01 00:00:00",
+      "month_of_year": 10,
+      "zeros": 115
+    },
+    {
+      "crashes": 5204,
+      "mean": 3.9245852187028656,
+      "month": "2018-11-01 00:00:00",
+      "month_of_year": 11,
+      "zeros": 134
+    },
+    {
+      "crashes": 5557,
+      "mean": 4.19079939668175,
+      "month": "2018-12-01 00:00:00",
+      "month_of_year": 12,
+      "zeros": 144
+    },
+    {
+      "crashes": 5084,
+      "mean": 3.834087481146305,
+      "month": "2019-01-01 00:00:00",
+      "month_of_year": 1,
+      "zeros": 139
+    },
+    {
+      "crashes": 4734,
+      "mean": 3.570135746606335,
+      "month": "2019-02-01 00:00:00",
+      "month_of_year": 2,
+      "zeros": 167
+    },
+    {
+      "crashes": 5499,
+      "mean": 4.147058823529412,
+      "month": "2019-03-01 00:00:00",
+      "month_of_year": 3,
+      "zeros": 127
+    },
+    {
+      "crashes": 5288,
+      "mean": 3.9879336349924586,
+      "month": "2019-04-01 00:00:00",
+      "month_of_year": 4,
+      "zeros": 140
+    },
+    {
+      "crashes": 5961,
+      "mean": 4.495475113122172,
+      "month": "2019-05-01 00:00:00",
+      "month_of_year": 5,
+      "zeros": 114
+    },
+    {
+      "crashes": 5869,
+      "mean": 4.426093514328809,
+      "month": "2019-06-01 00:00:00",
+      "month_of_year": 6,
+      "zeros": 125
+    },
+    {
+      "crashes": 5992,
+      "mean": 4.5188536953242835,
+      "month": "2019-07-01 00:00:00",
+      "month_of_year": 7,
+      "zeros": 116
+    },
+    {
+      "crashes": 5437,
+      "mean": 4.100301659125188,
+      "month": "2019-08-01 00:00:00",
+      "month_of_year": 8,
+      "zeros": 134
+    },
+    {
+      "crashes": 5413,
+      "mean": 4.082202111613876,
+      "month": "2019-09-01 00:00:00",
+      "month_of_year": 9,
+      "zeros": 131
+    },
+    {
+      "crashes": 5502,
+      "mean": 4.149321266968326,
+      "month": "2019-10-01 00:00:00",
+      "month_of_year": 10,
+      "zeros": 137
+    },
+    {
+      "crashes": 5327,
+      "mean": 4.017345399698341,
+      "month": "2019-11-01 00:00:00",
+      "month_of_year": 11,
+      "zeros": 133
+    },
+    {
+      "crashes": 5264,
+      "mean": 3.9698340874811464,
+      "month": "2019-12-01 00:00:00",
+      "month_of_year": 12,
+      "zeros": 161
+    },
+    {
+      "crashes": 4900,
+      "mean": 3.695324283559578,
+      "month": "2020-01-01 00:00:00",
+      "month_of_year": 1,
+      "zeros": 160
+    },
+    {
+      "crashes": 5047,
+      "mean": 3.806184012066365,
+      "month": "2020-02-01 00:00:00",
+      "month_of_year": 2,
+      "zeros": 132
+    },
+    {
+      "crashes": 3758,
+      "mean": 2.834087481146305,
+      "month": "2020-03-01 00:00:00",
+      "month_of_year": 3,
+      "zeros": 207
+    },
+    {
+      "crashes": 2616,
+      "mean": 1.9728506787330318,
+      "month": "2020-04-01 00:00:00",
+      "month_of_year": 4,
+      "zeros": 350
+    },
+    {
+      "crashes": 3776,
+      "mean": 2.847662141779789,
+      "month": "2020-05-01 00:00:00",
+      "month_of_year": 5,
+      "zeros": 242
+    },
+    {
+      "crashes": 4471,
+      "mean": 3.371794871794872,
+      "month": "2020-06-01 00:00:00",
+      "month_of_year": 6,
+      "zeros": 167
+    },
+    {
+      "crashes": 5222,
+      "mean": 3.93815987933635,
+      "month": "2020-07-01 00:00:00",
+      "month_of_year": 7,
+      "zeros": 150
+    },
+    {
+      "crashes": 5256,
+      "mean": 3.9638009049773757,
+      "month": "2020-08-01 00:00:00",
+      "month_of_year": 8,
+      "zeros": 131
+    },
+    {
+      "crashes": 4788,
+      "mean": 3.6108597285067874,
+      "month": "2020-09-01 00:00:00",
+      "month_of_year": 9,
+      "zeros": 176
+    },
+    {
+      "crashes": 4841,
+      "mean": 3.6508295625942684,
+      "month": "2020-10-01 00:00:00",
+      "month_of_year": 10,
+      "zeros": 141
+    },
+    {
+      "crashes": 3957,
+      "mean": 2.984162895927602,
+      "month": "2020-11-01 00:00:00",
+      "month_of_year": 11,
+      "zeros": 205
+    },
+    {
+      "crashes": 4132,
+      "mean": 3.1161387631975868,
+      "month": "2020-12-01 00:00:00",
+      "month_of_year": 12,
+      "zeros": 185
+    },
+    {
+      "crashes": 4147,
+      "mean": 3.127450980392157,
+      "month": "2021-01-01 00:00:00",
+      "month_of_year": 1,
+      "zeros": 196
+    },
+    {
+      "crashes": 4849,
+      "mean": 3.656862745098039,
+      "month": "2021-02-01 00:00:00",
+      "month_of_year": 2,
+      "zeros": 146
+    },
+    {
+      "crashes": 4376,
+      "mean": 3.300150829562594,
+      "month": "2021-03-01 00:00:00",
+      "month_of_year": 3,
+      "zeros": 174
+    },
+    {
+      "crashes": 4698,
+      "mean": 3.5429864253393664,
+      "month": "2021-04-01 00:00:00",
+      "month_of_year": 4,
+      "zeros": 158
+    },
+    {
+      "crashes": 5437,
+      "mean": 4.100301659125188,
+      "month": "2021-05-01 00:00:00",
+      "month_of_year": 5,
+      "zeros": 122
+    },
+    {
+      "crashes": 5867,
+      "mean": 4.424585218702866,
+      "month": "2021-06-01 00:00:00",
+      "month_of_year": 6,
+      "zeros": 106
+    },
+    {
+      "crashes": 5707,
+      "mean": 4.303921568627451,
+      "month": "2021-07-01 00:00:00",
+      "month_of_year": 7,
+      "zeros": 100
+    },
+    {
+      "crashes": 5666,
+      "mean": 4.273001508295626,
+      "month": "2021-08-01 00:00:00",
+      "month_of_year": 8,
+      "zeros": 121
+    },
+    {
+      "crashes": 5581,
+      "mean": 4.208898944193062,
+      "month": "2021-09-01 00:00:00",
+      "month_of_year": 9,
+      "zeros": 124
+    },
+    {
+      "crashes": 5797,
+      "mean": 4.371794871794871,
+      "month": "2021-10-01 00:00:00",
+      "month_of_year": 10,
+      "zeros": 100
+    },
+    {
+      "crashes": 4928,
+      "mean": 3.7164404223227754,
+      "month": "2021-11-01 00:00:00",
+      "month_of_year": 11,
+      "zeros": 131
+    },
+    {
+      "crashes": 4829,
+      "mean": 3.6417797888386123,
+      "month": "2021-12-01 00:00:00",
+      "month_of_year": 12,
+      "zeros": 167
+    },
+    {
+      "crashes": 4588,
+      "mean": 3.460030165912519,
+      "month": "2022-01-01 00:00:00",
+      "month_of_year": 1,
+      "zeros": 161
+    },
+    {
+      "crashes": 4586,
+      "mean": 3.4585218702865763,
+      "month": "2022-02-01 00:00:00",
+      "month_of_year": 2,
+      "zeros": 152
+    },
+    {
+      "crashes": 4815,
+      "mean": 3.6312217194570136,
+      "month": "2022-03-01 00:00:00",
+      "month_of_year": 3,
+      "zeros": 147
+    },
+    {
+      "crashes": 4850,
+      "mean": 3.6576168929110104,
+      "month": "2022-04-01 00:00:00",
+      "month_of_year": 4,
+      "zeros": 142
+    },
+    {
+      "crashes": 5609,
+      "mean": 4.2300150829562595,
+      "month": "2022-05-01 00:00:00",
+      "month_of_year": 5,
+      "zeros": 116
+    },
+    {
+      "crashes": 5445,
+      "mean": 4.106334841628959,
+      "month": "2022-06-01 00:00:00",
+      "month_of_year": 6,
+      "zeros": 128
+    },
+    {
+      "crashes": 5269,
+      "mean": 3.973604826546003,
+      "month": "2022-07-01 00:00:00",
+      "month_of_year": 7,
+      "zeros": 129
+    },
+    {
+      "crashes": 5198,
+      "mean": 3.9200603318250375,
+      "month": "2022-08-01 00:00:00",
+      "month_of_year": 8,
+      "zeros": 128
+    },
+    {
+      "crashes": 5390,
+      "mean": 4.064856711915535,
+      "month": "2022-09-01 00:00:00",
+      "month_of_year": 9,
+      "zeros": 127
+    },
+    {
+      "crashes": 5480,
+      "mean": 4.132730015082957,
+      "month": "2022-10-01 00:00:00",
+      "month_of_year": 10,
+      "zeros": 124
+    },
+    {
+      "crashes": 4942,
+      "mean": 3.726998491704374,
+      "month": "2022-11-01 00:00:00",
+      "month_of_year": 11,
+      "zeros": 143
+    },
+    {
+      "crashes": 4969,
+      "mean": 3.7473604826546003,
+      "month": "2022-12-01 00:00:00",
+      "month_of_year": 12,
+      "zeros": 122
+    },
+    {
+      "crashes": 4557,
+      "mean": 3.436651583710407,
+      "month": "2023-01-01 00:00:00",
+      "month_of_year": 1,
+      "zeros": 158
+    },
+    {
+      "crashes": 4503,
+      "mean": 3.3959276018099547,
+      "month": "2023-02-01 00:00:00",
+      "month_of_year": 2,
+      "zeros": 167
+    },
+    {
+      "crashes": 4971,
+      "mean": 3.748868778280543,
+      "month": "2023-03-01 00:00:00",
+      "month_of_year": 3,
+      "zeros": 130
+    },
+    {
+      "crashes": 5137,
+      "mean": 3.874057315233786,
+      "month": "2023-04-01 00:00:00",
+      "month_of_year": 4,
+      "zeros": 137
+    },
+    {
+      "crashes": 5682,
+      "mean": 4.285067873303167,
+      "month": "2023-05-01 00:00:00",
+      "month_of_year": 5,
+      "zeros": 110
+    },
+    {
+      "crashes": 5405,
+      "mean": 4.076168929110105,
+      "month": "2023-06-01 00:00:00",
+      "month_of_year": 6,
+      "zeros": 133
+    },
+    {
+      "crashes": 5370,
+      "mean": 4.049773755656108,
+      "month": "2023-07-01 00:00:00",
+      "month_of_year": 7,
+      "zeros": 118
+    },
+    {
+      "crashes": 5627,
+      "mean": 4.243589743589744,
+      "month": "2023-08-01 00:00:00",
+      "month_of_year": 8,
+      "zeros": 98
+    },
+    {
+      "crashes": 5373,
+      "mean": 4.052036199095022,
+      "month": "2023-09-01 00:00:00",
+      "month_of_year": 9,
+      "zeros": 135
+    },
+    {
+      "crashes": 5606,
+      "mean": 4.2277526395173455,
+      "month": "2023-10-01 00:00:00",
+      "month_of_year": 10,
+      "zeros": 124
+    },
+    {
+      "crashes": 4852,
+      "mean": 3.659125188536953,
+      "month": "2023-11-01 00:00:00",
+      "month_of_year": 11,
+      "zeros": 136
+    },
+    {
+      "crashes": 5081,
+      "mean": 3.831825037707391,
+      "month": "2023-12-01 00:00:00",
+      "month_of_year": 12,
+      "zeros": 146
+    },
+    {
+      "crashes": 4644,
+      "mean": 3.502262443438914,
+      "month": "2024-01-01 00:00:00",
+      "month_of_year": 1,
+      "zeros": 157
+    },
+    {
+      "crashes": 4394,
+      "mean": 3.3137254901960786,
+      "month": "2024-02-01 00:00:00",
+      "month_of_year": 2,
+      "zeros": 159
+    },
+    {
+      "crashes": 4973,
+      "mean": 3.7503770739064857,
+      "month": "2024-03-01 00:00:00",
+      "month_of_year": 3,
+      "zeros": 135
+    },
+    {
+      "crashes": 5244,
+      "mean": 3.9547511312217196,
+      "month": "2024-04-01 00:00:00",
+      "month_of_year": 4,
+      "zeros": 137
+    },
+    {
+      "crashes": 6008,
+      "mean": 4.530920060331825,
+      "month": "2024-05-01 00:00:00",
+      "month_of_year": 5,
+      "zeros": 105
+    },
+    {
+      "crashes": 5696,
+      "mean": 4.295625942684766,
+      "month": "2024-06-01 00:00:00",
+      "month_of_year": 6,
+      "zeros": 121
+    },
+    {
+      "crashes": 5329,
+      "mean": 4.0188536953242835,
+      "month": "2024-07-01 00:00:00",
+      "month_of_year": 7,
+      "zeros": 120
+    },
+    {
+      "crashes": 5562,
+      "mean": 4.1945701357466065,
+      "month": "2024-08-01 00:00:00",
+      "month_of_year": 8,
+      "zeros": 136
+    },
+    {
+      "crashes": 5522,
+      "mean": 4.164404223227753,
+      "month": "2024-09-01 00:00:00",
+      "month_of_year": 9,
+      "zeros": 107
+    },
+    {
+      "crashes": 5648,
+      "mean": 4.259426847662142,
+      "month": "2024-10-01 00:00:00",
+      "month_of_year": 10,
+      "zeros": 127
+    },
+    {
+      "crashes": 5039,
+      "mean": 3.800150829562594,
+      "month": "2024-11-01 00:00:00",
+      "month_of_year": 11,
+      "zeros": 155
+    },
+    {
+      "crashes": 4925,
+      "mean": 3.7141779788838614,
+      "month": "2024-12-01 00:00:00",
+      "month_of_year": 12,
+      "zeros": 141
+    },
+    {
+      "crashes": 4628,
+      "mean": 3.4901960784313726,
+      "month": "2025-01-01 00:00:00",
+      "month_of_year": 1,
+      "zeros": 155
+    },
+    {
+      "crashes": 4349,
+      "mean": 3.279788838612368,
+      "month": "2025-02-01 00:00:00",
+      "month_of_year": 2,
+      "zeros": 160
+    },
+    {
+      "crashes": 4937,
+      "mean": 3.7232277526395174,
+      "month": "2025-03-01 00:00:00",
+      "month_of_year": 3,
+      "zeros": 145
+    },
+    {
+      "crashes": 5058,
+      "mean": 3.81447963800905,
+      "month": "2025-04-01 00:00:00",
+      "month_of_year": 4,
+      "zeros": 145
+    },
+    {
+      "crashes": 5683,
+      "mean": 4.285822021116139,
+      "month": "2025-05-01 00:00:00",
+      "month_of_year": 5,
+      "zeros": 130
+    },
+    {
+      "crashes": 5674,
+      "mean": 4.279034690799397,
+      "month": "2025-06-01 00:00:00",
+      "month_of_year": 6,
+      "zeros": 126
+    },
+    {
+      "crashes": 5486,
+      "mean": 4.137254901960785,
+      "month": "2025-07-01 00:00:00",
+      "month_of_year": 7,
+      "zeros": 148
+    },
+    {
+      "crashes": 5697,
+      "mean": 4.296380090497737,
+      "month": "2025-08-01 00:00:00",
+      "month_of_year": 8,
+      "zeros": 116
+    },
+    {
+      "crashes": 5127,
+      "mean": 3.8665158371040724,
+      "month": "2025-09-01 00:00:00",
+      "month_of_year": 9,
+      "zeros": 140
+    },
+    {
+      "crashes": 4994,
+      "mean": 3.766214177978884,
+      "month": "2025-10-01 00:00:00",
+      "month_of_year": 10,
+      "zeros": 137
+    },
+    {
+      "crashes": 4745,
+      "mean": 3.5784313725490198,
+      "month": "2025-11-01 00:00:00",
+      "month_of_year": 11,
+      "zeros": 151
+    },
+    {
+      "crashes": 4811,
+      "mean": 3.628205128205128,
+      "month": "2025-12-01 00:00:00",
+      "month_of_year": 12,
+      "zeros": 151
+    },
+    {
+      "crashes": 5392,
+      "mean": 4.066365007541478,
+      "month": "2026-01-01 00:00:00",
+      "month_of_year": 1,
+      "zeros": 114
+    },
+    {
+      "crashes": 4317,
+      "mean": 3.255656108597285,
+      "month": "2026-02-01 00:00:00",
+      "month_of_year": 2,
+      "zeros": 192
+    },
+    {
+      "crashes": 4856,
+      "mean": 3.6621417797888385,
+      "month": "2026-03-01 00:00:00",
+      "month_of_year": 3,
+      "zeros": 178
+    },
+    {
+      "crashes": 5076,
+      "mean": 3.828054298642534,
+      "month": "2026-04-01 00:00:00",
+      "month_of_year": 4,
+      "zeros": 150
+    },
+    {
+      "crashes": 5548,
+      "mean": 4.184012066365008,
+      "month": "2026-05-01 00:00:00",
+      "month_of_year": 5,
+      "zeros": 114
+    },
+    {
+      "crashes": 5433,
+      "mean": 4.097285067873303,
+      "month": "2026-06-01 00:00:00",
+      "month_of_year": 6,
+      "zeros": 130
+    },
+    {
+      "crashes": 5377,
+      "mean": 4.055052790346908,
+      "month": "2026-07-01 00:00:00",
+      "month_of_year": 7,
+      "zeros": 130
+    },
+    {
+      "crashes": 5305,
+      "mean": 4.000754147812971,
+      "month": "2026-08-01 00:00:00",
+      "month_of_year": 8,
+      "zeros": 130
+    }
+  ],
+  "months": 104,
+  "nb_missing": [
+    {
+      "feature": "lag_1",
+      "missing_share": 0.0
+    },
+    {
+      "feature": "lag_3",
+      "missing_share": 0.0
+    },
+    {
+      "feature": "roll_mean_3",
+      "missing_share": 0.0
+    },
+    {
+      "feature": "roll_mean_12",
+      "missing_share": 0.038461538461538464
+    },
+    {
+      "feature": "expanding_mean",
+      "missing_share": 0.0
+    },
+    {
+      "feature": "roll_std_12",
+      "missing_share": 0.038461538461538464
+    },
+    {
+      "feature": "zero_share_12",
+      "missing_share": 0.019230769230769232
+    },
+    {
+      "feature": "trend_12",
+      "missing_share": 0.038461538461538464
+    },
+    {
+      "feature": "seasonal_ratio",
+      "missing_share": 0.07692307692307693
+    },
+    {
+      "feature": "trend_6",
+      "missing_share": 0.0
+    },
+    {
+      "feature": "injury_share_12",
+      "missing_share": 0.019281529179719224
+    },
+    {
+      "feature": "month_sin",
+      "missing_share": 0.0
+    },
+    {
+      "feature": "month_cos",
+      "missing_share": 0.0
+    },
+    {
+      "feature": "is_covid",
+      "missing_share": 0.0
+    },
+    {
+      "feature": "temp_lag1",
+      "missing_share": 0.0
+    },
+    {
+      "feature": "precip_lag1",
+      "missing_share": 0.0
+    },
+    {
+      "feature": "snow_lag1",
+      "missing_share": 0.0
+    },
+    {
+      "feature": "camera_operational",
+      "missing_share": 0.0
+    },
+    {
+      "feature": "n_cameras_1km",
+      "missing_share": 0.0
+    },
+    {
+      "feature": "dist_center_m",
+      "missing_share": 0.0
+    },
+    {
+      "feature": "road_density_500m_km_per_km2",
+      "missing_share": 0.0
+    },
+    {
+      "feature": "major_road_share_500m",
+      "missing_share": 0.0
+    },
+    {
+      "feature": "n_intersections_1000m",
+      "missing_share": 0.0
+    },
+    {
+      "feature": "dist_major_intersection_m",
+      "missing_share": 0.0
+    },
+    {
+      "feature": "neighbor_crash_mean_12",
+      "missing_share": 0.009615384615384616
+    },
+    {
+      "feature": "neighbor_crash_lag1",
+      "missing_share": 0.009615384615384616
+    }
+  ],
+  "overdispersion_variance_mean": 3.4377779846967216,
+  "rows": 137904,
+  "seasonal": [
+    {
+      "crashes": 4800.666666666667,
+      "month_of_year": 1
+    },
+    {
+      "crashes": 4635.444444444444,
+      "month_of_year": 2
+    },
+    {
+      "crashes": 4824.0,
+      "month_of_year": 3
+    },
+    {
+      "crashes": 4823.444444444444,
+      "month_of_year": 4
+    },
+    {
+      "crashes": 5523.444444444444,
+      "month_of_year": 5
+    },
+    {
+      "crashes": 5532.555555555556,
+      "month_of_year": 6
+    },
+    {
+      "crashes": 5511.888888888889,
+      "month_of_year": 7
+    },
+    {
+      "crashes": 5490.666666666667,
+      "month_of_year": 8
+    },
+    {
+      "crashes": 5333.625,
+      "month_of_year": 9
+    },
+    {
+      "crashes": 5457.75,
+      "month_of_year": 10
+    },
+    {
+      "crashes": 4874.25,
+      "month_of_year": 11
+    },
+    {
+      "crashes": 4946.0,
+      "month_of_year": 12
+    }
+  ],
+  "target_first": "2018-01-01",
+  "target_last": "2026-08-01",
+  "target_mean": 3.8807576284951852,
+  "target_variance": 13.341183139184606,
+  "test_first": "2025-09-01",
+  "test_last": "2026-08-01",
+  "test_rows": 15912,
+  "training_rows": 121992,
+  "year_stats": [
+    {
+      "crashes": 66374,
+      "mean": 4.171317244846657,
+      "year": 2018,
+      "zeros": 0.097473604826546
+    },
+    {
+      "crashes": 65370,
+      "mean": 4.108220211161387,
+      "year": 2019,
+      "zeros": 0.102061337355455
+    },
+    {
+      "crashes": 52764,
+      "mean": 3.3159879336349927,
+      "year": 2020,
+      "zeros": 0.14115133232780291
+    },
+    {
+      "crashes": 61882,
+      "mean": 3.8890145801910507,
+      "year": 2021,
+      "zeros": 0.10338109602815485
+    },
+    {
+      "crashes": 61141,
+      "mean": 3.8424459527400705,
+      "year": 2022,
+      "zeros": 0.10174710910005028
+    },
+    {
+      "crashes": 62164,
+      "mean": 3.906737053795877,
+      "year": 2023,
+      "zeros": 0.10005027652086476
+    },
+    {
+      "crashes": 62984,
+      "mean": 3.9582704876822525,
+      "year": 2024,
+      "zeros": 0.10055304172951232
+    },
+    {
+      "crashes": 61189,
+      "mean": 3.845462543991956,
+      "year": 2025,
+      "zeros": 0.10708898944193061
+    },
+    {
+      "crashes": 41304,
+      "mean": 3.8936651583710407,
+      "year": 2026,
+      "zeros": 0.10727752639517345
+    }
+  ],
+  "zero_share": 0.10673366979928066
+}

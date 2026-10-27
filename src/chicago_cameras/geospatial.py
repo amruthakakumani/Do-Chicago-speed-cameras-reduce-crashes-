@@ -9,8 +9,8 @@ that they can be unit-tested with synthetic fixtures.
 from __future__ import annotations
 
 import logging
+from collections.abc import Sequence
 from dataclasses import dataclass
-from typing import Sequence
 
 import numpy as np
 from pyproj import Transformer
@@ -162,7 +162,7 @@ def attribution_diagnostics(
     histogram = {int(k): int(v) for k, v in zip(*np.unique(observed, return_counts=True))}
     return AttributionDiagnostics(
         n_crashes=n_crashes,
-        n_assignments=int(len(crash_index)),
+        n_assignments=len(crash_index),
         n_shared_crashes=int((observed > 1).sum()),
         shared_share=float((observed > 1).sum()) / max(len(observed), 1),
         max_sites_per_crash=int(observed.max(initial=0)),

@@ -26,7 +26,7 @@ def load_config(path: str | Path = DEFAULT_CONFIG_PATH) -> dict[str, Any]:
     with config_path.open() as handle:
         config = yaml.safe_load(handle)
     if not isinstance(config, dict):
-        raise ValueError(f"{config_path} must contain a YAML mapping")
+        raise TypeError(f"{config_path} must contain a YAML mapping")
 
     missing = [section for section in REQUIRED_SECTIONS if section not in config]
     if missing:

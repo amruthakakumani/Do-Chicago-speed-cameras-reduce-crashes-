@@ -42,7 +42,7 @@ def geographic_split(
     frame = assign_blocks(locations, block_size_m=block_size_m)
     blocks = np.array(sorted(frame["block_id"].unique()))
     rng = np.random.default_rng(seed)
-    n_holdout = max(1, int(round(len(blocks) * holdout_fraction)))
+    n_holdout = max(1, round(len(blocks) * holdout_fraction))
     held_blocks = set(rng.choice(blocks, size=n_holdout, replace=False).tolist())
 
     holdout_mask = frame["block_id"].isin(held_blocks).to_numpy()
@@ -59,10 +59,10 @@ def geographic_split(
 
     info = {
         "block_size_m": block_size_m,
-        "n_blocks": int(len(blocks)),
-        "n_holdout_blocks": int(len(held_blocks)),
-        "n_train_locations": int(len(train)),
-        "n_holdout_locations": int(len(holdout)),
+        "n_blocks": len(blocks),
+        "n_holdout_blocks": len(held_blocks),
+        "n_train_locations": len(train),
+        "n_holdout_locations": len(holdout),
         "holdout_fraction_actual": float(len(holdout) / len(frame)),
         "buffer_m": buffer_m,
         "min_train_to_holdout_distance_m": float(distance[train_mask].min()),

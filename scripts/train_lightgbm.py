@@ -27,10 +27,10 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from chicago_cameras.config import load_config  # noqa: E402
-from chicago_cameras.ml.dataset import build_crash_grid, build_dataset  # noqa: E402
-from chicago_cameras.ml.evaluate import full_evaluation  # noqa: E402
-from chicago_cameras.ml.explain import (  # noqa: E402
+from chicago_cameras.config import load_config
+from chicago_cameras.ml.dataset import build_crash_grid, build_dataset
+from chicago_cameras.ml.evaluate import full_evaluation
+from chicago_cameras.ml.explain import (
     compute_shap_values,
     gain_importance,
     plot_actual_vs_predicted,
@@ -42,14 +42,14 @@ from chicago_cameras.ml.explain import (  # noqa: E402
     plot_shap_summary,
     plot_shap_waterfall,
 )
-from chicago_cameras.ml.predict import attach_predictions  # noqa: E402
-from chicago_cameras.ml.train import (  # noqa: E402
+from chicago_cameras.ml.predict import attach_predictions
+from chicago_cameras.ml.train import (
     model_metadata,
     save_model,
     train_final,
     write_metadata,
 )
-from chicago_cameras.ml.tune import run_tuning  # noqa: E402
+from chicago_cameras.ml.tune import run_tuning
 
 LOGGER = logging.getLogger("train_lightgbm")
 
@@ -106,7 +106,7 @@ def main() -> int:
     config = load_config(args.config)
     results_dir = ROOT / "results" / "ml"
     figures_dir = results_dir / "figures"
-    models_dir = ROOT / "models"
+    models_dir = ROOT / "models" / "v1"
     results_dir.mkdir(parents=True, exist_ok=True)
     figures_dir.mkdir(parents=True, exist_ok=True)
     models_dir.mkdir(parents=True, exist_ok=True)
@@ -264,7 +264,7 @@ def main() -> int:
     payload = {
         "generated_at_utc": pd.Timestamp.now(tz="UTC").isoformat(),
         "dataset": {
-            "rows": int(len(bundle.frame)),
+            "rows": len(bundle.frame),
             "train_rows": int((bundle.frame["split"] == "train").sum()),
             "test_rows": int((bundle.frame["split"] == "test").sum()),
             "locations": bundle.metadata["n_locations"],
@@ -301,7 +301,7 @@ def main() -> int:
                 / (1024**2 if platform.system() == "Darwin" else 1024),
                 1,
             ),
-            "rows_scored": int(len(predictions)),
+            "rows_scored": len(predictions),
         },
         "total_runtime_seconds": time.time() - started,
         "model_file": str(model_path.relative_to(ROOT)),

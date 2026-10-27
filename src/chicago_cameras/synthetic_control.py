@@ -94,7 +94,7 @@ class SyntheticControlFit:
             "rmspe_ratio": self.rmspe_ratio,
             "n_pre": self.n_pre,
             "n_post": self.n_post,
-            "n_donors": int(len(self.donor_rows)),
+            "n_donors": len(self.donor_rows),
             "top_weights": {
                 int(k): float(v)
                 for k, v in sorted(

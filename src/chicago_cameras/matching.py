@@ -137,7 +137,7 @@ def match_controls(
                 "mean_match_distance_m": float(np.mean(distances)),
                 "max_match_distance_m": float(np.max(distances)),
                 "match_score": best_score,
-                "n_candidates_in_radius": int(len(nearby)),
+                "n_candidates_in_radius": len(nearby),
                 "level_ref": level_ref,
                 "slope_ref": slope_ref,
                 "level_scale": level_scale,

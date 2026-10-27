@@ -96,7 +96,7 @@ def validate_panel(panel: pd.DataFrame, pre_months: int, post_months: int) -> di
         problems.append("negative crash counts")
     if panel.duplicated(subset=["stack", "unit", "rel"]).any():
         problems.append("duplicate stack-unit-month rows")
-    if not set(panel["rel"].unique()) == set(range(-pre_months, post_months)):
+    if set(panel["rel"].unique()) != set(range(-pre_months, post_months)):
         problems.append("event-time grid is incomplete")
 
     per_stack = panel.groupby("stack")["unit"].nunique()
@@ -112,7 +112,7 @@ def validate_panel(panel: pd.DataFrame, pre_months: int, post_months: int) -> di
     )
 
     return {
-        "n_rows": int(len(panel)),
+        "n_rows": len(panel),
         "n_stacks": int(panel["stack"].nunique()),
         "n_units": int(panel["unit"].nunique()),
         "controls_per_stack": {str(k): int(v) for k, v in (per_stack - 1).value_counts().sort_index().items()},

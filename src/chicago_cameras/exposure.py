@@ -24,7 +24,8 @@ class ExposureAuditConfig:
     quality_regime_start: str = "2026-05-01"
 
 
-def build_exposure_audit(config: ExposureAuditConfig = ExposureAuditConfig()) -> dict[str, Any]:
+def build_exposure_audit(config: ExposureAuditConfig | None = None) -> dict[str, Any]:
+    config = config or ExposureAuditConfig()
     monthly = pd.read_parquet(config.processed_dir / "aadt_segment_month.parquet")
     segments = pd.read_parquet(config.processed_dir / "aadt_segments.parquet")
     monthly["month"] = pd.to_datetime(monthly["month"])
@@ -94,7 +95,7 @@ def build_exposure_audit(config: ExposureAuditConfig = ExposureAuditConfig()) ->
         tree = cKDTree(xy)
         distance, _ = tree.query(camera_xy, k=1)
         camera_coverage = {
-            "n_cameras": int(len(cameras)),
+            "n_cameras": len(cameras),
             "cameras_with_segment_within_250m": int((distance <= 250).sum()),
             "share_with_segment_within_250m": float((distance <= 250).mean()),
             "cameras_with_segment_within_1000m": int((distance <= 1000).sum()),
@@ -111,8 +112,8 @@ def build_exposure_audit(config: ExposureAuditConfig = ExposureAuditConfig()) ->
         ),
         "actual_first_month": str(monthly["month"].min().date()),
         "actual_last_month": str(monthly["month"].max().date()),
-        "n_months": int(len(all_months)),
-        "n_rows": int(len(monthly)),
+        "n_months": len(all_months),
+        "n_rows": len(monthly),
         "n_segments": int(monthly["segmentid"].nunique()),
         "mean_adt_quantiles": {
             "p01": float(monthly["mean_adt"].quantile(0.01)),
@@ -131,12 +132,12 @@ def build_exposure_audit(config: ExposureAuditConfig = ExposureAuditConfig()) ->
         "coverage_by_month": by_month.to_dict(orient="records"),
         "quality_regime": {
             "pre_2026_05": {
-                "rows": int(len(pre_quality)),
+                "rows": len(pre_quality),
                 "segments": int(pre_quality["segmentid"].nunique()),
                 "mean_adt": float(pre_quality["mean_adt"].mean()),
             },
             "from_2026_05": {
-                "rows": int(len(post_quality)),
+                "rows": len(post_quality),
                 "segments": int(post_quality["segmentid"].nunique()),
                 "mean_adt": float(post_quality["mean_adt"].mean()),
             },

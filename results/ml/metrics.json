@@ -686,5 +686,5 @@
     "rows_scored": 157180
   },
   "total_runtime_seconds": 49.91898536682129,
-  "model_file": "models/lightgbm_crash_model.txt"
+  "model_file": "models/v1/lightgbm_crash_model.txt"
 }

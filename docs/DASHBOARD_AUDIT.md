@@ -71,7 +71,7 @@ and a verified URL.
 ```text
 streamlit.testing.v1.AppTest: all seven pages, zero exceptions
 streamlit run dashboard/app.py --server.headless true: HTTP 200
-pytest: 63 passed
+pytest: 67 collected, 66 passed, 1 skipped (V2 binary artefact intentionally removed)
 ruff: clean
 ```
 

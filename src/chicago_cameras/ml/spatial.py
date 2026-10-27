@@ -13,11 +13,12 @@ because it would leak future traffic exposure into historical training months.
 from __future__ import annotations
 
 import hashlib
+import itertools
 import json
 import logging
 import zipfile
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 
 import numpy as np
@@ -88,16 +89,16 @@ def acquire_tiger(cache_dir: Path, refresh: bool = False) -> dict:
             "sha256": _sha256(zip_path),
             "vintage": TIGER_VINTAGE,
             "license": "Public domain (U.S. Census Bureau)",
-            "downloaded_at_utc": datetime.now(timezone.utc).isoformat(),
+            "downloaded_at_utc": datetime.now(UTC).isoformat(),
         }
         changed = True
 
     if not changed:
-        for county in TIGER_COUNTIES:
+        for county, county_name in TIGER_COUNTIES.items():
             zip_path = cache_dir / f"tl_{TIGER_VINTAGE}_{county}_edges.zip"
             if zip_path.exists() and county not in records:
                 records[county] = {
-                    "county_name": TIGER_COUNTIES[county],
+                    "county_name": county_name,
                     "url": f"https://www2.census.gov/geo/tiger/TIGER{TIGER_VINTAGE}/EDGES/tl_{TIGER_VINTAGE}_{county}_edges.zip",
                     "zip": str(zip_path),
                     "sha256": _sha256(zip_path),
@@ -157,7 +158,7 @@ def _load_lines(
                 continue
             points = shape_record.shape.points
             parts = list(shape_record.shape.parts) + [len(points)]
-            for start, end in zip(parts[:-1], parts[1:]):
+            for start, end in itertools.pairwise(parts):
                 part = points[start:end]
                 if len(part) < 2:
                     continue

@@ -24,7 +24,7 @@ def synthetic_panel() -> pd.DataFrame:
             for rel in range(-6, 6):
                 base = 8.0 if treated else 5.0
                 post_effect = -2.0 if (treated and rel >= 0) else 0.0
-                y = max(0, int(round(rng.poisson(base + post_effect))))
+                y = max(0, round(rng.poisson(base + post_effect)))
                 rows.append(
                     {
                         "stack": f"S{stack}",

@@ -181,7 +181,7 @@
     "verbosity": -1
   },
   "inference_seconds_for_test": 1.569,
-  "model_file": "models/lightgbm_crash_model.txt",
+  "model_file": "models/v1/lightgbm_crash_model.txt",
   "model_name": "lightgbm_poisson_crash_model",
   "model_version": "1.0.0",
   "n_features": 44,

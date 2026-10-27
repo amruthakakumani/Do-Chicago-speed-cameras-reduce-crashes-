@@ -19,15 +19,15 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from chicago_cameras.ml.dataset import build_dataset  # noqa: E402
-from chicago_cameras.ml.evaluate import full_evaluation  # noqa: E402
-from chicago_cameras.ml.predict import attach_predictions, load_model  # noqa: E402
+from chicago_cameras.ml.dataset import build_dataset
+from chicago_cameras.ml.evaluate import full_evaluation
+from chicago_cameras.ml.predict import attach_predictions, load_model
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", default="config/analysis.yaml")
-    parser.add_argument("--model", default="models/lightgbm_crash_model.txt")
+    parser.add_argument("--model", default="models/v1/lightgbm_crash_model.txt")
     parser.add_argument("--json", default="results/ml/evaluation.json")
     args = parser.parse_args()
 

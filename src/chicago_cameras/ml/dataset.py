@@ -13,9 +13,10 @@ non-random sample of Chicago; this is documented rather than hidden.
 from __future__ import annotations
 
 import logging
+from collections.abc import Iterable
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 import numpy as np
 import pandas as pd
@@ -505,7 +506,7 @@ def build_dataset(
             "last": str(pd.Timestamp(ml_config.target_end).date()),
         },
         "test_start": str(pd.Timestamp(ml_config.test_start).date()),
-        "n_location_months": int(len(frame)),
+        "n_location_months": len(frame),
         "n_locations": int(locations["location_id"].nunique()),
         "n_camera_locations": int((locations["site_type"] == "camera").sum()),
         "n_control_locations": int((locations["site_type"] == "control").sum()),

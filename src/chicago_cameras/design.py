@@ -99,7 +99,7 @@ class StudyData:
         xs, ys = self._crash_xy[:, 0], self._crash_xy[:, 1]
         self.bounds_xy = (xs.min(), ys.min(), xs.max(), ys.max())
 
-    def subset_start(self, start_month: str | pd.Timestamp) -> "StudyData":
+    def subset_start(self, start_month: str | pd.Timestamp) -> StudyData:
         """Return a copy restricted to months at or after ``start_month``.
 
         Used to reproduce the original study's 2015 start exactly, without
@@ -199,7 +199,7 @@ def resolve_overlaps(
     keep = np.ones(len(cameras), dtype=bool)
     if rule == "keep_all" or len(pairs) == 0:
         return np.ones(len(cameras), dtype=bool), {
-            "overlap_pairs": int(len(pairs)),
+            "overlap_pairs": len(pairs),
             "dropped_for_overlap": 0,
         }
 
@@ -228,7 +228,7 @@ def resolve_overlaps(
                 float(min(np.linalg.norm(xy[node] - xy[n]) for n in earlier))
             )
     stats = {
-        "overlap_pairs": int(len(pairs)),
+        "overlap_pairs": len(pairs),
         "dropped_for_overlap": dropped,
     }
     if drop_distances:
@@ -268,7 +268,7 @@ def build_design(
             "try a shorter pre-period or the keep_all overlap rule"
         )
 
-    control_xy, control_counts_all = data.control_sites(
+    control_xy, _ = data.control_sites(
         radius_m=config.radius_m,
         buffer_m=config.buffer_m,
         grid_m=config.grid_m,
@@ -322,14 +322,14 @@ def build_design(
         control_xy, cameras[["x", "y"]].to_numpy(float)
     )
     diagnostics = {
-        "n_cameras_total": int(len(cameras)),
+        "n_cameras_total": len(cameras),
         "n_cameras_in_window": int(cameras["eligible_window"].sum()),
         "n_cameras_dropped_overlap": int(
             (cameras["eligible_window"] & ~keep_overlap).sum()
         ),
-        "n_cameras_matched": int(len(matched_rows)),
-        "n_control_candidates": int(len(control_xy)),
-        "n_controls_used_unique": int(len(np.unique(match_result.controls_used))),
+        "n_cameras_matched": len(matched_rows),
+        "n_control_candidates": len(control_xy),
+        "n_controls_used_unique": len(np.unique(match_result.controls_used)),
         "n_controls_reused": int(match_result.n_multi_used_controls),
         "match_failures": {str(k): v for k, v in match_result.failures.items()},
         "control_min_distance_to_camera_m": float(treated_control_distance.min())
@@ -352,7 +352,7 @@ def build_design(
     # area. Use a 1 m tolerance so that boundary adjacency is not reported as
     # overlap, while a genuinely overlapping pair is.
     control_overlap = overlap_pairs(control_xy, max(2 * config.radius_m - 1.0, 0.0))
-    diagnostics["control_overlap_pairs"] = int(len(control_overlap))
+    diagnostics["control_overlap_pairs"] = len(control_overlap)
 
     # Repeated attribution of one crash to several camera catchments.
     crash_idx, _ = assignment_pairs(

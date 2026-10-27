@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Build the formatted PDF and DOCX from the Markdown source.
+"""Build the approved PDF from the Markdown manuscript source.
 
 The scientific Markdown is never edited.  A temporary body is generated with
 the title block removed and figure captions attached to their figures; a Typst
@@ -13,21 +13,21 @@ from __future__ import annotations
 import re
 import shutil
 import subprocess
+from copy import deepcopy
 from pathlib import Path
 
 from docx import Document
 from docx.enum.text import WD_ALIGN_PARAGRAPH, WD_TAB_ALIGNMENT, WD_TAB_LEADER
-from docx.shared import Inches, Pt, RGBColor
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
-from copy import deepcopy
+from docx.shared import Inches, Pt, RGBColor
 
 ROOT = Path(__file__).resolve().parents[1]
 PAPER = ROOT / "paper"
 BUILD = PAPER / "build"
-SOURCE = PAPER / "chicago_speed_cameras_research.md"
-PDF = PAPER / "chicago_speed_cameras_research.pdf"
-DOCX = PAPER / "chicago_speed_cameras_research.docx"
+SOURCE = PAPER / "source" / "chicago_speed_cameras_research.md"
+PDF = PAPER / "Chicago_Speed_Cameras_Research.pdf"
+DOCX = BUILD / "chicago_preview.docx"
 TEMPLATE = PAPER / "templates" / "working_paper.typ"
 REPO = "https://github.com/amruthakakumani/Do-Chicago-speed-cameras-reduce-crashes-"
 TOC_ENTRIES = [
@@ -60,11 +60,11 @@ def prepare_body() -> tuple[Path, Path]:
     # Pandoc's default Markdown reader does not retain \[...\] math without
     # the double-backslash extension. Convert the source delimiters to the
     # portable $...$ / $$...$$ forms without changing the equations.
-    text = re.sub(r"\\\[(.*?)\\\]", lambda match: f"$${match.group(1)}$$", text, flags=re.S)
-    text = re.sub(r"\\\((.*?)\\\)", lambda match: f"${match.group(1)}$", text, flags=re.S)
+    text = re.sub(r"\\\[(.*?)\\\]", lambda match: f"$${match.group(1)}$$", text, flags=re.DOTALL)
+    text = re.sub(r"\\\((.*?)\\\)", lambda match: f"${match.group(1)}$", text, flags=re.DOTALL)
     pattern = re.compile(
         r"!\[[^\]]*\]\((figures/[^)]+)\)\n\n\*((?:Figure \d+\..*?))\*\n",
-        re.S,
+        re.DOTALL,
     )
 
     def combine_pdf(match: re.Match) -> str:
@@ -403,7 +403,7 @@ def _render_docx_pages(source: Path) -> dict[str, int]:
                 if heading in text and heading not in pages:
                     pages[heading] = page_number - 3
         return pages
-    except Exception:
+    except Exception:  # noqa: BLE001 - pagination preview is optional
         return {}
 
 
@@ -416,7 +416,7 @@ def main() -> int:
         build_docx(docx_body, toc_pages=toc_pages)
         # Re-render once so the final DOCX is internally consistent.
         _render_docx_pages(DOCX)
-    print(f"wrote {PDF} and {DOCX}")
+    print(f"wrote {PDF} (DOCX preview in {DOCX})")
     return 0
 
 

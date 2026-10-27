@@ -11,6 +11,7 @@ from __future__ import annotations
 import json
 import logging
 from dataclasses import dataclass
+
 import pandas as pd
 
 from ..config import load_config, path_for
@@ -46,7 +47,8 @@ class CoverageDatasetConfig:
     seed: int = 20261024
 
 
-def build_coverage_bundle(config: CoverageDatasetConfig = CoverageDatasetConfig()) -> DatasetBundle:
+def build_coverage_bundle(config: CoverageDatasetConfig | None = None) -> DatasetBundle:
+    config = config or CoverageDatasetConfig()
     cfg = load_config(config.config_path)
     data, quality = prepare_data(cfg, reuse_processed=True)
     citywide = data.subset_start(config.citywide_start)
@@ -91,7 +93,7 @@ def build_coverage_bundle(config: CoverageDatasetConfig = CoverageDatasetConfig(
         "n_locations": int(locations["location_id"].nunique()),
         "n_camera_locations": int((locations["site_type"] == "camera").sum()),
         "n_control_locations": int((locations["site_type"] == "control").sum()),
-        "n_rows": int(len(frame)),
+        "n_rows": len(frame),
         "n_features": len(feature_columns),
         "feature_columns": feature_columns,
         "categorical_features": CATEGORICAL_FEATURES,

@@ -87,7 +87,7 @@ def interval_metrics(
         "median_width": float(np.median(width)),
         "mean_lower": float(lower.mean()),
         "mean_upper": float(upper.mean()),
-        "n": int(len(y)),
+        "n": len(y),
         "method": interval.method,
         "alpha": interval.alpha,
         "quantile": interval.quantile,

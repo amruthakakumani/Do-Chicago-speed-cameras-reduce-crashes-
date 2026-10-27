@@ -17,7 +17,15 @@ import lightgbm as lgb
 import numpy as np
 import pandas as pd
 
-from .conformal import coverage_by_group, coverage_by_risk_decile, interval_metrics as interval_metrics_fn, select_method, build_intervals, conformal_quantile, nonconformity
+from .conformal import (
+    build_intervals,
+    conformal_quantile,
+    coverage_by_group,
+    coverage_by_risk_decile,
+    nonconformity,
+    select_method,
+)
+from .conformal import interval_metrics as interval_metrics_fn
 from .evaluate import calibration_table, monthly_metrics, regression_metrics, subgroup_errors
 from .reconstruction import fixed_params
 from .validation import fold_frames, rolling_origin_folds, temporal_split
@@ -117,7 +125,7 @@ def train_road_model() -> dict[str, Any]:
     test_metrics = regression_metrics(test["y_all"], test["predicted"])
     threshold = float(np.quantile(train_all["y_all"], 0.90))
     high = test["y_all"] >= threshold
-    k = max(1, int(round(0.10 * len(test))))
+    k = max(1, round(0.10 * len(test)))
     top = test.nlargest(k, "predicted")
     hotspot = {
         "actual_high_threshold_from_training_y": threshold,
@@ -157,8 +165,8 @@ def train_road_model() -> dict[str, Any]:
         "rounds": int(rounds),
         "best_iterations": iterations,
         "training_seconds": round(time.time() - started, 2),
-        "train_rows": int(len(train_all)),
-        "test_rows": int(len(test)),
+        "train_rows": len(train_all),
+        "test_rows": len(test),
         "validation": {
             "fold_metrics": fold_metrics,
             "mean_deviance": float(np.mean([row["poisson_deviance"] for row in fold_metrics])),
