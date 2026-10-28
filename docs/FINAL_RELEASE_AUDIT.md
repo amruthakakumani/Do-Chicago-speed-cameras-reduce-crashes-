@@ -81,7 +81,7 @@ additional operational complexity. No candidate met the promotion rule.
 | Pages | 22 |
 | Publication figures | 11 (plus cover graphic) |
 | Tables | 6 |
-| File size | 2,916,608 bytes (~2.78 MB) |
+| File size | 2,912,935 bytes (~2.78 MB) |
 | Body page numbers | 1–19; cover/author/TOC pages precede them |
 | Source available | `paper/source/chicago_speed_cameras_research.md` |
 | Build command | `python scripts/build_publication_docs.py` |

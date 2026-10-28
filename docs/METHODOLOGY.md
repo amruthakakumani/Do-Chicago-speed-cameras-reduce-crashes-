@@ -97,8 +97,10 @@ equidispersion; NB2 estimates the variance function rather than assuming it.
 ### 6.3 Conditional Poisson FE (preferred count specification)
 
 - Conditioning on each stack-month total turns the Poisson FE model into a binomial model for the
-  treated count with the number of controls as exposure. This is numerically identical to Poisson
-  with a full set of stack × event-month intercepts, without estimating thousands of dummies.
+  treated count with the number of controls as exposure. The shared stack-month effect cancels; a
+  separate treated-versus-control baseline and the number of matched controls remain. This is
+  numerically identical to Poisson with a full set of stack × event-month intercepts, without
+  estimating thousands of dummies.
 - Coefficient is a log rate ratio; `exp(β) − 1` is the percent change.
 
 ### 6.4 Cohort 2×2 (staggered-adoption-robust)

@@ -21,8 +21,8 @@
   #it
 ]
 #set image(width: 100%)
-#set figure(gap: 0.45em)
-#show figure.caption: set text(size: 8.6pt, style: "italic", fill: muted)
+#set figure(gap: 0.60em)
+#show figure.caption: set text(size: 9.2pt, style: "italic", fill: muted)
 #show table: it => {
   set text(size: 8.5pt, hyphenate: false)
   it
