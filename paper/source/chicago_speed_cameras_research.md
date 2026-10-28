@@ -39,12 +39,13 @@ Methodologically, Bertrand, Duflo and Mullainathan (2004) show that naive standa
 
 **Table 1. Comparison with prior studies.**
 
-| Study | Geography | Period | Outcome | Design | Estimated effect |
-|---|---|---|---|---|---|
-| Tilahun (2023) | Chicago | 2015–2017 | Fatal/injury; fatal/severe | Empirical Bayes, 101 locations | −12% fatal/injury; −15% fatal/severe |
-| Stagoff-Belfort et al. (2025) | New York City | 2014–2023 | Collisions and injuries | Staggered DiD, ~2,000 cameras | −5%/month collisions; −2.5%/month injuries |
-| Sutton & Tilahun (2022) | Chicago | 2016–2019 | Equity/efficacy | Empirical Bayes report | Report-level estimates |
-| **This study** | **Chicago** | **2015–2026** | **All reported crashes** | **Matched DiD; conditional Poisson FE; cohort 2×2** | **−2.6% [−11.5%, +7.2%]** |
+| Study | Setting | Method | Main finding |
+|---|---|---|---|
+| Tilahun (2023) | Chicago | Empirical Bayes | 12% reduction in fatal/injury crashes |
+| NYC study (2025) | New York City | Staggered DiD | Reported reductions in collisions and injuries |
+| This study | Chicago | Matched DiD | −2.6%, statistically uncertain |
+
+The full comparison differs by period and outcome. Tilahun (2023) uses empirical Bayes at 101 Chicago locations for 2015–2017 and reports a 12% reduction in fatal/injury crashes and 15% in fatal/severe crashes. Stagoff-Belfort et al. (2025) study roughly 2,000 New York City cameras over 2014–2023 and report about 5% fewer collisions and 2.5% fewer injuries per month. This study uses 2015–2026 Chicago crash records; its primary matched-DiD estimate is −2.6% (95% CI −11.5% to +7.2%) across 20 cameras.
 
 Total-crash and injury-crash effects are not directly comparable: cameras may affect severe outcomes differently, and reporting completeness differs across data systems. This study does not disprove the Chicago or New York findings; it estimates a different sample with a different design and reports more uncertainty.
 
@@ -126,10 +127,10 @@ estimated by OLS and Poisson with standard errors clustered by camera stack. Thi
 The preferred count model conditions on each camera-month total. Let \(y_{0st}\) be the treated count and \(y_{1st}\) the sum over the five comparison sites. Conditional on \(N_{st}=y_{0st}+y_{1st}\),
 
 \[
-y_{0st} \mid N_{st} \sim \text{Binomial}\left(N_{st}, \frac{\exp(\alpha_{st}+\tau \text{post}_{st})}{\exp(\alpha_{st}+\tau \text{post}_{st})+5}\right),
+y_{0st} \mid N_{st} \sim \operatorname{Binomial}\left(N_{st}, \frac{\exp(\beta_0+\tau\,\text{post}_{st})}{k_{st}+\exp(\beta_0+\tau\,\text{post}_{st})}\right),
 \]
 
-which is the exact conditional likelihood of a Poisson model with a full set of camera-by-month fixed effects. The coefficient \(\tau\) is a log rate ratio; \(\exp(\tau)-1\) is the percent change. Camera-by-month fixed effects absorb shocks genuinely common to a treated camera and its matched comparison sites within the same stack and month. They do not remove differential local shocks, unobserved time-varying confounding that differs between treated and control locations, or COVID-19 effects that vary geographically.
+which is the exact conditional likelihood of a Poisson model with a full set of camera-month (stack-by-event-month) fixed effects. Conditioning on \(N_{st}\) removes the shared nuisance effect \(\alpha_{st}\); a separate treated-versus-control baseline \(\beta_0\) and the number of matched comparison sites \(k_{st}\) remain. The coefficient \(\tau\) is a log rate ratio; \(\exp(\tau)-1\) is the percent change. These fixed effects absorb shocks genuinely common to a treated camera and its matched comparison sites within the same stack and month. They do not remove differential local shocks, unobserved time-varying confounding that differs between treated and control locations, or COVID-19 effects that vary geographically.
 
 ![Overlapping catchments](figures/fig2_catchment_overlap.png)
 
